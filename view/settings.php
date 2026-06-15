@@ -165,7 +165,7 @@ $allPrompts = getAllPrompts();
                                     <td>1</td>
                                     <td><?= e(date('Y-m-d H:i', strtotime('now'))) ?></td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="editPrompt('<?= e($key) ?>', <?= json_encode($template, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>)">Edit</button>
+                                        <button class="btn btn-sm btn-outline-primary" data-key="<?= e($key) ?>" data-template="<?= e($template) ?>" onclick="editPrompt(this.dataset.key, this.dataset.template)">Edit</button>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
