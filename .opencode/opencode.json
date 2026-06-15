@@ -1,0 +1,89 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "instructions": [
+        "AGENTS.md",
+        "NEXT.md",
+        "ROADMAP.md",
+        "DESIGN.md",
+        "README.md"
+    ],
+    "permission": {
+        "edit": "allow",
+        "write": "allow",
+        "bash": {
+            "*": "ask",
+            "pwd*": "allow",
+            "ls*": "allow",
+            "tree*": "allow",
+            "find*": "allow",
+            "grep*": "allow",
+            "egrep*": "allow",
+            "fgrep*": "allow",
+            "cat*": "allow",
+            "head*": "allow",
+            "tail*": "allow",
+            "less*": "allow",
+            "more*": "allow",
+            "wc*": "allow",
+            "sed*": "allow",
+            "awk*": "allow",
+            "sort*": "allow",
+            "uniq*": "allow",
+            "cut*": "allow",
+            "git status*": "allow",
+            "git diff*": "allow",
+            "git log*": "allow",
+            "git show*": "allow",
+            "git branch*": "allow",
+            "git add*": "allow",
+            "git commit*": "allow",
+            "git push*": "allow",
+            "composer install*": "allow",
+            "composer test*": "allow",
+            "vendor/bin/phpunit*": "allow",
+            "php -l*": "allow",
+            "php cli*": "allow"
+        }
+    },
+    "agent": {
+        "build": {
+            "mode": "primary",
+            "model": "ollama/qwen3.6:35b-128k",
+            "temperature": 0.1,
+            "prompt": "You are the Local Project build/debug agent. Focus on diagnosis, small patches, tests, commits, and pushes. Prefer correctness over speed."
+        },
+        "coder": {
+            "mode": "primary",
+            "model": "ollama/qwen3-coder:30b-128k",
+            "temperature": 0.1,
+            "prompt": "You are the Local Project coding agent. Implement clearly scoped changes using existing project patterns. Do not redesign architecture unless requested."
+        }
+    },
+    "command": {
+        "next": {
+            "description": "Work on the next task from NEXT.md",
+            "agent": "coder",
+            "template": "Read AGENTS.md, NEXT.md, ROADMAP.md, DESIGN.md, and README.md. Complete only the first unchecked task in NEXT.md that is ready. Treat NEXT.md as the immediate execution plan and ROADMAP.md as generated strategic context. Do not read or update KANBAN.md directly; it is the Project Management application's source board and should be maintained by the application. Keep the change small, follow existing patterns, and avoid unrelated refactors. Run focused validation first, then broader validation when practical, and run git diff --check. After successful validation, update NEXT.md by marking the completed task as checked ([x]) and add any immediate follow-up only if it is required to continue safely. Update documentation or README.md if behavior changed. Commit all task-related changes and push."
+        },
+        "plan": {
+            "description": "Review ROADMAP.md and NEXT.md, then refine NEXT.md",
+            "agent": "build",
+            "template": "Read AGENTS.md, ROADMAP.md, NEXT.md, DESIGN.md, README.md, and docs/index.md when present. Act as the project planning agent only. Do not implement code. Do not refactor. Do not read or update KANBAN.md directly; it is owned by the Project Management application and used to generate ROADMAP.md and NEXT.md. Use ROADMAP.md for current strategic priorities, NEXT.md for immediate work, DESIGN.md for architectural constraints, README.md and docs/ for user-facing/documented behavior, and AGENTS.md for workflow rules. Refine NEXT.md so it contains a single focused sprint goal, a short active task list, and a clear definition of done. Prefer tasks that are already implied by ROADMAP.md and are small enough for the next command to execute without ambiguity. If NEXT.md is already clear and actionable, leave it mostly unchanged. Run git diff --check, commit planning/documentation changes if any, and push."
+        },
+        "fix-ci": {
+            "description": "Fix a GitHub Actions CI failure",
+            "agent": "build",
+            "template": "Fix the CI failure below. Read AGENTS.md first. Use ROADMAP.md and NEXT.md only for task context; do not read or update KANBAN.md directly. Find the first meaningful failure, patch the smallest correct fix, run the closest local test, run git diff --check, update documentation or README.md if behavior changed, commit, and push.\n\n$ARGUMENTS"
+        },
+        "docs": {
+            "description": "Review the codebase and maintain docs/ plus README.md",
+            "agent": "build",
+            "template": "Review the codebase and maintain project documentation. Read AGENTS.md, DESIGN.md, README.md, and docs/index.md first when present. Use ROADMAP.md and NEXT.md for context only. Do not read or update KANBAN.md directly; it is owned by the Project Management application. Inspect the relevant implementation before writing. Update or create documentation under docs/ following docs/index.md, and maintain README.md so it accurately summarizes setup, usage, architecture, and key workflows. Do not invent behavior that is not documented or observable in code. Run git diff --check, commit documentation changes, and push.\n\n$ARGUMENTS"
+        },
+        "document": {
+            "description": "Alias for docs: maintain docs/ plus README.md",
+            "agent": "build",
+            "template": "Review the codebase and maintain project documentation. Read AGENTS.md, DESIGN.md, README.md, and docs/index.md first when present. Use ROADMAP.md and NEXT.md for context only. Do not read or update KANBAN.md directly; it is owned by the Project Management application. Inspect the relevant implementation before writing. Update or create documentation under docs/ following docs/index.md, and maintain README.md so it accurately summarizes setup, usage, architecture, and key workflows. Do not invent behavior that is not documented or observable in code. Run git diff --check, commit documentation changes, and push.\n\n$ARGUMENTS"
+        }
+    }
+}

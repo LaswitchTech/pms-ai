@@ -1,0 +1,15 @@
+# Project Management front controller
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Application routes must go through the root front controller even when
+    # they share a name with a physical directory, such as /kanban/.
+    RewriteRule ^kanban(?:/.*)?$ index.php [L,QSA]
+
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    RewriteRule ^ index.php [L,QSA]
+</IfModule>

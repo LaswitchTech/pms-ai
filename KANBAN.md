@@ -1,0 +1,317 @@
+# Kanban
+
+## Todo <!-- hide: archive,copy -->
+- [ ] Workflow Automation <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+  - [ ] NEXT.md Integration (Files: `view/kanban.php`, `lib/next.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Add task action button <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Restrict button to In Progress column <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Preserve metadata <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Preserve subtasks <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+  - [ ] Task Planning Workflow (Files: `view/kanban.php`, `assets/js/kanban.js`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Add Review button <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Display AI suggestions modal <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Allow user acceptance <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Create subtasks automatically <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+- [ ] Improve Kanban UX <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+  - [ ] Replace alert() calls (Files: `view/kanban.php`, `assets/js/kanban.js`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Create reusable Bootstrap modal <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Confirmation dialogs <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Error dialogs <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+  - [ ] Task Tags (Files: `lib/kanban.php`, `view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Extend parser <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Add tag editor <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Add tag rendering <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Add tag filtering <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+  - [ ] Read-only Mode (Files: `lib/settings.php`, `view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Add toggle <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Disable mutations <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Disable drag/drop <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+  - [ ] Archive Improvements (Files: `view/kanban.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Search archive <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Filter archive by tag <!-- created_at: 2026-06-12T11:29:50-04:00 priority: low -->
+  - [ ] Column Controls Review <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Review existing controls <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Standardize dropdown actions <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Add missing bulk actions <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+- [ ] Reorganize Agents Workspace (Files: `view/agents.php`, `router.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+  - [ ] Create Agents dashboard <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+  - [ ] Move Design page under Agents <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+  - [ ] Move Next page under Agents <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+  - [ ] Update navigation <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+  - [ ] Update routes <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+- [ ] Project Repository Management (Files: `view/projects.php`, `projects/show.php`, `lib/git.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+  - [ ] Project Details Page <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Project metadata <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Repository metadata <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Branch display <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+  - [ ] Git Configuration <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Configure repository URL <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Configure branch <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Configure token storage <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+  - [ ] Repository Status <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Detect git repository <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Current branch <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Dirty working tree <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Ahead / behind status <!-- created_at: 2026-06-12T11:29:50-04:00 priority: low -->
+  - [ ] URL Sanitization <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Strip credentials <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Strip tokens <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+- [ ] OpenCode Management (Files: `lib/opencode.php`, `view/settings.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: low -->
+  - [ ] Define Global Defaults <!-- created_at: 2026-06-12T11:29:50-04:00 priority: low -->
+  - [ ] Project Overrides <!-- created_at: 2026-06-12T11:29:50-04:00 priority: low -->
+  - [ ] Settings Merge Engine <!-- created_at: 2026-06-12T11:29:50-04:00 priority: low -->
+  - [ ] Generate .opencode/opencode.json <!-- created_at: 2026-06-12T11:29:50-04:00 priority: low -->
+- [ ] Dynamic Roadmap Generation (Files: `view/roadmap.php`, `lib/roadmap.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+  - [ ] ROADMAP generated from KANBAN <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+  - [ ] Generate release milestones <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+  - [ ] Generate timeline <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+  - [ ] Add roadmap page <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+- [ ] Application Architecture Refactor (Files: `index.php`, `router.php`, `lib/renderer.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: urgent -->
+  - [ ] Create lib/renderer.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Renderer class handles page rendering <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Layout inclusion via Renderer, not index.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] View file existence checks in Renderer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+  - [ ] Extract route mapping into Router or separate config <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Remove $routes array from index.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Delegate route registration to Router class or route_config.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] index.php becomes thin bootstrap (includes, bootstraps router, dispatches) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+  - [ ] Helper consolidation in /lib <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Move escape/e() helper to lib/helpers.php or view_helpers.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Move ensureDirectory() into lib/file_helpers.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+    - [ ] Move slugifyProject() into lib/helpers.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+    - [ ] Move readProjectsConfig()/writeProjectsConfig() into lib/config_helpers.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Move discoverProjects()/syncProjectsConfig()/createProject() into lib/project_helpers.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Move git helpers (detectGitRepository, sanitizeGitRepositoryForDisplay) into lib/git_helpers.php or lib/project_helpers.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+    - [ ] Move rewrite/config helpers (ensureRewriteConfiguration, readFirstMarkdownHeading) into appropriate lib files <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+  - [ ] Update all views to use shared helpers <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Remove duplicate function_exists blocks from views <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+    - [ ] Confirm bootstrap.php or index.php includes all shared helpers before layout rendering <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+- [ ] Controller Layer (Files: `controller/`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+  - [ ] Create controller/directory structure <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Establish controller naming conventions and responsibilities <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+    - [ ] Create shared library for cross-controller utilities in /lib <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+  - [ ] Create controller/dashboard.php (Files: `controller/dashboard.php`, `view/dashboard.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Extract dashboard data preparation (projects config, project actions, server detection, rewrite status) into controller <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Create project manager render helper used only from controller or shared lib <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+    - [ ] Remove dashboard logic from index.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] View/dashboard.php becomes purely presentational <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+  - [ ] Create controller/kanban.php (Files: `controller/kanban.php`, `view/kanban.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Extract kanban board loading/parsing logic into controller <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Controller handles POST actions and delegates to lib/kanban.php helpers <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Remove kanban business logic from view/kanban.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] View becomes presentational-only layer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+  - [ ] Create controller/roadmap.php (Files: `controller/roadmap.php`, `view/roadmap.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Extract roadmap file path resolution logic into controller <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Move markdown rendering to a shared MarkdownRenderer or use Parsedown via lib/markdown_renderer.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Remove inline markdown renderers from view/roadmap.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+    - [ ] View becomes presentational-only layer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+  - [ ] Create controller/design.php (Files: `controller/design.php`, `view/design.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Extract design file path resolution logic into controller <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Reuse shared MarkdownRenderer for HTML rendering <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Remove inline markdown renderers from view/design.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+    - [ ] View becomes presentational-only layer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+  - [ ] Create controller/next.php (Files: `controller/next.php`, `view/next.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Extract next file path resolution logic into controller <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Reuse shared MarkdownRenderer for HTML rendering <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Remove inline markdown renderers from view/next.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+    - [ ] View becomes presentational-only layer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+  - [ ] Create controller/agents.php (Files: `controller/agents.php`, `view/agents.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Extract agents file path resolution, opencode config handling from view into controller <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Remove inline functions and logic from view/agents.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+    - [ ] View becomes presentational-only layer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+  - [ ] Create controller/projects.php (Files: `controller/projects.php`, `view/projects.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Extract project CRUD, git detection, config sync logic into controller <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Create shared ProjectManager library in /lib for project operations <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Build view/projects.php as presentational layer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Remove duplicate project logic from index.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+- [ ] Markdown Rendering (Files: `lib/markdown_renderer.php`, Parsedown, composer) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+  - [ ] Configure Composer autoload for erusev/parsedown <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Run `composer install` / `composer dump-autoload` to verify parsedown is loaded <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Confirm vendor/erusev/parsedown exists and autoload works via vendor/autoload.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+  - [ ] Create lib/markdown_renderer.php (Files: `lib/markdown_renderer.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] MarkdownRenderer class wraps Parsedown with caching layer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Support tables, code blocks, links, headers, lists correctly for GitHub-flavored markdown <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Support task checklists (checkbox lists) rendering <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+    - [ ] Add inline HTML sanitizer for safety <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+  - [ ] Migrate roadmap page to Parsedown (Files: `controller/roadmap.php`, `lib/markdown_renderer.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Replace custom markdown parser in view/roadmap.php with MarkdownRenderer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Confirm tables render correctly in ROADMAP.md output <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+  - [ ] Migrate design page to Parsedown (Files: `controller/design.php`, `lib/markdown_renderer.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Replace custom markdown parser in view/design.php with MarkdownRenderer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Confirm tables render correctly in DESIGN.md output <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+  - [ ] Migrate next page to Parsedown (Files: `controller/next.php`, `lib/markdown_renderer.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Replace custom markdown parser in view/next.php with MarkdownRenderer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Confirm tables render correctly in NEXT.md output <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+  - [ ] Migrate agents page to Parsedown (Files: `controller/agents.php`, `lib/markdown_renderer.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Replace custom markdown parser in view/agents.php with MarkdownRenderer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
+    - [ ] Confirm tables render correctly in AGENTS.md output <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
+
+## In Progress <!-- hide: archive -->
+- [ ] AI Services <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+  - [x] Task Review Service (Files: `lib/ai.php`, `lib/ollama.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:23-04:00 priority: high -->
+    - [x] Generate task decomposition suggestions <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:20-04:00 priority: high -->
+    - [x] Generate subtasks <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:21-04:00 priority: high -->
+    - [x] Suggest priorities <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:22-04:00 priority: normal -->
+  - [x] AI Prompts Registry (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:00-04:00 completed_at: 2026-06-15T14:50:31-04:00 priority: high -->
+    - [x] Design prompt registry structure — define how prompts are stored as named, versioned entries keyed by purpose <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:28-04:00 priority: normal -->
+    - [x] Create `lib/ai_prompts.php` with prompt registry class and helper functions to load/store prompts from a config source (JSON) <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:29-04:00 priority: normal -->
+    - [x] Extract all hardcoded prompts from `lib/ai.php` into the registry so each prompt key is configurable at runtime <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:29-04:00 priority: normal -->
+    - [x] Extract all hardcoded prompts from `lib/roadmap.php` into the registry using the same mechanism <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:30-04:00 priority: normal -->
+  - [ ] Prompt Editor UI (Files: `view/settings.php`, `view/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:01-04:00 priority: high -->
+    - [ ] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->
+    - [ ] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php` <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->
+  - [ ] Prompt Fallback Defaults (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:02-04:00 priority: high -->
+    - [ ] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->
+    - [ ] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->
+  - [ ] Roadmap Generation Service (Files: `lib/roadmap.php`, `lib/ai.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Generate ROADMAP.md from Kanban <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
+    - [ ] Generate release milestones <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+    - [ ] Generate timelines <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
+
+## Done <!-- hide: copy -->
+- [x] Implement Settings Management System <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:04:12-04:00 priority: urgent -->
+  - [x] Create settings storage layer (Files: `lib/settings.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:04:11-04:00 priority: urgent -->
+    - [x] Create settings.json persistence <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:20-04:00 priority: urgent -->
+    - [x] Add settings load/save helpers <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:04:08-04:00 priority: urgent -->
+    - [x] Add validation layer <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:22-04:00 priority: high -->
+  - [x] Create Settings UI (Files: `view/settings.php`, `templates/navigation.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:41-04:00 priority: high -->
+    - [x] Create settings page <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:38-04:00 priority: high -->
+    - [x] Add navigation link <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:39-04:00 priority: normal -->
+    - [x] Create settings form <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:40-04:00 priority: high -->
+  - [x] Timezone Configuration (Files: `bootstrap.php`, `lib/settings.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:52-04:00 priority: urgent -->
+    - [x] Add timezone selector <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:44-04:00 priority: high -->
+    - [x] Load timezone from settings <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:46-04:00 priority: urgent -->
+    - [x] Replace temporary date_default_timezone_set() <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:50-04:00 priority: urgent -->
+  - [x] Ollama Configuration (Files: `view/settings.php`, `lib/ollama.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:23-04:00 priority: high -->
+    - [x] Host <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:54-04:00 priority: high -->
+    - [x] Port <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:55-04:00 priority: high -->
+    - [x] Timeout <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:18-04:00 priority: normal -->
+    - [x] Context Window <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:20-04:00 priority: normal -->
+    - [x] Default Model <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:22-04:00 priority: high -->
+
+## Archive
+- [x] Nested task in kanban <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T18:18:02+00:00 archived_at: 2026-06-10T19:10:26-04:00 priority: normal -->
+  - [x] Add nest tasks as a list inside the parent task content <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T18:18:02+00:00 priority: normal -->
+  - [x] Add a button to move a task inside another task more like drag and drop <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T18:18:02+00:00 priority: normal -->
+  - [x] Add a button to remove a task from its parent task and move it to the root of the kanban <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T18:18:02+00:00 priority: normal -->
+  - [x] Fix the parsing of `[ ]` and `[x]` in the task content to support nested tasks <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T18:18:02+00:00 priority: normal -->
+- [x] Log task movement so we can track when a task was completed, created or moved? <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:05:39-04:00 archived_at: 2026-06-10T19:10:30-04:00 priority: normal -->
+  - [x] Log task creation <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T18:20:41+00:00 priority: normal -->
+  - [x] Add due date to task <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:05:36-04:00 due_at: 2026-06-10T14:25:00-04:00 priority: normal -->
+  - [x] Log when a task is marked as completed <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T18:20:45+00:00 priority: normal -->
+- [x] Add `priority` metadata support to `KANBAN.md` <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:16:21-04:00 archived_at: 2026-06-10T19:10:34-04:00 priority: normal -->
+  - [x] Parse `priority:` from task metadata comments <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:16:18-04:00 priority: normal -->
+  - [x] Write `priority:` back when saving tasks <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:16:18-04:00 priority: normal -->
+  - [x] Preserve priority in drag/drop payloads <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:16:20-04:00 priority: normal -->
+- [x] Add priority defaults <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:17:52-04:00 archived_at: 2026-06-10T19:10:39-04:00 priority: normal -->
+  - [x] Default new tasks to `normal` <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:17:48-04:00 priority: normal -->
+  - [x] Normalize missing/invalid priorities to `normal` <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:17:50-04:00 priority: normal -->
+- [x] Add click-to-cycle priority <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:21:45-04:00 archived_at: 2026-06-10T19:10:43-04:00 priority: normal -->
+  - [x] Add `cycle_priority` POST action <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:21:41-04:00 priority: normal -->
+  - [x] Cycle `low → normal → high → urgent → low` <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:21:42-04:00 priority: normal -->
+  - [x] Make the priority badge submit the cycle action <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:21:43-04:00 priority: normal -->
+- [x] Validate priority behavior <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:23:05-04:00 archived_at: 2026-06-10T19:13:18-04:00 priority: urgent -->
+  - [x] Confirm Markdown stays clean <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:23:04-04:00 priority: high -->
+  - [x] Confirm drag/drop preserves priority <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:23:04-04:00 priority: low -->
+  - [x] Confirm nested tasks support priority <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:23:03-04:00 priority: normal -->
+- [x] Replace priority cycling with a dropdown <!-- created_at: 2026-06-10T19:15:00-04:00 completed_at: 2026-06-10T19:28:59-04:00 archived_at: 2026-06-10T19:33:17-04:00 priority: high -->
+  - [x] Add a priority dropdown to each task card <!-- created_at: 2026-06-10T19:15:00-04:00 completed_at: 2026-06-10T19:28:55-04:00 priority: normal -->
+  - [x] Replace the `cycle_priority` action with an `update_priority` POST action <!-- created_at: 2026-06-10T19:15:00-04:00 completed_at: 2026-06-10T19:28:56-04:00 priority: normal -->
+  - [x] Preserve existing priority badge styling inside the dropdown options or selected state <!-- created_at: 2026-06-10T19:15:00-04:00 completed_at: 2026-06-10T19:28:57-04:00 priority: normal -->
+  - [x] Confirm priority updates work for root tasks and subtasks <!-- created_at: 2026-06-10T19:15:00-04:00 completed_at: 2026-06-10T19:28:58-04:00 priority: normal -->
+- [ ] Validate archive behavior <!-- created_at: 2026-06-10T18:21:00-04:00 archived_at: 2026-06-10T19:33:19-04:00 priority: normal -->
+  - [x] Confirm archived tasks stay out of active board <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T19:11:08-04:00 priority: normal -->
+  - [x] Confirm restore works after accidental archive <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T19:13:42-04:00 priority: normal -->
+  - [x] Confirm nested subtasks remain intact <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T19:11:16-04:00 priority: normal -->
+  - [x] Confirm drag/drop still preserves metadata <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T19:11:19-04:00 priority: normal -->
+- [x] Add restore action <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T19:13:37-04:00 archived_at: 2026-06-10T19:33:21-04:00 priority: normal -->
+  - [x] Add `restore_task` POST action <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T19:13:34-04:00 priority: normal -->
+  - [x] Restore archived tasks to the last Kanban column <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T19:13:35-04:00 priority: normal -->
+  - [x] Clear or preserve `archived_at` based on desired history behavior <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T19:13:36-04:00 priority: normal -->
+- [x] Add archive action <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T18:58:30-04:00 archived_at: 2026-06-10T19:33:23-04:00 priority: normal -->
+  - [x] Show archive button only for tasks in the last Kanban column <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T18:58:26-04:00 priority: normal -->
+  - [x] Add `archive_task` POST action <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T18:58:27-04:00 priority: normal -->
+  - [x] Set `archived_at` when archiving <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T18:58:28-04:00 priority: normal -->
+- [x] Add archive storage section <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T18:45:11-04:00 archived_at: 2026-06-10T19:33:25-04:00 priority: normal -->
+  - [x] Create an `## Archive` section outside the active Kanban columns <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T18:45:08-04:00 priority: normal -->
+  - [x] Exclude archived tasks from active columns <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T18:45:09-04:00 priority: normal -->
+  - [x] Keep archived task metadata and subtasks intact <!-- created_at: 2026-06-10T18:21:00-04:00 completed_at: 2026-06-10T18:45:10-04:00 priority: normal -->
+- [x] BUG: Counts should be updated whenever we drag and drop a task into a different column <!-- created_at: 2026-06-11T09:51:23-04:00 completed_at: 2026-06-11T10:03:46-04:00 archived_at: 2026-06-11T10:04:13-04:00 archived_from: "Done" priority: normal -->
+- [x] Add controls to Kanban columns <!-- created_at: 2026-06-10T19:37:02-04:00 completed_at: 2026-06-11T09:43:33-04:00 archived_at: 2026-06-11T10:04:16-04:00 archived_from: "Done" priority: high -->
+  - [x] Add a bootstrap dropdown menu on the top right of columns to store column controls <!-- created_at: 2026-06-11T08:29:06-04:00 completed_at: 2026-06-11T08:53:42-04:00 priority: high -->
+  - [x] Add the ability to remove Kanban columns safely <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-11T08:53:45-04:00 priority: high -->
+  - [x] Add the ability to define which task controls are available in each column <!-- created_at: 2026-06-11T08:54:18-04:00 completed_at: 2026-06-11T09:43:28-04:00 priority: high -->
+- [x] Add the ability to move Kanban columns <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-11T08:38:39-04:00 archived_at: 2026-06-11T10:04:19-04:00 archived_from: "Done" priority: high -->
+  - [x] Use Sortable to allow the columns to be re-organized <!-- created_at: 2026-06-11T08:27:39-04:00 completed_at: 2026-06-11T08:38:36-04:00 priority: high -->
+  - [x] Add a handle to columns <!-- created_at: 2026-06-11T08:27:03-04:00 completed_at: 2026-06-11T08:38:38-04:00 priority: high -->
+- [x] Add priority UI <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:20:12-04:00 archived_at: 2026-06-11T10:04:22-04:00 archived_from: "Done" priority: normal -->
+  - [x] Render a compact priority badge near the task title <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:20:11-04:00 priority: normal -->
+  - [x] Use styles for `low`, `normal`, `high`, `urgent` <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T16:20:09-04:00 priority: normal -->
+- [x] BUG: When moving a task to subtask, it does not update the markdown for the copy to clipboard feature. <!-- created_at: 2026-06-11T10:24:05-04:00 completed_at: 2026-06-12T09:44:35-04:00 archived_at: 2026-06-12T10:36:58-04:00 archived_from: "Done" priority: high -->
+- [x] Restore Kanban stability after module split <!-- created_at: 2026-06-11T10:19:43-04:00 completed_at: 2026-06-12T09:44:20-04:00 archived_at: 2026-06-12T10:37:02-04:00 archived_from: "Done" priority: urgent -->
+  - [x] Validate shared Kanban helper split (`view/kanban.php`, `lib/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-12T09:43:24-04:00 priority: high -->
+  - [x] Move Markdown parsing helpers into `lib/kanban.php` <!-- created_at: 2026-06-11T11:20:00-04:00 completed_at: 2026-06-12T09:44:09-04:00 priority: urgent -->
+    - [x] Move task metadata helpers into `lib/kanban.php` <!-- created_at: 2026-06-11T11:20:00-04:00 completed_at: 2026-06-11T11:20:00-04:00 priority: urgent -->
+    - [x] Move column settings helpers into `lib/kanban.php` <!-- created_at: 2026-06-11T11:20:00-04:00 completed_at: 2026-06-11T11:20:00-04:00 priority: urgent -->
+    - [x] Move save/write helpers into `lib/kanban.php` <!-- created_at: 2026-06-11T11:20:00-04:00 completed_at: 2026-06-11T11:20:00-04:00 priority: urgent -->
+    - [x] Move task mutation helpers into `lib/kanban.php` <!-- created_at: 2026-06-11T11:20:00-04:00 completed_at: 2026-06-11T11:20:00-04:00 priority: urgent -->
+    - [x] Move count helpers into `lib/kanban.php` <!-- created_at: 2026-06-11T11:20:00-04:00 completed_at: 2026-06-11T11:20:00-04:00 priority: high -->
+    - [x] Confirm only render helpers remain in `view/kanban.php` <!-- created_at: 2026-06-11T11:20:00-04:00 completed_at: 2026-06-12T09:44:07-04:00 priority: high -->
+      - [x] Remove legacy POST action handling from `view/kanban.php` <!-- created_at: 2026-06-12T08:32:35-04:00 completed_at: 2026-06-12T08:32:35-04:00 priority: normal -->
+      - [x] Move board loading/default creation into a shared read helper or controller block <!-- created_at: 2026-06-12T08:32:35-04:00 completed_at: 2026-06-12T08:48:22-04:00 priority: normal -->
+      - [x] Refactor `api.php` to use shared board/file helpers from `lib.php` <!-- created_at: 2026-06-12T09:02:21-04:00 completed_at: 2026-06-12T09:02:21-04:00 priority: normal -->
+      - [x] Keep only HTML/render helpers in `view/kanban.php` <!-- created_at: 2026-06-12T08:32:35-04:00 completed_at: 2026-06-12T09:40:55-04:00 priority: normal -->
+    - [x] Confirm there are no duplicate PHP function declarations between `view/kanban.php` and `lib/kanban.php` <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-12T09:43:16-04:00 priority: urgent -->
+  - [x] Validate `api/kanban.php` after stable POST flow is restored <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-12T09:44:15-04:00 priority: normal -->
+    - [x] Confirm `api/kanban.php` no longer returns “API is not ready yet” <!-- created_at: 2026-06-11T11:20:00-04:00 completed_at: 2026-06-11T11:20:00-04:00 priority: high -->
+    - [x] Confirm API JSON actions target the same `KANBAN.md` path as the UI <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-12T09:43:36-04:00 priority: high -->
+    - [x] Confirm API returns updated board state after successful actions <!-- created_at: 2026-06-11T10:25:00-04:00 completed_at: 2026-06-12T09:43:40-04:00 priority: normal -->
+  - [x] Resume AJAX migration only after the board is stable <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-12T09:44:17-04:00 priority: normal -->
+    - [x] Convert Open/Done toggle to AJAX <!-- created_at: 2026-06-11T10:25:00-04:00 completed_at: 2026-06-12T09:43:46-04:00 priority: high -->
+    - [x] Convert priority dropdown to AJAX <!-- created_at: 2026-06-11T10:25:00-04:00 completed_at: 2026-06-12T09:43:48-04:00 priority: high -->
+    - [x] Convert edit/save to AJAX <!-- created_at: 2026-06-11T10:25:00-04:00 completed_at: 2026-06-12T09:43:49-04:00 priority: high -->
+    - [x] Convert delete to AJAX <!-- created_at: 2026-06-11T10:25:00-04:00 completed_at: 2026-06-12T09:43:50-04:00 priority: normal -->
+    - [x] Convert archive/restore to AJAX <!-- created_at: 2026-06-11T10:25:00-04:00 completed_at: 2026-06-12T09:43:51-04:00 priority: high -->
+    - [x] Convert add/remove columns to AJAX <!-- created_at: 2026-06-11T10:25:00-04:00 completed_at: 2026-06-12T09:43:53-04:00 priority: normal -->
+    - [x] Convert column control toggles to AJAX <!-- created_at: 2026-06-11T10:25:00-04:00 completed_at: 2026-06-12T09:43:54-04:00 priority: high -->
+- [x] Fix `KANBAN.md` path resolution after moving UI into `view/kanban.php` <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-11T21:47:46-04:00 archived_at: 2026-06-12T10:37:04-04:00 archived_from: "Done" priority: urgent -->
+  - [x] Confirm the local project uses the repository root `KANBAN.md`, not `kanban/KANBAN.md` <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-11T13:25:17-04:00 priority: urgent -->
+  - [x] Confirm managed projects resolve their own root `KANBAN.md` files correctly <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-11T13:25:17-04:00 priority: high -->
+  - [x] Remove or ignore accidental duplicate `KANBAN.md` files created inside the `kanban/` module directory <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-11T21:47:39-04:00 priority: high -->
+- [x] Fix routing so `/kanban` and `/kanban/` load through the main layout <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-11T13:25:17-04:00 archived_at: 2026-06-12T10:37:05-04:00 archived_from: "Done" priority: urgent -->
+  - [x] Confirm `.htaccess` routes `/kanban` and `/kanban/` to the main `index.php` front controller <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-11T13:25:17-04:00 priority: urgent -->
+  - [x] Confirm direct access to `view/kanban.php` is not bypassing the application layout <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-11T13:25:17-04:00 priority: high -->
+  - [x] Confirm project routes still work for `/kanban/{projectSlug}` <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-11T13:25:17-04:00 priority: high -->
+- [x] Restore Kanban actions through AJAX API <!-- created_at: 2026-06-11T11:45:00-04:00 completed_at: 2026-06-11T21:40:36-04:00 archived_at: 2026-06-12T10:37:07-04:00 archived_from: "Done" priority: urgent -->
+  - [x] Confirm `api/kanban.php` uses the same `KANBAN.md` path as the UI (`api/kanban.php`, `index.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T13:25:17-04:00 priority: urgent -->
+  - [x] Add a shared JavaScript `submitKanbanAction()` helper (`view/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T13:25:17-04:00 priority: urgent -->
+  - [x] Convert add column to AJAX (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T13:46:05-04:00 priority: urgent -->
+  - [x] Convert add task/card to AJAX (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T16:44:52-04:00 priority: urgent -->
+  - [x] Convert edit/save task to AJAX (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T16:44:52-04:00 priority: urgent -->
+  - [x] Convert delete task to AJAX (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T17:03:45-04:00 priority: urgent -->
+  - [x] Convert delete column to AJAX (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T18:08:30-04:00 priority: urgent -->
+  - [x] Convert Open/Done toggle to AJAX (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T18:09:52-04:00 priority: urgent -->
+  - [x] Convert priority dropdown to AJAX (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T18:32:21-04:00 priority: high -->
+  - [x] Convert archive/restore to AJAX (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T20:08:55-04:00 priority: high -->
+  - [x] Convert moving tasks to AJAX (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T20:24:29-04:00 priority: high -->
+  - [x] Convert Copy Markdown to clipboard to AJAX (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T20:56:36-04:00 priority: high -->
+  - [x] Convert drag/drop persistence to AJAX API endpoint (`view/kanban.php`, `api/kanban.php`, `lib/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T21:18:06-04:00 priority: urgent -->
+  - [x] Convert column control toggles to AJAX (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T21:38:59-04:00 priority: high -->
+  - [x] Refresh/re-render board state after successful AJAX actions (`view/kanban.php`, `api/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T21:39:01-04:00 priority: urgent -->
+  - [x] Confirm copy Markdown uses the updated task tree after drag/drop (`view/kanban.php`) <!-- created_at: 2026-06-11T13:25:17-04:00 completed_at: 2026-06-11T21:19:28-04:00 priority: high -->
+- [x] BUG: The `No cards in this column.` placeholder should be updated whenever we drag and drop a task in a different column <!-- created_at: 2026-06-11T09:52:50-04:00 completed_at: 2026-06-11T10:04:59-04:00 archived_at: 2026-06-12T10:37:09-04:00 archived_from: "Done" priority: normal -->
+- [x] Add a copy to clipboard feature that will copy the markdown of a task and subtasks into the clipboard <!-- created_at: 2026-06-11T09:54:32-04:00 completed_at: 2026-06-11T10:11:20-04:00 archived_at: 2026-06-12T10:37:10-04:00 archived_from: "Done" priority: normal -->
+- [x] Add task tag support <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T16:46:35-04:00 archived_at: 2026-06-15T08:56:59-04:00 archived_from: "Done" priority: high -->
+  - Files: `lib/kanban.php`, `view/kanban.php`, `api/kanban.php`
+  - Tags: feature
+  - [x] Add `Tags:` parser support <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T16:46:29-04:00 priority: high -->
+  - [x] Store tags as normalized arrays <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T16:46:30-04:00 priority: high -->
+  - [x] Render tags on task cards <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T16:46:31-04:00 priority: normal -->
+  - [x] Preserve tags during drag/drop, copy, archive, restore, and edit/save <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T16:46:32-04:00 priority: high -->
+  - [x] Add filtering by tag <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T16:46:32-04:00 priority: normal -->
+- [x] Add task description support <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T12:37:42-04:00 archived_at: 2026-06-15T08:57:02-04:00 archived_from: "Done" priority: high -->
+  - Files: `lib/kanban.php`, `view/kanban.php`, `api/kanban.php`
+  - [x] Update Markdown parser to support indented description lines <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T12:37:30-04:00 priority: urgent -->
+  - [x] Store task descriptions separately from titles <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T12:37:31-04:00 priority: high -->
+  - [x] Render descriptions inside task cards <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T12:37:37-04:00 priority: high -->
+  - [x] Preserve descriptions during drag/drop, copy, archive, restore, and edit/save <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T12:37:41-04:00 priority: high -->

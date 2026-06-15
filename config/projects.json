@@ -1,0 +1,21 @@
+{
+    "active_project": "hauser",
+    "projects": {
+        "core": {
+            "name": "Core",
+            "slug": "core",
+            "path": "/Users/louis/Projects/LaswitchTech/core",
+            "git_repository": "",
+            "created_at": null,
+            "updated_at": "2026-06-15T15:57:05-04:00"
+        },
+        "hauser": {
+            "name": "Hauser",
+            "slug": "hauser",
+            "path": "/Users/louis/Projects/kanban/projects/hauser",
+            "git_repository": null,
+            "created_at": "2026-06-12T08:15:20-04:00",
+            "updated_at": "2026-06-15T15:57:05-04:00"
+        }
+    }
+}

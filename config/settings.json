@@ -1,0 +1,8 @@
+{
+    "timezone": "America\/Toronto",
+    "ollama_host": "localhost",
+    "ollama_port": 11434,
+    "ollama_timeout": 30,
+    "ollama_context_window": 1024000,
+    "ollama_model": "qwen3.6:35b-128k"
+}

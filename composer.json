@@ -1,0 +1,17 @@
+{
+    "name": "kanban/app",
+    "description": "Kanban project management application",
+    "authors": [
+        {
+            "name": "louis"
+        }
+    ],
+    "require": {
+        "erusev/parsedown": "^1.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kanban\\": "lib/"
+        }
+    }
+}
