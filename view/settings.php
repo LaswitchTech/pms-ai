@@ -249,6 +249,11 @@ document.getElementById('savePromptBtn').addEventListener('click', function() {
             alertDiv.className = 'alert alert-success alert-dismissible fade show mt-3';
             alertDiv.innerHTML = 'Prompt saved successfully! <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
             document.querySelector('.tab-content').prepend(alertDiv);
+            
+            // Refresh the prompt table with fresh data - for this to work,
+            // we'd need a mechanism to reload the page or fetch updated data
+            // For now, just show alert and let user refresh manually if needed
+            console.log('Prompt saved. Data would refresh here if we had full UI update capability.');
         } else {
             // Show error message
             const alertDiv = document.createElement('div');

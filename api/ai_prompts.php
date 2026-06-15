@@ -26,10 +26,18 @@ $template = $data['template'];
 
 // Attempt to save the prompt
 if (setPrompt($key, $template)) {
+    // Get the updated prompt data for response
+    $registry = getAIPromptsRegistry();
+    $updatedPrompt = $registry->getPrompt($key);
+    $promptData = $registry->getAllPrompts();  // Get all prompts to update UI
+    
     echo json_encode([
         'success' => true,
         'message' => 'Prompt saved successfully',
-        'key' => $key
+        'key' => $key,
+        'template' => $updatedPrompt,
+        'version' => $registry->getPrompt($key) ? 1 : 0, // This will need better approach
+        'updated_at' => date('c')
     ]);
 } else {
     http_response_code(500);
