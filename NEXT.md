@@ -12,4 +12,4 @@ A UI for viewing, editing, and saving AI prompt templates stored in the registry
 **Referenced by**: KANBAN.md → `AI Services → Prompt Editor UI`
 
 - [x] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->
-- [ ] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php` <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->
+- [x] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php` <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->

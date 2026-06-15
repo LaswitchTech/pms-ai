@@ -158,7 +158,7 @@
     - [x] Extract all hardcoded prompts from `lib/ai.php` into the registry so each prompt key is configurable at runtime <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:29-04:00 priority: normal -->
     - [x] Extract all hardcoded prompts from `lib/roadmap.php` into the registry using the same mechanism <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:30-04:00 priority: normal -->
   - [ ] Prompt Editor UI (Files: `view/settings.php`, `view/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:01-04:00 priority: high -->
-    - [ ] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->
+    - [x] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T16:18:35-04:00 priority: normal -->
     - [ ] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php` <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->
   - [ ] Prompt Fallback Defaults (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:02-04:00 priority: high -->
     - [ ] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->

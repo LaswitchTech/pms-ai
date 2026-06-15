@@ -223,7 +223,46 @@ function editPrompt(key, template) {
 }
 
 document.getElementById('savePromptBtn').addEventListener('click', function() {
-    // In a real implementation, this would make an AJAX call to save the prompt
-    alert('Prompt saving functionality would be implemented here');
+    const key = document.getElementById('promptKey').value;
+    const template = document.getElementById('promptTemplate').value;
+    
+    // Make AJAX call to save the prompt
+    fetch('/api/ai_prompts.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            key: key,
+            template: template
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Close the modal and show success message
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editPromptModal'));
+            modal.hide();
+            
+            // Show success alert
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success alert-dismissible fade show mt-3';
+            alertDiv.innerHTML = 'Prompt saved successfully! <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+            document.querySelector('.tab-content').prepend(alertDiv);
+        } else {
+            // Show error message
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
+            alertDiv.innerHTML = 'Failed to save prompt: ' + (data.error || 'Unknown error') + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+            document.querySelector('.tab-content').prepend(alertDiv);
+        }
+    })
+    .catch(error => {
+        // Show error message
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
+        alertDiv.innerHTML = 'Network error while saving prompt: ' + error.message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+        document.querySelector('.tab-content').prepend(alertDiv);
+    });
 });
 </script>
