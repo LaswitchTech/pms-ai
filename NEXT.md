@@ -11,8 +11,8 @@ Ensure all prompt templates have safe fallback defaults when registry entries ar
 **Files**: `lib/ai_prompts.php`
 **Referenced by**: KANBAN.md → `AI Services → Prompt Fallback Defaults`
 
-- [ ] Ship default prompt templates in the codebase as fallback values for any missing or corrupted registry entries <!-- created_at: 2026-06-16T08:30:00-04:00 priority: high -->
-- [ ] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry <!-- created_at: 2026-06-16T08:30:00-04:00 priority: high -->
+- [x] Ship default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted <!-- created_at: 2026-06-16T08:30:00-04:00 priority: high -->
+- [x] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry <!-- created_at: 2026-06-16T08:30:00-04:00 priority: high -->
 
 ## Completed (previous)
 
