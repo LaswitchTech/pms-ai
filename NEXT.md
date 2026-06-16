@@ -14,6 +14,6 @@ Migrate prompts from `config/ai_prompts.json` to individual markdown template fi
 - In `AIPromptsRegistry::loadFromFile()`, after loading JSON config, fall back to reading corresponding `.md` files from `/assets/prompts/` for missing or custom entries so the markdown source is authoritative.
 - Update the prompt editor UI (save handler in `view/settings.php`) to write updated `template` field to `assets/prompts/{key}.md`; on save failure, fall back to writing the JSON manifest (`config/ai_prompts.json`) as the backing store.
 
-1. [ ] Create `/assets/prompts/{key}.md` markdown files for each prompt template currently in `config/ai_prompts.json`
+1. [x] Create `/assets/prompts/{key}.md` markdown files for each prompt template currently in `config/ai_prompts.json`
 2. [ ] Update `AIPromptsRegistry::loadFromFile()` to fall back to reading markdown template files from `/assets/prompts/`
 3. [ ] Update prompt editor UI (view) to save edits as `.md` files in `/assets/prompts/` with a JSON manifest fallback
