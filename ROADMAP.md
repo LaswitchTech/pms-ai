@@ -2,41 +2,30 @@
 
 ## Now
 
-### AI Services (high) — In Progress
+### OpenCode Orchestration (high) — In Progress
 
-Generate task decomposition, subtasks, and priorities via Ollama.
+Centralize AI orchestration through OpenCode, replacing custom PHP-based AI flows with the `/plan` command pipeline. This is the current active work item in `KANBAN.md`'s **In Progress** section.
 
-- [x] Task Review Service (`lib/ai.php`, `lib/ollama.php`)
-  - [x] Generate task decomposition suggestions
-  - [x] Generate subtasks
-  - [x] Suggest priorities
-- [x] AI Prompts Registry (`lib/ai_prompts.php`, `config/ai_prompts.json`)
-  - [x] Design prompt registry structure — define how prompts are stored as named, versioned entries keyed by purpose
-  - [x] Create `lib/ai_prompts.php` with prompt registry class and helper functions to load/store prompts from a config source (JSON)
-  - [x] Extract all hardcoded prompts from `lib/ai.php` into the registry so each prompt key is configurable at runtime
-  - [x] Extract all hardcoded prompts from `lib/roadmap.php` into the registry using the same mechanism
-- [x] Prompt Editor UI (`view/settings.php`, `view/ai_prompts.php`)
-  - [x] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts
-  - [x] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php`
-- [x] Prompt Fallback Defaults (`lib/ai_prompts.php`)
-  - [x] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted
-  - [x] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry
-- [x] Prompt Per-Prompt Models (`lib/ai_prompts.php`)
-  - [x] Extend prompt registry schema to store a per-prompt model field alongside template, version, and updated_at
-  - [x] Update `lib/ai.php` and `lib/roadmap.php` to pass the prompt's model to Ollama when calling `ollamaPrompt()`
-  - [x] Update prompt editor UI to show and edit an optional "model" field per prompt template
-- [x] Migrate Prompts from JSON to Markdown Files (`lib/ai_prompts.php`, `config/ai_prompts.json`)
-  - [x] Create `/assets/prompts/{key}.md` markdown files for each prompt template currently in `config/ai_prompts.json`
-  - [x] Update `AIPromptsRegistry::loadFromFile()` to fall back to reading markdown template files from `/assets/prompts/`
-  - [x] Update prompt editor UI (view) to save edits as `.md` files in `/assets/prompts/` with a JSON manifest fallback
-- [ ] Roadmap Generation Service (`lib/roadmap.php`, `lib/ai.php`)
-  - [ ] Generate ROADMAP.md from Kanban
-  - [ ] Generate release milestones
-  - [ ] Generate timelines
+- [ ] Deprecate custom PHP AI workflows (`lib/roadmap.php`, `lib/ai.php`, `config/ai_prompts.json`)
+  - [ ] Review recently implemented roadmap generation code for deprecation boundaries
+  - [ ] Decide remove/deprecate/adapt strategy for custom roadmap-generation code
+  - [ ] Remove or deprecate prompts after `/plan` integration is validated
+  - [ ] Confirm planning delegations route to OpenCode `/plan`
+- [ ] Implement OpenCode settings (`lib/settings.php`, `view/settings.php`)
+  - [ ] Enable/toggle, server host/port/timeout, executable path, project working directory configs
+  - [ ] Add validation on save
+- [ ] Implement OpenCode server integration (`lib/opencode.php`, `api/opencode.php`)
+  - [ ] Reusable client wrapper and server availability detection
+  - [ ] Dashboard status indicators for OpenCode and Ollama
+- [ ] Implement command execution UI (`view/agents.php`, `assets/js/opencode.js`, etc.)
+  - [ ] `/plan`, `/next`, `/debug`, `/review`, `/document` command buttons
+  - [ ] Progress/output/error capture and display
+  - [ ] Duplicate-execution guard
+- [ ] Preserve markdown viewer workflow for generated output
 
 ### Application Architecture Refactor (urgent)
 
-Critical refactor to clean up index.php, introduce Renderer class, and consolidate helpers.
+Critical refactor to clean up `index.php`, introduce Renderer class, and consolidate helpers.
 
 - [ ] Create lib/renderer.php (`lib/renderer.php`)
   - [ ] Renderer class handles page rendering
@@ -105,15 +94,22 @@ Replace inline markdown parsing with Parsedown via lib/markdown_renderer.php.
   - [ ] Support tables, code blocks, links, headers, lists correctly for GitHub-flavored markdown
   - [ ] Support task checklists (checkbox lists) rendering
   - [ ] Add inline HTML sanitizer for safety
-- [ ] Migrate all pages to Parsedown (`controller/roadmap.php`, `lib/markdown_renderer.php`)
-  - [ ] Migrate roadmap page — replace custom parser with MarkdownRenderer
-  - [ ] Migrate design page — replace custom parser with MarkdownRenderer
-  - [ ] Migrate next page — replace custom parser with MarkdownRenderer
-  - [ ] Migrate agents page — replace custom parser with MarkdownRenderer
+- [ ] Migrate roadmap page to Parsedown (`controller/roadmap.php`, `lib/markdown_renderer.php`)
+  - [ ] Replace custom markdown parser in view/roadmap.php with MarkdownRenderer
+  - [ ] Confirm tables render correctly in ROADMAP.md output
+- [ ] Migrate design page to Parsedown (`controller/design.php`, `lib/markdown_renderer.php`)
+  - [ ] Replace custom markdown parser in view/design.php with MarkdownRenderer
+  - [ ] Confirm tables render correctly in DESIGN.md output
+- [ ] Migrate next page to Parsedown (`controller/next.php`, `lib/markdown_renderer.php`)
+  - [ ] Replace custom markdown parser in view/next.php with MarkdownRenderer
+  - [ ] Confirm tables render correctly in NEXT.md output
+- [ ] Migrate agents page to Parsedown (`controller/agents.php`, `lib/markdown_renderer.php`)
+  - [ ] Replace custom markdown parser in view/agents.php with MarkdownRenderer
+  - [ ] Confirm tables render correctly in AGENTS.md output
 
 ### Dynamic Roadmap Generation (high)
 
-Generate ROADMAP.md dynamically from KANBAN.md.
+Generate ROADMAP.md dynamically from KANBAN.md — partially overlapping with OpenCode `/plan` delegation.
 
 - [ ] ROADMAP generated from KANBAN
 - [ ] Generate release milestones
@@ -172,6 +168,18 @@ Generate ROADMAP.md dynamically from KANBAN.md.
   - [ ] Standardize dropdown actions
   - [ ] Add missing bulk actions
 
+### Review Kanban Status Model (normal)
+
+Clarify and document task lifecycle semantics for the board.
+
+- [ ] Confirm `In Progress` is the source for `/plan` active work selection (high)
+- [ ] Confirm checkbox state is independent from column state
+- [ ] Document Todo / In Progress / Done / Archive semantics
+
+### Archived tasks in dedicated file (normal)
+
+Migrate archived task storage out of KANBAN.md into `ARCHIVES.md`.
+
 ## Next
 
 ### Reorganize Agents Workspace (normal)
@@ -195,3 +203,22 @@ Generate ROADMAP.md dynamically from KANBAN.md.
   - [x] Generate task decomposition suggestions
   - [x] Generate subtasks
   - [x] Suggest priorities
+- [x] AI Prompts Registry (`lib/ai_prompts.php`, `config/ai_prompts.json`)
+  - [x] Design prompt registry structure — define how prompts are stored as named, versioned entries keyed by purpose
+  - [x] Create `lib/ai_prompts.php` with prompt registry class and helper functions to load/store prompts from a config source (JSON)
+  - [x] Extract all hardcoded prompts from `lib/ai.php` into the registry so each prompt key is configurable at runtime
+  - [x] Extract all hardcoded prompts from `lib/roadmap.php` into the registry using the same mechanism
+- [x] Prompt Editor UI (`view/settings.php`, `view/ai_prompts.php`)
+  - [x] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts
+  - [x] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php`
+- [x] Prompt Fallback Defaults (`lib/ai_prompts.php`)
+  - [x] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted
+  - [x] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry
+- [x] Prompt Per-Prompt Models (`lib/ai_prompts.php`)
+  - [x] Extend prompt registry schema to store a per-prompt model field alongside template, version, and updated_at
+  - [x] Update `lib/ai.php` and `lib/roadmap.php` to pass the prompt's model to Ollama when calling `ollamaPrompt()`
+  - [x] Update prompt editor UI to show and edit an optional "model" field per prompt template
+- [x] Migrate Prompts from JSON to Markdown Files (`lib/ai_prompts.php`, `config/ai_prompts.json`)
+  - [x] Create `/assets/prompts/{key}.md` markdown files for each prompt template currently in `config/ai_prompts.json`
+  - [x] Update `AIPromptsRegistry::loadFromFile()` to fall back to reading markdown template files from `/assets/prompts/`
+  - [x] Update prompt editor UI (view) to save edits as `.md` files in `/assets/prompts/` with a JSON manifest fallback
