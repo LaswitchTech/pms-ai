@@ -2,7 +2,44 @@
     "$schema": "https://opencode.ai/config.json",
     "model": "qwen3.6:35b-128k",
     "compaction": {
+        "auto": true,
+        "prune": true,
+        "reserved": 10000,
         "model": "qwen3.6:35b-128k"
+    },
+    "provider": {
+        "ollama": {
+            "models": {
+                "qwen3.6:35b-128k": {
+                    "name": "Qwen 3.6 35B 128K",
+                    "limit": {
+                        "context": 50000,
+                        "output": 8192
+                    }
+                },
+                "qwen3-coder:30b-128k": {
+                    "name": "Qwen3 Coder 30B 128K",
+                    "limit": {
+                        "context": 50000,
+                        "output": 8192
+                    }
+                }
+            }
+        }
+    },
+    "agent": {
+        "build": {
+            "mode": "primary",
+            "model": "ollama/qwen3.6:35b-128k",
+            "temperature": 0.1,
+            "prompt": "You are the Local Project build/debug agent. Focus on diagnosis, small patches, tests, commits, and pushes. Prefer correctness over speed."
+        },
+        "coder": {
+            "mode": "primary",
+            "model": "ollama/qwen3-coder:30b-128k",
+            "temperature": 0.1,
+            "prompt": "You are the Local Project coding agent. Implement clearly scoped changes using existing project patterns. Do not redesign architecture unless requested."
+        }
     },
     "instructions": [
         "AGENTS.md",
@@ -47,20 +84,6 @@
             "vendor/bin/phpunit*": "allow",
             "php -l*": "allow",
             "php cli*": "allow"
-        }
-    },
-    "agent": {
-        "build": {
-            "mode": "primary",
-            "model": "ollama/qwen3.6:35b-128k",
-            "temperature": 0.1,
-            "prompt": "You are the Local Project build/debug agent. Focus on diagnosis, small patches, tests, commits, and pushes. Prefer correctness over speed."
-        },
-        "coder": {
-            "mode": "primary",
-            "model": "ollama/qwen3-coder:30b-128k",
-            "temperature": 0.1,
-            "prompt": "You are the Local Project coding agent. Implement clearly scoped changes using existing project patterns. Do not redesign architecture unless requested."
         }
     },
     "command": {
