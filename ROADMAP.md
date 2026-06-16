@@ -15,9 +15,9 @@ Generate task decomposition, subtasks, and priorities via Ollama.
   - [x] Create `lib/ai_prompts.php` with prompt registry class and helper functions to load/store prompts from a config source (JSON)
   - [x] Extract all hardcoded prompts from `lib/ai.php` into the registry so each prompt key is configurable at runtime
   - [x] Extract all hardcoded prompts from `lib/roadmap.php` into the registry using the same mechanism
-- [ ] Prompt Editor UI (`view/settings.php`, `view/ai_prompts.php`)
-  - [ ] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts
-  - [ ] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php`
+- [x] Prompt Editor UI (`view/settings.php`, `view/ai_prompts.php`)
+  - [x] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts
+  - [x] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php`
 - [ ] Prompt Fallback Defaults (`lib/ai_prompts.php`)
   - [ ] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted
   - [ ] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry
