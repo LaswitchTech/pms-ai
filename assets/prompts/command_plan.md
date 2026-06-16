@@ -32,7 +32,7 @@ Your responsibilities are:
 
 3. Generate NEXT.md.
    - Use the template located at /assets/prompts/templates/NEXT.md.
-   - Select a task from the "In Progress" section of KANBAN.md whenever one exists.
+   - Select a task from the 'In Progress' section of KANBAN.md whenever one exists.
    - Before selecting the task, check for priority conflicts and due-date conflicts.
    - A priority conflict exists when a lower task in the same section has a higher priority than a task above it.
    - A due-date conflict exists when a lower task in the same section has a due date that is overdue or sooner than a task above it.
