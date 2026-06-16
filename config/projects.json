@@ -7,7 +7,7 @@
             "path": "/Users/louis/Projects/LaswitchTech/core",
             "git_repository": "",
             "created_at": null,
-            "updated_at": "2026-06-16T08:20:59-04:00"
+            "updated_at": "2026-06-16T09:21:25-04:00"
         },
         "hauser": {
             "name": "Hauser",
@@ -15,7 +15,7 @@
             "path": "/Users/louis/Projects/kanban/projects/hauser",
             "git_repository": null,
             "created_at": "2026-06-12T08:15:20-04:00",
-            "updated_at": "2026-06-16T08:20:59-04:00"
+            "updated_at": "2026-06-16T09:21:25-04:00"
         }
     }
 }

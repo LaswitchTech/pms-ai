@@ -2,12 +2,12 @@
 require __DIR__ . '/../lib/settings.php';
 require __DIR__ . '/../lib/ai_prompts.php';
 
-// Load settings
+// Load setting
 $settings = loadSettings(__DIR__ . '/../config/settings.json');
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate and save settings
+    // Validate and save setting
     $newSettings = [
         'timezone' => $_POST['timezone'] ?? null,
         'ollama_host' => $_POST['ollama_host'] ?? 'localhost',
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Context window must be at least 256";
     }
     
-    // Save settings if no validation errors
+    // Save settings if no validation error
     if (!isset($error)) {
         if (saveSettings(__DIR__ . '/../config/settings.json', $newSettings)) {
             // Redirect back to settings page using a reliable method to avoid confusion with router
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $settings = $newSettings;
 }
 
-// Get list of timezones
+// Get list of timezone
 $timezones = DateTimeZone::listIdentifiers();
 
 // Get all prompts with metadata for display
@@ -152,6 +152,7 @@ $allPrompts = getAIPromptsRegistry()->getAllPromptsWithMeta();
                                 <tr>
                                     <th>Key</th>
                                     <th>Template</th>
+                                    <th>Model</th>
                                     <th>Version</th>
                                     <th>Updated At</th>
                                     <th>Actions</th>
@@ -159,9 +160,10 @@ $allPrompts = getAIPromptsRegistry()->getAllPromptsWithMeta();
                             </thead>
                             <tbody>
                                 <?php foreach ($allPrompts as $key => $prompt): ?>
-                                <tr data-row-key="<?= e($key) ?>">
+                                <tr data-row-key="<?= e($key) ?>" data-template="<?= e($prompt['template']) ?>">
                                     <td><?= e($prompt['key']) ?></td>
                                     <td class="text-break" style="max-width: 300px;"><?= e(substr($prompt['template'], 0, 100)) . (strlen($prompt['template']) > 100 ? '...' : '') ?></td>
+                                    <td><?= $prompt['model'] ? e($prompt['model']) : '—' ?></td>
                                     <td><?= $prompt['version'] > 0 ? e($prompt['version']) : '∅' ?></td>
                                     <td><?= $prompt['updated_at'] ? e(date('Y-m-d H:i', strtotime($prompt['updated_at']))) : '—' ?></td>
                                     <td>
@@ -198,6 +200,10 @@ $allPrompts = getAIPromptsRegistry()->getAllPromptsWithMeta();
                         <textarea class="form-control" id="promptTemplate" name="template" rows="8"></textarea>
                     </div>
                     <div class="mb-3">
+                        <label for="promptModel" class="form-label">Model (optional)</label>
+                        <input type="text" class="form-control" id="promptModel" name="model" placeholder="Leave empty to use default model">
+                    </div>
+                    <div class="mb-3">
                         <label for="promptVersion" class="form-label">Version</label>
                         <input type="text" class="form-control" id="promptVersion" name="version" readonly>
                     </div>
@@ -217,13 +223,19 @@ function editPrompt(key, template) {
     document.getElementById('promptKeyDisplay').value = key;
     document.getElementById('promptTemplate').value = template;
     
-    // Find the current version for this key from any row in the table
+    // Find the current version and model for this key from any row in the table
     var row = document.querySelector('tr[data-row-key="' + key + '"]');
     var currentVersion = 1;
+    var currentModel = '';
     if (row) {
-        var verCell = row.querySelector('td:nth-child(3)');
+        var verCell = row.querySelector('td:nth-child(4)');
         if (verCell && verCell.textContent !== '—' && verCell.textContent !== '∅') {
             currentVersion = parseInt(verCell.textContent, 10) || 1;
+        }
+        
+        var modelCell = row.querySelector('td:nth-child(3)');
+        if (modelCell && modelCell.textContent !== '—') {
+            currentModel = modelCell.textContent.trim();
         }
     }
 
@@ -232,6 +244,7 @@ function editPrompt(key, template) {
     window._promptEditorRow = row ? row : null;
 
     document.getElementById('promptVersion').value = currentVersion;
+    document.getElementById('promptModel').value = currentModel;
     
     const modal = new bootstrap.Modal(document.getElementById('editPromptModal'));
     modal.show();
@@ -240,6 +253,7 @@ function editPrompt(key, template) {
 document.getElementById('savePromptBtn').addEventListener('click', function() {
     var key = document.getElementById('promptKey').value;
     var template = document.getElementById('promptTemplate').value;
+    var model = document.getElementById('promptModel').value;
     
     // Make AJAX call to save the prompt
     fetch('/api/ai_prompts.php', {
@@ -249,7 +263,8 @@ document.getElementById('savePromptBtn').addEventListener('click', function() {
         },
         body: JSON.stringify({
             key: key,
-            template: template
+            template: template,
+            model: model
         })
     })
     .then(function(response) { return response.json(); })

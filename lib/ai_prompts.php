@@ -62,7 +62,8 @@ class AIPromptsRegistry {
             'key' => $key,
             'template' => $template,
             'version' => $this->getNewVersion($key),
-            'updated_at' => date('c')
+            'updated_at' => date('c'),
+            'model' => null  // Default to null (no specific model)
         ];
         
         // Save to file
@@ -84,10 +85,10 @@ class AIPromptsRegistry {
     }
 
     /**
-     * Get all prompts with its metadata (version, updated_at).
+     * Get all prompts with its metadata (version, updated_at, model).
      * Returns a flat array keyed by prompt key:
      *   [
-     *     'task_decomposition' => ['key' => '...', 'template' => '...', 'version' => 1, 'updated_at' => '...'],
+     *     'task_decomposition' => ['key' => '...', 'template' => '...', 'version' => 1, 'updated_at' => '...', 'model' => '...'],
      *     ...
      *   ]
      */
@@ -109,7 +110,8 @@ class AIPromptsRegistry {
                     'key' => $this->prompts[$key]['key'],
                     'template' => $this->prompts[$key]['template'],
                     'version' => $this->prompts[$key]['version'],
-                    'updated_at' => $this->prompts[$key]['updated_at']
+                    'updated_at' => $this->prompts[$key]['updated_at'],
+                    'model' => $this->prompts[$key]['model'] ?? null
                 ];
             } else {
                 // Default — shows as-is from code, no user edits
@@ -117,7 +119,8 @@ class AIPromptsRegistry {
                     'key' => $key,
                     'template' => $this->defaults[$key],
                     'version' => 0,
-                    'updated_at' => null
+                    'updated_at' => null,
+                    'model' => null
                 ];
             }
         }
@@ -130,14 +133,14 @@ class AIPromptsRegistry {
      */
     private function loadDefaults(): void {
         $this->defaults = [
-            // Task-related prompts
+            // Task-related prompts (no specific model specified)
             'task_decomposition' => "Please decompose the following task into 3-5 logical subtasks:\n\n{task_description}\n\nFormat your response as a markdown list with subtasks numbered.",
             
             'task_subtasks' => "Generate 3-5 detailed subtasks for the following main task:\n\n{task_description}\n\nFormat each subtask with a brief description only, one per line.",
             
             'task_priority' => "Based on the following task description, please suggest a priority level from the options: high, medium, low\n\n{task_description}\n\nRespond with only the priority level (high/medium/low) and nothing else.",
             
-            // Roadmap-related prompts
+            // Roadmap-related prompts (no specific model specified) 
             'roadmap_generation' => "Generate a ROADMAP.md file based on the following KANBAN.md content. Structure it in proper markdown with sections, and include release milestones and timeline information:\n\n### KANBAN.md Content:\n{kanban_content}\n\nGenerate a comprehensive roadmap that includes:\n1. Release milestones\n2. Timeline estimation\n3. Priority ordering of tasks\n4. Strategic planning considerations\n\nFormat properly with markdown headers and lists.",
             
             'release_milestones' => "Extract and organize the following KANBAN.md content into release milestones:\n\n{kanban_content}\n\nGenerate a list of release milestones with approximate dates, based on task dependencies and complexity. Format as a markdown list.",
@@ -172,7 +175,8 @@ class AIPromptsRegistry {
                     'key' => $promptData['key'],
                     'template' => $promptData['template'],
                     'version' => $promptData['version'] ?? 1,
-                    'updated_at' => $promptData['updated_at'] ?? date('c')
+                    'updated_at' => $promptData['updated_at'] ?? date('c'),
+                    'model' => $promptData['model'] ?? null
                 ];
             }
         }
@@ -189,7 +193,8 @@ class AIPromptsRegistry {
                 'key' => $key,
                 'template' => $prompt['template'],
                 'version' => $prompt['version'],
-                'updated_at' => $prompt['updated_at']
+                'updated_at' => $prompt['updated_at'],
+                'model' => $prompt['model'] ?? null
             ];
         }
         

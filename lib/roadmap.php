@@ -19,7 +19,9 @@ function generateRoadmapFromKanban(string $kanbanContent, string $settingsPath =
         ];
     }
     
-    $promptTemplate = getPrompt('roadmap_generation');
+    $registry = getAIPromptsRegistry();
+    $promptKey = 'roadmap_generation';
+    $promptTemplate = getPrompt($promptKey);
     if ($promptTemplate === null) {
         // Fallback to hardcoded prompt if registry doesn't have it (shouldn't happen)
         $promptTemplate = "Generate a ROADMAP.md file based on the following KANBAN.md content. Structure it in proper markdown with sections, and include release milestones and timeline information:\n\n### KANBAN.md Content:\n{kanban_content}\n\nGenerate a comprehensive roadmap that includes:\n1. Release milestones\n2. Timeline estimation\n3. Priority ordering of tasks\n4. Strategic planning considerations\n\nFormat properly with markdown headers and lists.";
@@ -27,7 +29,15 @@ function generateRoadmapFromKanban(string $kanbanContent, string $settingsPath =
     
     $prompt = str_replace('{kanban_content}', $kanbanContent, $promptTemplate);
     
-    $response = ollamaPrompt($prompt, [], $settingsPath);
+    // Get prompt metadata to check for specific model
+    $allPrompts = $registry->getAllPromptsWithMeta();
+    $model = null;
+    if (isset($allPrompts[$promptKey]) && isset($allPrompts[$promptKey]['model'])) {
+        $model = $allPrompts[$promptKey]['model'];
+    }
+    
+    $options = $model ? ['model' => $model] : [];
+    $response = ollamaPrompt($prompt, $options, $settingsPath);
     
     if (!$response['success']) {
         return [
@@ -63,7 +73,9 @@ function generateReleaseMilestones(string $kanbanContent, string $settingsPath =
         ];
     }
     
-    $promptTemplate = getPrompt('release_milestones');
+    $registry = getAIPromptsRegistry();
+    $promptKey = 'release_milestones';
+    $promptTemplate = getPrompt($promptKey);
     if ($promptTemplate === null) {
         // Fallback to hardcoded prompt if registry doesn't have it (shouldn't happen)
         $promptTemplate = "Extract and organize the following KANBAN.md content into release milestones:\n\n{kanban_content}\n\nGenerate a list of release milestones with approximate dates, based on task dependencies and complexity. Format as a markdown list.";
@@ -71,7 +83,15 @@ function generateReleaseMilestones(string $kanbanContent, string $settingsPath =
     
     $prompt = str_replace('{kanban_content}', $kanbanContent, $promptTemplate);
     
-    $response = ollamaPrompt($prompt, [], $settingsPath);
+    // Get prompt metadata to check for specific model
+    $allPrompts = $registry->getAllPromptsWithMeta();
+    $model = null;
+    if (isset($allPrompts[$promptKey]) && isset($allPrompts[$promptKey]['model'])) {
+        $model = $allPrompts[$promptKey]['model'];
+    }
+    
+    $options = $model ? ['model' => $model] : [];
+    $response = ollamaPrompt($prompt, $options, $settingsPath);
     
     if (!$response['success']) {
         return [
@@ -107,7 +127,9 @@ function generateTimeline(string $kanbanContent, string $settingsPath = __DIR__ 
         ];
     }
     
-    $promptTemplate = getPrompt('project_timeline');
+    $registry = getAIPromptsRegistry();
+    $promptKey = 'project_timeline';
+    $promptTemplate = getPrompt($promptKey);
     if ($promptTemplate === null) {
         // Fallback to hardcoded prompt if registry doesn't have it (shouldn't happen)
         $promptTemplate = "Based on the following KANBAN.md content, generate a project timeline with key dates:\n\n{kanban_content}\n\nCreate a timeline that shows planned completion dates for major features or groups of tasks. Format it as a markdown timeline.";
@@ -115,7 +137,15 @@ function generateTimeline(string $kanbanContent, string $settingsPath = __DIR__ 
     
     $prompt = str_replace('{kanban_content}', $kanbanContent, $promptTemplate);
     
-    $response = ollamaPrompt($prompt, [], $settingsPath);
+    // Get prompt metadata to check for specific model
+    $allPrompts = $registry->getAllPromptsWithMeta();
+    $model = null;
+    if (isset($allPrompts[$promptKey]) && isset($allPrompts[$promptKey]['model'])) {
+        $model = $allPrompts[$promptKey]['model'];
+    }
+    
+    $options = $model ? ['model' => $model] : [];
+    $response = ollamaPrompt($prompt, $options, $settingsPath);
     
     if (!$response['success']) {
         return [
@@ -137,7 +167,7 @@ function generateTimeline(string $kanbanContent, string $settingsPath = __DIR__ 
  *
  * @param string $kanbanContent The content of KANBAN.md
  * @param string $settingsPath Path to the settings.json file (default: __DIR__ . '/../settings.json')
- * @return array Complete roadmap information including all components
+ * @return array Complete roadmap information including all component
  */
 function generateCompleteRoadmap(string $kanbanContent, string $settingsPath = __DIR__ . '/../settings.json'): array
 {

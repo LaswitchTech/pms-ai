@@ -23,6 +23,7 @@ if (!isset($data['key']) || !isset($data['template'])) {
 
 $key = $data['key'];
 $template = $data['template'];
+$model = $data['model'] ?? null;
 
 // Attempt to save the prompt
 if (setPrompt($key, $template)) {
@@ -42,7 +43,8 @@ if (setPrompt($key, $template)) {
         'key' => $key,
         'template' => isset($promptEntry['template']) ? $promptEntry['template'] : $template,
         'version' => isset($promptEntry['version']) ? (int) $promptEntry['version'] : 1,
-        'updated_at' => isset($promptEntry['updated_at']) ? $promptEntry['updated_at'] : (new DateTime())->format('c')
+        'updated_at' => isset($promptEntry['updated_at']) ? $promptEntry['updated_at'] : (new DateTime())->format('c'),
+        'model' => $promptEntry['model'] ?? null
     ]);
 } else {
     http_response_code(500);

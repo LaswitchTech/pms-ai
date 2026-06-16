@@ -5,14 +5,16 @@
  *
  * @param string $taskDescription The task description to decompose
  * @param string $settingsPath Path to the settings.json file (default: __DIR__ . '/../settings.json')
- * @return array Response data with suggestions
+ * @return array Response data with suggestion
  */
 function generateTaskDecomposition(string $taskDescription, string $settingsPath = __DIR__ . '/../settings.json'): array
 {
     require_once __DIR__ . '/ollama.php';
     require_once __DIR__ . '/ai_prompts.php';
     
-    $promptTemplate = getPrompt('task_decomposition');
+    $registry = getAIPromptsRegistry();
+    $promptKey = 'task_decomposition';
+    $promptTemplate = getPrompt($promptKey);
     if ($promptTemplate === null) {
         // Fallback to hardcoded prompt if registry doesn't have it (shouldn't happen)
         $promptTemplate = "Please decompose the following task into 3-5 logical subtasks:\n\n{task_description}\n\nFormat your response as a markdown list with subtasks numbered.";
@@ -20,7 +22,15 @@ function generateTaskDecomposition(string $taskDescription, string $settingsPath
     
     $prompt = str_replace('{task_description}', $taskDescription, $promptTemplate);
     
-    $response = ollamaPrompt($prompt, [], $settingsPath);
+    // Get prompt metadata to check for specific model
+    $allPrompts = $registry->getAllPromptsWithMeta();
+    $model = null;
+    if (isset($allPrompts[$promptKey]) && isset($allPrompts[$promptKey]['model'])) {
+        $model = $allPrompts[$promptKey]['model'];
+    }
+    
+    $options = $model ? ['model' => $model] : [];
+    $response = ollamaPrompt($prompt, $options, $settingsPath);
     
     if (!$response['success']) {
         return [
@@ -56,14 +66,16 @@ function generateTaskDecomposition(string $taskDescription, string $settingsPath
  *
  * @param string $taskDescription The task description
  * @param string $settingsPath Path to the settings.json file (default: __DIR__ . '/../settings.json')
- * @return array Response data with subtasks
+ * @return array Response data with subtask
  */
 function generateSubtasks(string $taskDescription, string $settingsPath = __DIR__ . '/../settings.json'): array
 {
     require_once __DIR__ . '/ollama.php';
     require_once __DIR__ . '/ai_prompts.php';
     
-    $promptTemplate = getPrompt('task_subtasks');
+    $registry = getAIPromptsRegistry();
+    $promptKey = 'task_subtasks';
+    $promptTemplate = getPrompt($promptKey);
     if ($promptTemplate === null) {
         // Fallback to hardcoded prompt if registry doesn't have it (shouldn't happen)
         $promptTemplate = "Generate 3-5 detailed subtasks for the following main task:\n\n{task_description}\n\nFormat each subtask with a brief description only, one per line.";
@@ -71,7 +83,15 @@ function generateSubtasks(string $taskDescription, string $settingsPath = __DIR_
     
     $prompt = str_replace('{task_description}', $taskDescription, $promptTemplate);
     
-    $response = ollamaPrompt($prompt, [], $settingsPath);
+    // Get prompt metadata to check for specific model
+    $allPrompts = $registry->getAllPromptsWithMeta();
+    $model = null;
+    if (isset($allPrompts[$promptKey]) && isset($allPrompts[$promptKey]['model'])) {
+        $model = $allPrompts[$promptKey]['model'];
+    }
+    
+    $options = $model ? ['model' => $model] : [];
+    $response = ollamaPrompt($prompt, $options, $settingsPath);
     
     if (!$response['success']) {
         return [
@@ -114,7 +134,9 @@ function suggestTaskPriority(string $taskDescription, string $settingsPath = __D
     require_once __DIR__ . '/ollama.php';
     require_once __DIR__ . '/ai_prompts.php';
     
-    $promptTemplate = getPrompt('task_priority');
+    $registry = getAIPromptsRegistry();
+    $promptKey = 'task_priority';
+    $promptTemplate = getPrompt($promptKey);
     if ($promptTemplate === null) {
         // Fallback to hardcoded prompt if registry doesn't have it (shouldn't happen)
         $promptTemplate = "Based on the following task description, please suggest a priority level from the options: high, medium, low\n\n{task_description}\n\nRespond with only the priority level (high/medium/low) and nothing else.";
@@ -122,7 +144,15 @@ function suggestTaskPriority(string $taskDescription, string $settingsPath = __D
     
     $prompt = str_replace('{task_description}', $taskDescription, $promptTemplate);
     
-    $response = ollamaPrompt($prompt, [], $settingsPath);
+    // Get prompt metadata to check for specific model
+    $allPrompts = $registry->getAllPromptsWithMeta();
+    $model = null;
+    if (isset($allPrompts[$promptKey]) && isset($allPrompts[$promptKey]['model'])) {
+        $model = $allPrompts[$promptKey]['model'];
+    }
+    
+    $options = $model ? ['model' => $model] : [];
+    $response = ollamaPrompt($prompt, $options, $settingsPath);
     
     if (!$response['success']) {
         return [
@@ -153,7 +183,7 @@ function suggestTaskPriority(string $taskDescription, string $settingsPath = __D
  */
 function generateTaskReview(string $taskDescription, string $settingsPath = __DIR__ . '/../settings.json'): array
 {
-    // Generate decomposed subtasks
+    // Generate decomposed subtask
     $subtasksResult = generateSubtasks($taskDescription, $settingsPath);
     
     // Suggest priority
