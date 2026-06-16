@@ -1,5 +1,7 @@
 # Next
 
+## {goal} <!-- Root Task Title -->
+
 ## {status} <!-- default: In Progress -->
 
 ### {Root Task Title}
