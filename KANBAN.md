@@ -148,54 +148,35 @@
 
 ## In Progress <!-- hide: archive -->
 - [ ] AI Services <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
-  - [x] Task Review Service (Files: `lib/ai.php`, `lib/ollama.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:23-04:00 priority: high -->
-    - [x] Generate task decomposition suggestions <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:20-04:00 priority: high -->
-    - [x] Generate subtasks <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:21-04:00 priority: high -->
-    - [x] Suggest priorities <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:22-04:00 priority: normal -->
-  - [x] AI Prompts Registry (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:00-04:00 completed_at: 2026-06-15T14:50:31-04:00 priority: high -->
-    - [x] Design prompt registry structure — define how prompts are stored as named, versioned entries keyed by purpose <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:28-04:00 priority: normal -->
-    - [x] Create `lib/ai_prompts.php` with prompt registry class and helper functions to load/store prompts from a config source (JSON) <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:29-04:00 priority: normal -->
-    - [x] Extract all hardcoded prompts from `lib/ai.php` into the registry so each prompt key is configurable at runtime <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:29-04:00 priority: normal -->
-    - [x] Extract all hardcoded prompts from `lib/roadmap.php` into the registry using the same mechanism <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:30-04:00 priority: normal -->
-  - [x] Prompt Editor UI (Files: `view/settings.php`, `view/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:01-04:00 completed_at: 2026-06-15T20:33:48-04:00 priority: high -->
-    - [x] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T16:18:35-04:00 priority: normal -->
-    - [x] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php` <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T20:28:48-04:00 priority: normal -->
-  - [x] Prompt Fallback Defaults (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:02-04:00 completed_at: 2026-06-16T08:33:48-04:00 priority: high -->
-    - [x] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-16T08:33:46-04:00 priority: normal -->
-    - [x] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-16T08:33:47-04:00 priority: normal -->
-  - [x] Prompt Per-Prompt Models (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:27-04:00 priority: high -->
-    - [x] Extend prompt registry schema to store a per-prompt model field alongside template, version, and updated_at <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:24-04:00 priority: high -->
-    - [x] Update `lib/ai.php` and `lib/roadmap.php` to pass the prompt's model to Ollama when calling `ollamaPrompt()` <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:25-04:00 priority: high -->
-    - [x] Update prompt editor UI to show and edit an optional "model" field per prompt template <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:26-04:00 priority: normal -->
-  - [x] Migrate Prompts from JSON to Markdown Files (Files: `lib/ai_prompts.php`, `config/ai_prompts.json`) <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:18-04:00 priority: high -->
-    - [x] Create `/assets/prompts/{key}.md` markdown files for each prompt template currently in `config/ai_prompts.json` <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:14-04:00 priority: high -->
-    - [x] Update `AIPromptsRegistry::loadFromFile()` to fall back to reading markdown template files from `/assets/prompts/` <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:15-04:00 priority: high -->
-    - [x] Update prompt editor UI (view) to save edits as `.md` files in `/assets/prompts/` with a JSON manifest fallback <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:16-04:00 priority: high -->
   - [ ] Roadmap Generation Service (Files: `lib/roadmap.php`, `lib/ai.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
     - [ ] Generate ROADMAP.md from Kanban <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
     - [ ] Generate release milestones <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
     - [ ] Generate timelines <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
 
 ## Done <!-- hide: copy -->
-- [x] Implement Settings Management System <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:04:12-04:00 priority: urgent -->
-  - [x] Create settings storage layer (Files: `lib/settings.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:04:11-04:00 priority: urgent -->
-    - [x] Create settings.json persistence <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:20-04:00 priority: urgent -->
-    - [x] Add settings load/save helpers <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:04:08-04:00 priority: urgent -->
-    - [x] Add validation layer <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:22-04:00 priority: high -->
-  - [x] Create Settings UI (Files: `view/settings.php`, `templates/navigation.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:41-04:00 priority: high -->
-    - [x] Create settings page <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:38-04:00 priority: high -->
-    - [x] Add navigation link <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:39-04:00 priority: normal -->
-    - [x] Create settings form <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:40-04:00 priority: high -->
-  - [x] Timezone Configuration (Files: `bootstrap.php`, `lib/settings.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:52-04:00 priority: urgent -->
-    - [x] Add timezone selector <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:44-04:00 priority: high -->
-    - [x] Load timezone from settings <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:46-04:00 priority: urgent -->
-    - [x] Replace temporary date_default_timezone_set() <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:50-04:00 priority: urgent -->
-  - [x] Ollama Configuration (Files: `view/settings.php`, `lib/ollama.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:23-04:00 priority: high -->
-    - [x] Host <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:54-04:00 priority: high -->
-    - [x] Port <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:55-04:00 priority: high -->
-    - [x] Timeout <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:18-04:00 priority: normal -->
-    - [x] Context Window <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:20-04:00 priority: normal -->
-    - [x] Default Model <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:22-04:00 priority: high -->
+- [x] Migrate Prompts from JSON to Markdown Files (Files: `lib/ai_prompts.php`, `config/ai_prompts.json`) <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:18-04:00 priority: high -->
+  - [x] Create `/assets/prompts/{key}.md` markdown files for each prompt template currently in `config/ai_prompts.json` <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:14-04:00 priority: high -->
+  - [x] Update `AIPromptsRegistry::loadFromFile()` to fall back to reading markdown template files from `/assets/prompts/` <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:15-04:00 priority: high -->
+  - [x] Update prompt editor UI (view) to save edits as `.md` files in `/assets/prompts/` with a JSON manifest fallback <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:16-04:00 priority: high -->
+- [x] Prompt Per-Prompt Models (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:27-04:00 priority: high -->
+  - [x] Extend prompt registry schema to store a per-prompt model field alongside template, version, and updated_at <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:24-04:00 priority: high -->
+  - [x] Update `lib/ai.php` and `lib/roadmap.php` to pass the prompt's model to Ollama when calling `ollamaPrompt()` <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:25-04:00 priority: high -->
+  - [x] Update prompt editor UI to show and edit an optional "model" field per prompt template <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:26-04:00 priority: normal -->
+- [x] Prompt Fallback Defaults (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:02-04:00 completed_at: 2026-06-16T08:33:48-04:00 priority: high -->
+  - [x] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-16T08:33:46-04:00 priority: normal -->
+  - [x] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-16T08:33:47-04:00 priority: normal -->
+- [x] Prompt Editor UI (Files: `view/settings.php`, `view/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:01-04:00 completed_at: 2026-06-15T20:33:48-04:00 priority: high -->
+  - [x] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T16:18:35-04:00 priority: normal -->
+  - [x] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php` <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T20:28:48-04:00 priority: normal -->
+- [x] AI Prompts Registry (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:00-04:00 completed_at: 2026-06-15T14:50:31-04:00 priority: high -->
+  - [x] Design prompt registry structure — define how prompts are stored as named, versioned entries keyed by purpose <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:28-04:00 priority: normal -->
+  - [x] Create `lib/ai_prompts.php` with prompt registry class and helper functions to load/store prompts from a config source (JSON) <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:29-04:00 priority: normal -->
+  - [x] Extract all hardcoded prompts from `lib/ai.php` into the registry so each prompt key is configurable at runtime <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:29-04:00 priority: normal -->
+  - [x] Extract all hardcoded prompts from `lib/roadmap.php` into the registry using the same mechanism <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T14:50:30-04:00 priority: normal -->
+- [x] Task Review Service (Files: `lib/ai.php`, `lib/ollama.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:23-04:00 priority: high -->
+  - [x] Generate task decomposition suggestions <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:20-04:00 priority: high -->
+  - [x] Generate subtasks <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:21-04:00 priority: high -->
+  - [x] Suggest priorities <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T13:36:22-04:00 priority: normal -->
 
 ## Archive
 - [x] Nested task in kanban <!-- created_at: 2026-06-10T18:18:02+00:00 completed_at: 2026-06-10T18:18:02+00:00 archived_at: 2026-06-10T19:10:26-04:00 priority: normal -->
@@ -323,3 +304,22 @@
   - [x] Store task descriptions separately from titles <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T12:37:31-04:00 priority: high -->
   - [x] Render descriptions inside task cards <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T12:37:37-04:00 priority: high -->
   - [x] Preserve descriptions during drag/drop, copy, archive, restore, and edit/save <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-12T12:37:41-04:00 priority: high -->
+- [x] Implement Settings Management System <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:04:12-04:00 archived_at: 2026-06-16T12:23:24-04:00 archived_from: "Done" priority: urgent -->
+  - [x] Create settings storage layer (Files: `lib/settings.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:04:11-04:00 priority: urgent -->
+    - [x] Create settings.json persistence <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:20-04:00 priority: urgent -->
+    - [x] Add settings load/save helpers <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:04:08-04:00 priority: urgent -->
+    - [x] Add validation layer <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:22-04:00 priority: high -->
+  - [x] Create Settings UI (Files: `view/settings.php`, `templates/navigation.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:41-04:00 priority: high -->
+    - [x] Create settings page <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:38-04:00 priority: high -->
+    - [x] Add navigation link <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:39-04:00 priority: normal -->
+    - [x] Create settings form <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:40-04:00 priority: high -->
+  - [x] Timezone Configuration (Files: `bootstrap.php`, `lib/settings.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:52-04:00 priority: urgent -->
+    - [x] Add timezone selector <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:44-04:00 priority: high -->
+    - [x] Load timezone from settings <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:46-04:00 priority: urgent -->
+    - [x] Replace temporary date_default_timezone_set() <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:50-04:00 priority: urgent -->
+  - [x] Ollama Configuration (Files: `view/settings.php`, `lib/ollama.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:23-04:00 priority: high -->
+    - [x] Host <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:54-04:00 priority: high -->
+    - [x] Port <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:01:55-04:00 priority: high -->
+    - [x] Timeout <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:18-04:00 priority: normal -->
+    - [x] Context Window <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:20-04:00 priority: normal -->
+    - [x] Default Model <!-- created_at: 2026-06-12T11:29:50-04:00 completed_at: 2026-06-15T12:03:22-04:00 priority: high -->
