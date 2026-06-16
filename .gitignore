@@ -1,4 +1,3 @@
-
 ########################################
 # Dependencies
 ########################################
@@ -9,6 +8,7 @@ composer.lock
 # Sensitive / secrets — never commit
 ########################################
 config/.env.*
+config/*.json
 config/settings.json
 *.key
 *.pem

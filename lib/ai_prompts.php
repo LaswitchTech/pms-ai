@@ -50,22 +50,28 @@ class AIPromptsRegistry {
     }
 
     /**
-     * Set prompt template by key
+     * Set prompt template by key (optionally with a specific model).
      *
      * @param string $key The prompt key
      * @param string $template The prompt template
+     * @param string|null $model Optional Ollama model name for this prompt
      * @return bool Success status
      */
-    public function setPrompt(string $key, string $template): bool {
-        // Store in memory
+    public function setPrompt(string $key, string $template, ?string $model = null): bool {
+        // Preserve existing model if not overridden
+        $existingModel = null;
+        if (isset($this->prompts[$key]) && isset($this->prompts[$key]['model'])) {
+            $existingModel = $this->prompts[$key]['model'];
+        }
+
         $this->prompts[$key] = [
             'key' => $key,
             'template' => $template,
             'version' => $this->getNewVersion($key),
             'updated_at' => date('c'),
-            'model' => null  // Default to null (no specific model)
+            'model' => $model !== null ? $model : $existingModel
         ];
-        
+
         // Save to file
         return $this->saveToFile();
     }
@@ -243,10 +249,11 @@ function getPrompt(string $key): ?string {
  *
  * @param string $key The prompt key
  * @param string $template The prompt template  
+ * @param string|null $model Optional Ollama model name for this prompt
  * @return bool Success status
  */
-function setPrompt(string $key, string $template): bool {
-    return getAIPromptsRegistry()->setPrompt($key, $template);
+function setPrompt(string $key, string $template, ?string $model = null): bool {
+    return getAIPromptsRegistry()->setPrompt($key, $template, $model);
 }
 
 /**

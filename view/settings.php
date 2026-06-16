@@ -311,10 +311,10 @@ document.getElementById('savePromptBtn').addEventListener('click', function() {
                 }
                 cells[1].parentNode.replaceChild(newTD, cells[1]);
 
-                // Column 3: version (from API)
-                cells[2].textContent = data.version !== undefined ? String(data.version) : '';
+                // Column 4: version (from API)
+                cells[3].textContent = data.version !== undefined ? String(data.version) : '';
 
-                // Column 4: updated_at (formatted timestamp from API)
+                // Column 5: updated_at (formatted timestamp from API)
                 if (data.updated_at) {
                     var dt = new Date(data.updated_at);
                     var formattedDate = dt.getFullYear() + '-' +
@@ -322,7 +322,13 @@ document.getElementById('savePromptBtn').addEventListener('click', function() {
                         String(dt.getDate()).padStart(2, '0') + ' ' +
                         String(dt.getHours()).padStart(2, '0') + ':' +
                         String(dt.getMinutes()).padStart(2, '0');
-                    cells[3].textContent = formattedDate;
+                    cells[4].textContent = formattedDate;
+                }
+
+                // Column 3: model (from API)
+                var modelCell = cells[2];
+                if (modelCell) {
+                    modelCell.textContent = (data.model && data.model.trim()) ? data.model.trim() : '—';
                 }
             } else {
                 console.error('PromptEditor: Could not find table row for key="' + key + '"');

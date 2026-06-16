@@ -25,9 +25,9 @@ $key = $data['key'];
 $template = $data['template'];
 $model = $data['model'] ?? null;
 
-// Attempt to save the prompt
-if (setPrompt($key, $template)) {
-    // Get the exact metadata that was just saved from the in-memory store
+// Pass $model to setPrompt() so the model field persists correctly when saving
+if (setPrompt($key, $template, $model)) {
+    // Re-read from disk to get freshly saved data (including the model field)
     $registry = getAIPromptsRegistry();
     $promptEntry = null;
     foreach ($registry->getAllPromptsWithMeta() as $meta) {
