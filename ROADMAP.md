@@ -18,9 +18,13 @@ Generate task decomposition, subtasks, and priorities via Ollama.
 - [x] Prompt Editor UI (`view/settings.php`, `view/ai_prompts.php`)
   - [x] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts
   - [x] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php`
-- [ ] Prompt Fallback Defaults (`lib/ai_prompts.php`)
-  - [ ] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted
-  - [ ] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry
+- [x] Prompt Fallback Defaults (`lib/ai_prompts.php`)
+  - [x] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted
+  - [x] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry
+- [ ] Prompt Per-Prompt Models (`lib/ai_prompts.php`)
+  - [ ] Extend prompt registry schema to store a per-prompt model field alongside template, version, and updated_at
+  - [ ] Update `lib/ai.php` and `lib/roadmap.php` to pass the prompt's model to Ollama when calling `ollamaPrompt()`
+  - [ ] Update prompt editor UI to show and edit an optional "model" field per prompt template
 - [ ] Roadmap Generation Service (`lib/roadmap.php`, `lib/ai.php`)
   - [ ] Generate ROADMAP.md from Kanban
   - [ ] Generate release milestones
