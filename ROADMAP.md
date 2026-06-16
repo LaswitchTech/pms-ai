@@ -21,10 +21,14 @@ Generate task decomposition, subtasks, and priorities via Ollama.
 - [x] Prompt Fallback Defaults (`lib/ai_prompts.php`)
   - [x] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted
   - [x] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry
-- [ ] Prompt Per-Prompt Models (`lib/ai_prompts.php`)
-  - [ ] Extend prompt registry schema to store a per-prompt model field alongside template, version, and updated_at
-  - [ ] Update `lib/ai.php` and `lib/roadmap.php` to pass the prompt's model to Ollama when calling `ollamaPrompt()`
-  - [ ] Update prompt editor UI to show and edit an optional "model" field per prompt template
+- [x] Prompt Per-Prompt Models (`lib/ai_prompts.php`)
+  - [x] Extend prompt registry schema to store a per-prompt model field alongside template, version, and updated_at
+  - [x] Update `lib/ai.php` and `lib/roadmap.php` to pass the prompt's model to Ollama when calling `ollamaPrompt()`
+  - [x] Update prompt editor UI to show and edit an optional "model" field per prompt template
+- [$] Migrate Prompts from JSON to Markdown Files (`lib/ai_prompts.php`, `config/ai_prompts.json`)
+  - [ ] Create `/assets/prompts/{key}.md` markdown files for each prompt template currently in `config/ai_prompts.json`
+  - [ ] Update `AIPromptsRegistry::loadFromFile()` to fall back to reading markdown template files from `/assets/prompts/`
+  - [ ] Update prompt editor UI (view) to save edits as `.md` files in `/assets/prompts/` with a JSON manifest fallback
 - [ ] Roadmap Generation Service (`lib/roadmap.php`, `lib/ai.php`)
   - [ ] Generate ROADMAP.md from Kanban
   - [ ] Generate release milestones
