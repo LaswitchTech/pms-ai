@@ -72,7 +72,36 @@ class AIPromptsRegistry {
             'model' => $model !== null ? $model : $existingModel
         ];
 
-        // Save to file
+        // Save to both JSON config file AND markdown file with fallback behavior  
+        return $this->saveToBoth($key, $template, $model);
+    }
+    
+    /**
+     * Save prompt to both JSON file and markdown file (fallback to JSON on markdown failure)
+     * 
+     * @param string $key The prompt key
+     * @param string $template The prompt template
+     * @param string|null $model Optional Ollama model name for this prompt
+     * @return bool Success status
+     */
+    private function saveToBoth(string $key, string $template, ?string $model = null): bool {
+        // First attempt to save to markdown file (this is the primary authoritative source)
+        $markdownDir = dirname(__DIR__) . '/assets/prompts/';
+        $markdownFile = $markdownDir . $key . '.md';
+        
+        $markdownSuccess = false;
+        if (is_dir($markdownDir) || mkdir($markdownDir, 0755, true)) {
+            // Write to markdown file - this is the primary authoritative source
+            $markdownSuccess = file_put_contents($markdownFile, $template) !== false;
+        }
+        
+        // If writing to markdown failed, fall back to JSON
+        if (!$markdownSuccess) {
+            return $this->saveToFile();
+        }
+        
+        // If markdown succeeded, also write the metadata to JSON for consistency 
+        // (but keep model in the prompt entry since setPrompt already has set it)
         return $this->saveToFile();
     }
 
