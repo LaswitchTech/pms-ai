@@ -188,13 +188,12 @@
     - [ ] Review recently implemented `lib/roadmap.php` and `lib/ai.php` roadmap-generation code <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Decide whether to remove, deprecate, or adapt custom roadmap-generation code <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Add OpenCode settings: <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-      - enabled
-      - host
-      - port
-      - timeout
-      - executable path
-      - project working directory
-      - <!-- priority: high -->
+      - [ ] Add OpenCode enabled setting <!-- priority: high -->
+      - [ ] Add OpenCode host setting <!-- priority: high -->
+      - [ ] Add OpenCode port setting <!-- priority: high -->
+      - [ ] Add OpenCode timeout setting <!-- priority: normal -->
+      - [ ] Add OpenCode executable path setting <!-- priority: normal -->
+      - [ ] Add OpenCode project working directory setting <!-- priority: high -->
     - [ ] Implement OpenCode server client wrapper <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Confirm OpenCode server API endpoint and payload format <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Execute `/plan` through OpenCode for the active project <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
