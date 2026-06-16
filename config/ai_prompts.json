@@ -12,21 +12,9 @@
         "updated_at": "2026-06-15T00:00:00Z"
     },
     {
-        "key": "test_new_prompt",
-        "template": "This is a test prompt template with {placeholder}",
-        "version": 1,
-        "updated_at": "2026-06-15T17:58:33+00:00"
-    },
-    {
         "key": "task_decomposition",
         "template": "CUSTOM TEST TEMPLATE - This prompt was edited via UI\n\nLet's try again",
         "version": 9,
         "updated_at": "2026-06-16T00:22:06+00:00"
-    },
-    {
-        "key": "new_test_prompt",
-        "template": "This is a completely new prompt template",
-        "version": 1,
-        "updated_at": "2026-06-15T20:25:55+00:00"
     }
 ]
