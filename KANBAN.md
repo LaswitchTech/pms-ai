@@ -167,10 +167,10 @@
     - [x] Extend prompt registry schema to store a per-prompt model field alongside template, version, and updated_at <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:24-04:00 priority: high -->
     - [x] Update `lib/ai.php` and `lib/roadmap.php` to pass the prompt's model to Ollama when calling `ollamaPrompt()` <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:25-04:00 priority: high -->
     - [x] Update prompt editor UI to show and edit an optional "model" field per prompt template <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:26-04:00 priority: normal -->
-  - [ ] Migrate Prompts from JSON to Markdown Files (Files: `lib/ai_prompts.php`, `config/ai_prompts.json`) <!-- created_at: 2026-06-16T11:00:00-04:00 priority: high -->
-    - [ ] Create `/assets/prompts/{key}.md` markdown files for each prompt template currently in `config/ai_prompts.json` <!-- created_at: 2026-06-16T11:00:00-04:00 priority: high -->
-    - [ ] Update `AIPromptsRegistry::loadFromFile()` to fall back to reading markdown template files from `/assets/prompts/` <!-- created_at: 2026-06-16T11:00:00-04:00 priority: high -->
-    - [ ] Update prompt editor UI (view) to save edits as `.md` files in `/assets/prompts/` with a JSON manifest fallback <!-- created_at: 2026-06-16T11:00:00-04:00 priority: high -->
+  - [x] Migrate Prompts from JSON to Markdown Files (Files: `lib/ai_prompts.php`, `config/ai_prompts.json`) <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:18-04:00 priority: high -->
+    - [x] Create `/assets/prompts/{key}.md` markdown files for each prompt template currently in `config/ai_prompts.json` <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:14-04:00 priority: high -->
+    - [x] Update `AIPromptsRegistry::loadFromFile()` to fall back to reading markdown template files from `/assets/prompts/` <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:15-04:00 priority: high -->
+    - [x] Update prompt editor UI (view) to save edits as `.md` files in `/assets/prompts/` with a JSON manifest fallback <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:16-04:00 priority: high -->
   - [ ] Roadmap Generation Service (Files: `lib/roadmap.php`, `lib/ai.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
     - [ ] Generate ROADMAP.md from Kanban <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
     - [ ] Generate release milestones <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
