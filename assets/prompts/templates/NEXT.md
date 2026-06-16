@@ -11,3 +11,5 @@
 **Files**: {List of files that will be created or modified to complete this task.}
 **Tasks**:
 - [ ] {Subtask Title} <!-- created_at: {timestamp} priority: {priority} -->
+- [ ] {Subtask Title} <!-- created_at: {timestamp} priority: {priority} -->
+- [ ] {Subtask Title} <!-- created_at: {timestamp} priority: {priority} -->
