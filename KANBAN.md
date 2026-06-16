@@ -1,21 +1,5 @@
 # Kanban
 
-## Todo <!-- hide: archive,copy -->
-- [ ] Workflow Automation via OpenCode (Files: `view/kanban.php`, `view/agents.php`, `api/opencode.php`, `lib/opencode.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
-  - [ ] Plan Command Integration (Files: `view/kanban.php`, `view/roadmap.php`, `api/opencode.php`, `lib/opencode.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
-    - [ ] Add `/plan` action button <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Restrict `/plan` action to projects with a valid `KANBAN.md` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Execute OpenCode `/plan` instead of generating NEXT.md directly in PHP <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Refresh ROADMAP.md and NEXT.md views after successful `/plan` execution <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-  - [ ] Command Runner UI (Files: `view/agents.php`, `assets/js/opencode.js`, `api/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add command buttons for `/plan`, `/next`, `/debug`, `/review`, and `/document` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add argument input field for commands that require user input <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Display command progress, output, errors, and completion status <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Prevent duplicate command execution for the same project <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] Deprecate Local AI Task Planning (Files: `lib/ai.php`, `view/kanban.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Review AI suggestion workflow <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Remove or repurpose local planning controls <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Ensure planning remains delegated to `/plan` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
 - [ ] Improve Kanban UX <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
   - [ ] Replace alert() calls (Files: `view/kanban.php`, `assets/js/kanban.js`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
     - [ ] Create reusable Bootstrap modal <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
@@ -55,43 +39,6 @@
   - [ ] URL Sanitization <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
     - [ ] Strip credentials <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
     - [ ] Strip tokens <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
-- [ ] OpenCode Management (Files: `lib/opencode.php`, `view/settings.php`, `api/opencode.php`, `.opencode/commands/`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] OpenCode Settings (Files: `lib/settings.php`, `view/settings.php`, `lib/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add global OpenCode enabled toggle <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add OpenCode server host setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add OpenCode server port setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add OpenCode timeout setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Add OpenCode executable path setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Add project working-directory setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Validate settings before saving <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-  - [ ] Project OpenCode Overrides (Files: `view/projects.php`, `projects/show.php`, `lib/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Allow project-specific OpenCode server override <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Allow project-specific `.opencode/opencode.json` overrides <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Merge global and project settings safely <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] OpenCode Config Generation (Files: `lib/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Generate `.opencode/opencode.json` for managed projects <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Preserve existing custom keys during regeneration <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Sync command templates into `.opencode/commands/` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] OpenCode Server Integration (Files: `lib/opencode.php`, `view/settings.php`, `view/dashboard.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Create reusable OpenCode client wrapper <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Detect OpenCode server availability <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Confirm OpenCode API endpoints and payloads <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add fallback/manual execution instructions <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-  - [ ] OpenCode Command Execution (Files: `api/opencode.php`, `view/agents.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Execute `/plan` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Execute `/next` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Execute `/debug` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Execute `/review` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Execute `/document` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Capture output, status, errors, and commit hashes <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Display execution results in UI <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-- [ ] Roadmap Workflow Pivot to OpenCode (Files: `lib/opencode.php`, `view/roadmap.php`, `.opencode/commands/plan.md`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] Replace custom roadmap generation with `/plan` execution <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] Remove or deprecate roadmap-generation prompts after validation <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-  - [ ] Keep ROADMAP.md generation delegated to `/plan` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] Update roadmap UI to trigger `/plan` when available <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-  - [ ] Show manual `/plan` instructions when OpenCode is unavailable <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-  - [ ] Preserve roadmap page as a markdown viewer <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
 - [ ] Application Architecture Refactor (Files: `index.php`, `router.php`, `lib/renderer.php`) <!-- created_at: 2026-06-15T13:50:00-04:00 priority: urgent -->
   - [ ] Create lib/renderer.php <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
     - [ ] Renderer class handles page rendering <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
@@ -176,36 +123,50 @@
   - [ ] Confirm checkbox state is independent from column state <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
   - [ ] Document Todo / In Progress / Done / Archive semantics <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
 - [ ] Archived tasks should be stored in a dedicated file `ARCHIVES.md` <!-- created_at: 2026-06-16T13:57:55-04:00 priority: normal -->
-- [ ] Dashboard Service Status (Files: `view/dashboard.php`, `lib/ollama.php`, `lib/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-  - [ ] Show Ollama availability <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-  - [ ] Show OpenCode availability <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] Show configured OpenCode endpoint <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-  - [ ] Link unavailable services to Settings and startup instructions <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
 
-## In Progress
-- [ ] OpenCode Orchestration <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] Replace custom Roadmap Generation Service with OpenCode `/plan` execution (Files: `lib/opencode.php`, `view/settings.php`, `view/roadmap.php`, `api/opencode.php`, `.opencode/commands/plan.md`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+- [ ] OpenCode Orchestration (Files: `lib/opencode.php`, `lib/settings.php`, `view/settings.php`, `view/dashboard.php`, `view/agents.php`, `view/kanban.php`, `view/roadmap.php`, `api/opencode.php`, `.opencode/commands/`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+  - [ ] Review and deprecate custom PHP AI workflows (Files: `lib/roadmap.php`, `lib/ai.php`, `config/ai_prompts.json`, `assets/prompts/`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Review recently implemented `lib/roadmap.php` and `lib/ai.php` roadmap-generation code <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Decide whether to remove, deprecate, or adapt custom roadmap-generation code <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add OpenCode settings: <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-      - [ ] Add OpenCode enabled setting <!-- priority: high -->
-      - [ ] Add OpenCode host setting <!-- priority: high -->
-      - [ ] Add OpenCode port setting <!-- priority: high -->
-      - [ ] Add OpenCode timeout setting <!-- priority: normal -->
-      - [ ] Add OpenCode executable path setting <!-- priority: normal -->
-      - [ ] Add OpenCode project working directory setting <!-- priority: high -->
-    - [ ] Implement OpenCode server client wrapper <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Confirm OpenCode server API endpoint and payload format <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Remove or deprecate roadmap-generation prompts after OpenCode `/plan` integration is validated <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+    - [ ] Ensure planning remains delegated to OpenCode `/plan` instead of local PHP AI prompts <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+  - [ ] Implement OpenCode settings (Files: `lib/settings.php`, `view/settings.php`, `lib/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Add OpenCode enabled setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Add OpenCode server host setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Add OpenCode server port setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Add OpenCode timeout setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+    - [ ] Add OpenCode executable path setting for local/manual fallback <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+    - [ ] Add OpenCode project working directory setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Validate OpenCode settings before saving <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+  - [ ] Implement OpenCode server integration (Files: `lib/opencode.php`, `api/opencode.php`, `view/dashboard.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Create reusable OpenCode client wrapper <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Confirm OpenCode server API endpoint and command execution payload format <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Detect OpenCode server availability <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Show OpenCode availability on dashboard <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+    - [ ] Show Ollama availability on dashboard using existing Ollama settings <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+    - [ ] Add fallback/manual execution instructions when OpenCode server is unavailable <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+  - [ ] Implement OpenCode command execution UI (Files: `view/agents.php`, `view/kanban.php`, `view/roadmap.php`, `assets/js/opencode.js`, `api/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Add command buttons for `/plan`, `/next`, `/debug`, `/review`, and `/document` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Add argument input field for commands that require user context such as `/debug` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
     - [ ] Execute `/plan` through OpenCode for the active project <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Ensure `/plan` updates ROADMAP.md and NEXT.md <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Surface execution status and errors in the UI <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-- [ ] OpenCode Command Templates Management (Files: `.opencode/commands/`, `view/agents.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Execute `/next`, `/debug`, `/review`, and `/document` through OpenCode for the active project <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+    - [ ] Capture command output, status, errors, and commit hashes when available <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Display command progress, output, errors, and completion status in the UI <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Prevent duplicate command execution while a command is already running for the same project <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+  - [ ] Preserve generated markdown viewer workflow (Files: `view/roadmap.php`, `view/next.php`, `lib/markdown_renderer.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+    - [ ] Ensure `/plan` updates ROADMAP.md and NEXT.md instead of PHP generating ROADMAP.md directly <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [ ] Refresh ROADMAP.md and NEXT.md views after successful `/plan` execution <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+    - [ ] Preserve roadmap page as a markdown viewer for generated ROADMAP.md <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+    - [ ] Show manual `/plan` instructions when OpenCode is unavailable <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+- [ ] OpenCode Command Templates Management (Files: `.opencode/commands/`, `view/agents.php`, `lib/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
   - [ ] Manage `/plan` template <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
   - [ ] Manage `/next` template <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
   - [ ] Manage `/debug` template <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
   - [ ] Manage `/review` template <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
   - [ ] Manage `/document` template <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-  - [ ] Synchronize templates into managed projects <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+  - [ ] Generate `.opencode/opencode.json` for managed projects when requested <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
+  - [ ] Preserve existing custom OpenCode config keys when regenerating config <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+  - [ ] Synchronize command templates into managed projects <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
 
 ## Done <!-- hide: copy -->
 - [x] Migrate Prompts from JSON to Markdown Files (Files: `lib/ai_prompts.php`, `config/ai_prompts.json`) <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:18-04:00 priority: high -->
