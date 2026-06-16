@@ -160,6 +160,7 @@ class AIPromptsRegistry {
      */
     private function loadFromFile(): void {
         if (!file_exists($this->configFile)) {
+            // If config doesn't exist, just return - defaults will be used
             return;
         }
         
@@ -184,6 +185,38 @@ class AIPromptsRegistry {
                     'updated_at' => $promptData['updated_at'] ?? date('c'),
                     'model' => $promptData['model'] ?? null
                 ];
+            }
+        }
+
+        // Fallback to reading markdown template files from /assets/prompts/
+        // This allows the markdown source to override any config entries
+        $markdownDir = dirname(__DIR__) . '/assets/prompts/';
+        if (is_dir($markdownDir)) {
+            $promptKeys = [
+                'task_decomposition',
+                'task_subtasks',
+                'task_priority',
+                'roadmap_generation',
+                'release_milestones',
+                'project_timeline'
+            ];
+
+            foreach ($promptKeys as $key) {
+                $markdownFile = $markdownDir . $key . '.md';
+                if (file_exists($markdownFile)) {
+                    $template = file_get_contents($markdownFile);
+                    if ($template !== false) {
+                        // If not already defined in config, add from markdown
+                        // If already defined, markdown version overrides config
+                        $this->prompts[$key] = [
+                            'key' => $key,
+                            'template' => $template,
+                            'version' => $this->prompts[$key]['version'] ?? 1, // Preserve version if exists
+                            'updated_at' => $this->prompts[$key]['updated_at'] ?? date('c'),
+                            'model' => $this->prompts[$key]['model'] ?? null
+                        ];
+                    }
+                }
             }
         }
     }
