@@ -1,0 +1,22 @@
+# Documentation Index
+
+Navigation hub for all application documentation.
+
+## Quick Links
+
+- [README.md](../README.md) — Project overview, requirements, installation, quick start, routes
+- [DESIGN.md](../DESIGN.md) — Architecture patterns and design constraints (authoritative reference)
+- [AGENTS.md](../AGENTS.md) — Agent workflow conventions for this repository
+
+## Configuration
+
+- [Configuration Guide](configuration.md) — All config file schemas and settings available through the application's settings layer
+
+## API Endpoints
+
+- [API Reference](api-reference.md) — Request/response schemas for all active AJAX endpoints
+
+## Historical / Changelog
+
+- [AI Prompts Registry Design](ai_prompts_registry_design.md) — Original design document for prompt registry structure
+- [AI Prompts Registry Implementation Updates](ai_prompts_registry_update.md) — Completed implementation changelog
