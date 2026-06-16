@@ -1,9 +1,9 @@
 [
     {
         "key": "task_subtasks",
-        "template": "Generate 3-5 detailed subtasks for the following main task:\n\n{task_description}\n\nFormat each subtask with a brief description only, one per line. For each subtask, also provide a priority level (high\/medium\/low) and estimated effort (in hours).",
-        "version": 1,
-        "updated_at": "2026-06-15T00:00:00Z"
+        "template": "Updated template with new version",
+        "version": 4,
+        "updated_at": "2026-06-15T20:25:55+00:00"
     },
     {
         "key": "task_priority",
@@ -16,5 +16,17 @@
         "template": "This is a test prompt template with {placeholder}",
         "version": 1,
         "updated_at": "2026-06-15T17:58:33+00:00"
+    },
+    {
+        "key": "task_decomposition",
+        "template": "CUSTOM TEST TEMPLATE - This prompt was edited via UI\n\nLet's try again",
+        "version": 9,
+        "updated_at": "2026-06-16T00:22:06+00:00"
+    },
+    {
+        "key": "new_test_prompt",
+        "template": "This is a completely new prompt template",
+        "version": 1,
+        "updated_at": "2026-06-15T20:25:55+00:00"
     }
 ]

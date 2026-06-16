@@ -26,18 +26,23 @@ $template = $data['template'];
 
 // Attempt to save the prompt
 if (setPrompt($key, $template)) {
-    // Get the updated prompt data for response
+    // Get the exact metadata that was just saved from the in-memory store
     $registry = getAIPromptsRegistry();
-    $updatedPrompt = $registry->getPrompt($key);
-    $promptData = $registry->getAllPrompts();  // Get all prompts to update UI
+    $promptEntry = null;
+    foreach ($registry->getAllPromptsWithMeta() as $meta) {
+        if ($meta['key'] === $key) {
+            $promptEntry = $meta;
+            break;
+        }
+    }
     
     echo json_encode([
         'success' => true,
         'message' => 'Prompt saved successfully',
         'key' => $key,
-        'template' => $updatedPrompt,
-        'version' => $registry->getPrompt($key) ? 1 : 0, // This will need better approach
-        'updated_at' => date('c')
+        'template' => isset($promptEntry['template']) ? $promptEntry['template'] : $template,
+        'version' => isset($promptEntry['version']) ? (int) $promptEntry['version'] : 1,
+        'updated_at' => isset($promptEntry['updated_at']) ? $promptEntry['updated_at'] : (new DateTime())->format('c')
     ]);
 } else {
     http_response_code(500);

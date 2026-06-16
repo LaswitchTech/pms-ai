@@ -56,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Get list of timezones
 $timezones = DateTimeZone::listIdentifiers();
 
-// Get all prompts for display
-$allPrompts = getAllPrompts();
+// Get all prompts with metadata for display
+$allPrompts = getAIPromptsRegistry()->getAllPromptsWithMeta();
 ?>
 
 <div class="container">
@@ -158,14 +158,14 @@ $allPrompts = getAllPrompts();
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($allPrompts as $key => $template): ?>
-                                <tr>
-                                    <td><?= e($key) ?></td>
-                                    <td class="text-break" style="max-width: 300px;"><?= e(substr($template, 0, 100)) . (strlen($template) > 100 ? '...' : '') ?></td>
-                                    <td>1</td>
-                                    <td><?= e(date('Y-m-d H:i', strtotime('now'))) ?></td>
+                                <?php foreach ($allPrompts as $key => $prompt): ?>
+                                <tr data-row-key="<?= e($key) ?>">
+                                    <td><?= e($prompt['key']) ?></td>
+                                    <td class="text-break" style="max-width: 300px;"><?= e(substr($prompt['template'], 0, 100)) . (strlen($prompt['template']) > 100 ? '...' : '') ?></td>
+                                    <td><?= $prompt['version'] > 0 ? e($prompt['version']) : '∅' ?></td>
+                                    <td><?= $prompt['updated_at'] ? e(date('Y-m-d H:i', strtotime($prompt['updated_at']))) : '—' ?></td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-key="<?= e($key) ?>" data-template="<?= e($template) ?>" onclick="editPrompt(this.dataset.key, this.dataset.template)">Edit</button>
+                                        <button class="btn btn-sm btn-outline-primary" data-key="<?= e($key) ?>" data-template="<?= e($prompt['template']) ?>" onclick="editPrompt(this.dataset.key, this.dataset.template)">Edit</button>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -216,15 +216,30 @@ function editPrompt(key, template) {
     document.getElementById('promptKey').value = key;
     document.getElementById('promptKeyDisplay').value = key;
     document.getElementById('promptTemplate').value = template;
-    document.getElementById('promptVersion').value = '1';
+    
+    // Find the current version for this key from any row in the table
+    var row = document.querySelector('tr[data-row-key="' + key + '"]');
+    var currentVersion = 1;
+    if (row) {
+        var verCell = row.querySelector('td:nth-child(3)');
+        if (verCell && verCell.textContent !== '—' && verCell.textContent !== '∅') {
+            currentVersion = parseInt(verCell.textContent, 10) || 1;
+        }
+    }
+
+    // Keep a JS-level reference to the row so we can update it after saving,
+    // even when the modal is hidden or the DOM is otherwise unstable.
+    window._promptEditorRow = row ? row : null;
+
+    document.getElementById('promptVersion').value = currentVersion;
     
     const modal = new bootstrap.Modal(document.getElementById('editPromptModal'));
     modal.show();
 }
 
 document.getElementById('savePromptBtn').addEventListener('click', function() {
-    const key = document.getElementById('promptKey').value;
-    const template = document.getElementById('promptTemplate').value;
+    var key = document.getElementById('promptKey').value;
+    var template = document.getElementById('promptTemplate').value;
     
     // Make AJAX call to save the prompt
     fetch('/api/ai_prompts.php', {
@@ -237,37 +252,89 @@ document.getElementById('savePromptBtn').addEventListener('click', function() {
             template: template
         })
     })
-    .then(response => response.json())
-    .then(data => {
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+        var alertClass = 'alert-success';
+        var alertMsg;
+        
         if (data.success) {
-            // Close the modal and show success message
-            const modal = bootstrap.Modal.getInstance(document.getElementById('editPromptModal'));
-            modal.hide();
+            // Close the modal
+            var modalInstance = bootstrap.Modal.getInstance(document.getElementById('editPromptModal'));
+            if (modalInstance) {
+                modalInstance.hide();
+            }
             
-            // Show success alert
-            const alertDiv = document.createElement('div');
-            alertDiv.className = 'alert alert-success alert-dismissible fade show mt-3';
-            alertDiv.innerHTML = 'Prompt saved successfully! <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
-            document.querySelector('.tab-content').prepend(alertDiv);
+            // Update the table row in-place with the new data from the API response.
+            // Re-query by key — window._promptEditorRow can become stale after modal closes.
+            var rows = document.querySelectorAll('tr[data-row-key]');
+            var targetRow = null;
+            for (var i = 0; i < rows.length; i++) {
+                if (rows[i].getAttribute('data-row-key') === key) {
+                    targetRow = rows[i];
+                    break;
+                }
+            }
+
+            if (targetRow) {
+                // Update the data-template attribute on the row and any buttons inside it,
+                // so that the next time the modal opens, it reads the fresh template value.
+                targetRow.setAttribute('data-template', data.template);
+                var btns = targetRow.querySelectorAll('[data-key]');
+                for (var b = 0; b < btns.length; b++) {
+                    btns[b].setAttribute('data-template', data.template);
+                }
+
+                var cells = targetRow.querySelectorAll('td');
+                // Column 2: template preview (first 100 chars + "..." if truncated).
+                // Clone the cell to force DOM update even when textContent is identical.
+                var newTD = document.createElement('td');
+                newTD.className = cells[1].className;
+                if (data.template.length > 100) {
+                    newTD.textContent = data.template.substring(0, 100) + '...';
+                } else {
+                    newTD.textContent = data.template;
+                }
+                cells[1].parentNode.replaceChild(newTD, cells[1]);
+
+                // Column 3: version (from API)
+                cells[2].textContent = data.version !== undefined ? String(data.version) : '';
+
+                // Column 4: updated_at (formatted timestamp from API)
+                if (data.updated_at) {
+                    var dt = new Date(data.updated_at);
+                    var formattedDate = dt.getFullYear() + '-' +
+                        String(dt.getMonth() + 1).padStart(2, '0') + '-' +
+                        String(dt.getDate()).padStart(2, '0') + ' ' +
+                        String(dt.getHours()).padStart(2, '0') + ':' +
+                        String(dt.getMinutes()).padStart(2, '0');
+                    cells[3].textContent = formattedDate;
+                }
+            } else {
+                console.error('PromptEditor: Could not find table row for key="' + key + '"');
+            }
             
-            // Refresh the prompt table with fresh data - for this to work,
-            // we'd need a mechanism to reload the page or fetch updated data
-            // For now, just show alert and let user refresh manually if needed
-            console.log('Prompt saved. Data would refresh here if we had full UI update capability.');
+            alertMsg = 'Prompt saved successfully!';
         } else {
             // Show error message
-            const alertDiv = document.createElement('div');
-            alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
-            alertDiv.innerHTML = 'Failed to save prompt: ' + (data.error || 'Unknown error') + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
-            document.querySelector('.tab-content').prepend(alertDiv);
+            var errDiv = document.createElement('div');
+            errDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
+            errDiv.innerHTML = 'Failed to save prompt: ' + (data.error || 'Unknown error') + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+            document.querySelector('.tab-content').prepend(errDiv);
+            return; // Don't show success alert on error
         }
-    })
-    .catch(error => {
-        // Show error message
-        const alertDiv = document.createElement('div');
-        alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
-        alertDiv.innerHTML = 'Network error while saving prompt: ' + error.message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+        
+        // Show success message
+        var alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-' + alertClass + ' alert-dismissible fade show mt-3';
+        alertDiv.innerHTML = (alertMsg || '') + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
         document.querySelector('.tab-content').prepend(alertDiv);
+    })
+    .catch(function(error) {
+        // Show error message
+        var errDiv = document.createElement('div');
+        errDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
+        errDiv.innerHTML = 'Network error while saving prompt: ' + error.message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+        document.querySelector('.tab-content').prepend(errDiv);
     });
 });
 </script>

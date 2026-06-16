@@ -84,6 +84,48 @@ class AIPromptsRegistry {
     }
 
     /**
+     * Get all prompts with its metadata (version, updated_at).
+     * Returns a flat array keyed by prompt key:
+     *   [
+     *     'task_decomposition' => ['key' => '...', 'template' => '...', 'version' => 1, 'updated_at' => '...'],
+     *     ...
+     *   ]
+     */
+    public function getAllPromptsWithMeta(): array {
+        $merged = [];
+
+        // Collect all keys in a deterministic order
+        $allKeys = array_keys($this->defaults);
+        foreach (array_keys($this->prompts) as $k) {
+            if (!in_array($k, $allKeys, true)) {
+                $allKeys[] = $k;
+            }
+        }
+
+        foreach ($allKeys as $key) {
+            if (isset($this->prompts[$key])) {
+                // Custom version stored in config file
+                $merged[$key] = [
+                    'key' => $this->prompts[$key]['key'],
+                    'template' => $this->prompts[$key]['template'],
+                    'version' => $this->prompts[$key]['version'],
+                    'updated_at' => $this->prompts[$key]['updated_at']
+                ];
+            } else {
+                // Default — shows as-is from code, no user edits
+                $merged[$key] = [
+                    'key' => $key,
+                    'template' => $this->defaults[$key],
+                    'version' => 0,
+                    'updated_at' => null
+                ];
+            }
+        }
+
+        return $merged;
+    }
+
+    /**
      * Load defaults from code
      */
     private function loadDefaults(): void {
