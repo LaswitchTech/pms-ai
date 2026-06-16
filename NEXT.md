@@ -24,7 +24,7 @@ Generate a `ROADMAP.md` file from the current Kanban board state by composing an
 - Optional view integration: `view/roadmap.php` (trigger generation via action/button or API call to `api/roadmap.php`)
 
 **Tasks**:
-- [ ] Add prompt registry entries for roadmap tasks <!-- created_at: 2026-06-16T17:58:18+00:00 priority: high -->
-- [ ] Implement RoadmapGenerator class — parse Kanban board, resolve prompts via AIPromptsRegistry, call ollamaPrompt(), persist markdown output <!-- created_at: 2026-06-16T17:58:18+00:00 priority: high -->
-- [ ] Implement generateReleaseMilestones — group urgent/high tasks into logical milestone releases with titles and descriptions, using the existing prompt template in the registry <!-- created_at: 2026-06-16T17:58:18+00:00 priority: high -->
-- [ ] Implement generateProjectTimelines — build timelines from task ordering, metadata, and priorities, using the existing prompt template in the registry <!-- created_at: 2026-06-16T17:58:18+00:00 priority: normal -->
+- [x] Add prompt registry entries for roadmap tasks <!-- created_at: 2026-06-16T17:58:18+00:00 priority: high -->
+- [x] Implement RoadmapGenerator class — parse Kanban board, resolve prompts via AIPromptsRegistry, call ollamaPrompt(), persist markdown output <!-- created_at: 2026-06-16T17:58:18+00:00 priority: high -->
+- [x] Implement generateReleaseMilestones — group urgent/high tasks into logical milestone releases with titles and descriptions, using the existing prompt template in the registry <!-- created_at: 2026-06-16T17:58:18+00:00 priority: high -->
+- [x] Implement generateProjectTimelines — build timelines from task ordering, metadata, and priorities, using the existing prompt template in the registry <!-- created_at: 2026-06-16T17:58:18+00:00 priority: normal -->
