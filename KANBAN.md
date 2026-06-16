@@ -124,6 +124,7 @@
   - [ ] Document Todo / In Progress / Done / Archive semantics <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
 - [ ] Archived tasks should be stored in a dedicated file `ARCHIVES.md` <!-- created_at: 2026-06-16T13:57:55-04:00 priority: normal -->
 
+## In Progress
 - [ ] OpenCode Orchestration (Files: `lib/opencode.php`, `lib/settings.php`, `view/settings.php`, `view/dashboard.php`, `view/agents.php`, `view/kanban.php`, `view/roadmap.php`, `api/opencode.php`, `.opencode/commands/`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
   - [ ] Review and deprecate custom PHP AI workflows (Files: `lib/roadmap.php`, `lib/ai.php`, `config/ai_prompts.json`, `assets/prompts/`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Review recently implemented `lib/roadmap.php` and `lib/ai.php` roadmap-generation code <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
