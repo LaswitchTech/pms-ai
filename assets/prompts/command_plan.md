@@ -33,11 +33,15 @@ Your responsibilities are:
 3. Generate NEXT.md.
    - Use the template located at /assets/prompts/templates/NEXT.md.
    - Select a task from the "In Progress" section of KANBAN.md whenever one exists.
-   - If multiple tasks exist in "In Progress", select the task using the following deterministic order:
+   - Before selecting the task, check for priority conflicts and due-date conflicts.
+   - A priority conflict exists when a lower task in the same section has a higher priority than a task above it.
+   - A due-date conflict exists when a lower task in the same section has a due date that is overdue or sooner than a task above it.
+   - If a priority conflict or due-date conflict exists, stop and ask the user which task should be prioritized before updating NEXT.md.
+   - If no conflicts exist, select the task using the following deterministic order:
      1. Highest priority.
      2. Highest position in the list (top-most task).
      3. Oldest task.
-   - If no task is currently in progress, select a pending task using the same deterministic order:
+   - If no task is currently in progress, evaluate pending tasks using the same conflict checks and deterministic order:
      1. Highest priority.
      2. Highest position in the list (top-most task).
      3. Oldest task.
