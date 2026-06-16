@@ -102,13 +102,8 @@
             "agent": "build",
             "template": "Fix the CI failure below. Read AGENTS.md first. Use ROADMAP.md and NEXT.md only for task context; do not read or update KANBAN.md directly. Find the first meaningful failure, patch the smallest correct fix, run the closest local test, run git diff --check, update documentation or README.md if behavior changed, commit, and push.\n\n$ARGUMENTS"
         },
-        "docs": {
-            "description": "Review the codebase and maintain docs/ plus README.md",
-            "agent": "build",
-            "template": "Review the codebase and maintain project documentation. Read AGENTS.md, DESIGN.md, README.md, and docs/index.md first when present. Use ROADMAP.md and NEXT.md for context only. Do not read or update KANBAN.md directly; it is owned by the Project Management application. Inspect the relevant implementation before writing. Update or create documentation under docs/ following docs/index.md, and maintain README.md so it accurately summarizes setup, usage, architecture, and key workflows. Do not invent behavior that is not documented or observable in code. Run git diff --check, commit documentation changes, and push.\n\n$ARGUMENTS"
-        },
         "document": {
-            "description": "Alias for docs: maintain docs/ plus README.md",
+            "description": "Review the codebase and maintain docs/ plus README.md",
             "agent": "build",
             "template": "Review the codebase and maintain project documentation. Read AGENTS.md, DESIGN.md, README.md, and docs/index.md first when present. Use ROADMAP.md and NEXT.md for context only. Do not read or update KANBAN.md directly; it is owned by the Project Management application. Inspect the relevant implementation before writing. Update or create documentation under docs/ following docs/index.md, and maintain README.md so it accurately summarizes setup, usage, architecture, and key workflows. Do not invent behavior that is not documented or observable in code. Run git diff --check, commit documentation changes, and push.\n\n$ARGUMENTS"
         }
