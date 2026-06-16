@@ -346,7 +346,7 @@ document.getElementById('savePromptBtn').addEventListener('click', function() {
         
         // Show success message
         var alertDiv = document.createElement('div');
-        alertDiv.className = 'alert alert-' + alertClass + ' alert-dismissible fade show mt-3';
+        alertDiv.className = 'alert ' + alertClass + ' alert-dismissible fade show mt-3';
         alertDiv.innerHTML = (alertMsg || '') + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
         document.querySelector('.tab-content').prepend(alertDiv);
     })
