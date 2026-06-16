@@ -1,5 +1,6 @@
 # Kanban
 
+## Inbox
 - [ ] Improve Kanban UX <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
   - [ ] Replace alert() calls (Files: `view/kanban.php`, `assets/js/kanban.js`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
     - [ ] Create reusable Bootstrap modal <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
@@ -123,6 +124,10 @@
   - [ ] Confirm checkbox state is independent from column state <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
   - [ ] Document Todo / In Progress / Done / Archive semantics <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
 - [ ] Archived tasks should be stored in a dedicated file `ARCHIVES.md` <!-- created_at: 2026-06-16T13:57:55-04:00 priority: normal -->
+- [ ] Implement a bill of material system based on BOM.md <!-- created_at: 2026-06-16T19:05:33-04:00 priority: normal -->
+- [ ] Implement a blog article workflow for LaswitchTech.com <!-- created_at: 2026-06-16T19:06:58-04:00 priority: normal -->
+- [ ] Implement CRUD functions for managing projects <!-- created_at: 2026-06-16T19:08:37-04:00 priority: normal -->
+- [ ] Implement a link a project. Which will create a symlink to the directory specified. Start with a basic text input. Later implement a file explorer so the user can more easily select the folder. <!-- created_at: 2026-06-16T19:10:02-04:00 priority: normal -->
 
 ## In Progress
 - [ ] OpenCode Orchestration (Files: `lib/opencode.php`, `lib/settings.php`, `view/settings.php`, `view/dashboard.php`, `view/agents.php`, `view/kanban.php`, `view/roadmap.php`, `api/opencode.php`, `.opencode/commands/`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
