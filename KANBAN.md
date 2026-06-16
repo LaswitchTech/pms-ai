@@ -146,6 +146,7 @@
     - [ ] Replace custom markdown parser in view/agents.php with MarkdownRenderer <!-- created_at: 2026-06-15T13:50:00-04:00 priority: high -->
     - [ ] Confirm tables render correctly in AGENTS.md output <!-- created_at: 2026-06-15T13:50:00-04:00 priority: normal -->
 - [ ] Add support for a `In Progress` status to go along with the existing `Open` and `Done` statuses. <!-- created_at: 2026-06-16T12:35:51-04:00 priority: normal -->
+- [ ] Archived tasks should be stored in a dedicated file `ARCHIVES.md` <!-- created_at: 2026-06-16T13:57:55-04:00 priority: normal -->
 
 ## In Progress <!-- hide: archive -->
 - [ ] AI Services <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
