@@ -16,22 +16,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'ollama_context_window' => (int) ($_POST['ollama_context_window'] ?? 4096),
         'ollama_model' => $_POST['ollama_model'] ?? ''
     ];
-    
+
     // Validate port
     if ($newSettings['ollama_port'] < 1 || $newSettings['ollama_port'] > 65535) {
         $error = "Port must be an integer between 1 and 65535";
     }
-    
+
     // Validate timeout
     if ($newSettings['ollama_timeout'] < 5) {
         $error = "Timeout must be at least 5 seconds";
     }
-    
+
     // Validate context window
     if ($newSettings['ollama_context_window'] < 256) {
         $error = "Context window must be at least 256";
     }
-    
+
     // Save settings if no validation error
     if (!isset($error)) {
         if (saveSettings(__DIR__ . '/../config/settings.json', $newSettings)) {
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = "Failed to save settings";
         }
     }
-    
+
     // If there was an error, keep the submitted values in the form
     $settings = $newSettings;
 }
@@ -62,11 +62,11 @@ $allPrompts = getAIPromptsRegistry()->getAllPromptsWithMeta();
 
 <div class="container">
     <h1 class="h3 mb-4">Settings</h1>
-    
+
     <?php if (isset($error)): ?>
         <div class="alert alert-danger"><?= e($error) ?></div>
     <?php endif; ?>
-    
+
     <ul class="nav nav-tabs" id="settingsTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab">General</button>
@@ -145,7 +145,7 @@ $allPrompts = getAIPromptsRegistry()->getAllPromptsWithMeta();
                 </div>
                 <div class="card-body">
                     <p class="text-muted">Manage AI prompt templates used by the system. These prompts can be customized to improve AI-generated results.</p>
-                    
+
                     <div class="table-responsive">
                         <table class="table table-sm">
                             <thead>
@@ -222,7 +222,7 @@ function editPrompt(key, template) {
     document.getElementById('promptKey').value = key;
     document.getElementById('promptKeyDisplay').value = key;
     document.getElementById('promptTemplate').value = template;
-    
+
     // Find the current version and model for this key from any row in the table
     var row = document.querySelector('tr[data-row-key="' + key + '"]');
     var currentVersion = 1;
@@ -232,7 +232,7 @@ function editPrompt(key, template) {
         if (verCell && verCell.textContent !== '—' && verCell.textContent !== '∅') {
             currentVersion = parseInt(verCell.textContent, 10) || 1;
         }
-        
+
         var modelCell = row.querySelector('td:nth-child(3)');
         if (modelCell && modelCell.textContent !== '—') {
             currentModel = modelCell.textContent.trim();
@@ -245,7 +245,7 @@ function editPrompt(key, template) {
 
     document.getElementById('promptVersion').value = currentVersion;
     document.getElementById('promptModel').value = currentModel;
-    
+
     const modal = new bootstrap.Modal(document.getElementById('editPromptModal'));
     modal.show();
 }
@@ -254,7 +254,7 @@ document.getElementById('savePromptBtn').addEventListener('click', function() {
     var key = document.getElementById('promptKey').value;
     var template = document.getElementById('promptTemplate').value;
     var model = document.getElementById('promptModel').value;
-    
+
     // Make AJAX call to save the prompt
     fetch('/api/ai_prompts.php', {
         method: 'POST',
@@ -271,14 +271,14 @@ document.getElementById('savePromptBtn').addEventListener('click', function() {
     .then(function(data) {
         var alertClass = 'alert-success';
         var alertMsg;
-        
+
         if (data.success) {
             // Close the modal
             var modalInstance = bootstrap.Modal.getInstance(document.getElementById('editPromptModal'));
             if (modalInstance) {
                 modalInstance.hide();
             }
-            
+
             // Update the table row in-place with the new data from the API response.
             // Re-query by key — window._promptEditorRow can become stale after modal closes.
             var rows = document.querySelectorAll('tr[data-row-key]');
@@ -333,7 +333,7 @@ document.getElementById('savePromptBtn').addEventListener('click', function() {
             } else {
                 console.error('PromptEditor: Could not find table row for key="' + key + '"');
             }
-            
+
             alertMsg = 'Prompt saved successfully!';
         } else {
             // Show error message
@@ -343,7 +343,7 @@ document.getElementById('savePromptBtn').addEventListener('click', function() {
             document.querySelector('.tab-content').prepend(errDiv);
             return; // Don't show success alert on error
         }
-        
+
         // Show success message
         var alertDiv = document.createElement('div');
         alertDiv.className = 'alert ' + alertClass + ' alert-dismissible fade show mt-3';
