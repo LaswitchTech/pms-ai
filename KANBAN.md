@@ -160,9 +160,17 @@
   - [x] Prompt Editor UI (Files: `view/settings.php`, `view/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:01-04:00 completed_at: 2026-06-15T20:33:48-04:00 priority: high -->
     - [x] Add an AI Prompts section to the Settings page or standalone view with a table of registered prompts <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T16:18:35-04:00 priority: normal -->
     - [x] Build a prompt editor form that loads, edits, and saves individual prompt entries back via `lib/ai_prompts.php` <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-15T20:28:48-04:00 priority: normal -->
-  - [ ] Prompt Fallback Defaults (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:02-04:00 priority: high -->
-    - [ ] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->
-    - [ ] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry <!-- created_at: 2026-06-15T14:50:28-04:00 priority: normal -->
+  - [x] Prompt Fallback Defaults (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-15T14:00:02-04:00 completed_at: 2026-06-16T08:33:48-04:00 priority: high -->
+    - [x] Ship a set of default prompt templates in the codebase as fallback values for any registry entries that are missing or corrupted <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-16T08:33:46-04:00 priority: normal -->
+    - [x] Ensure `lib/ai.php` and `lib/roadmap.php` gracefully fall back to defaults when a prompt key does not exist in the registry <!-- created_at: 2026-06-15T14:50:28-04:00 completed_at: 2026-06-16T08:33:47-04:00 priority: normal -->
+  - [x] Prompt Per-Prompt Models (Files: `lib/ai_prompts.php`) <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:27-04:00 priority: high -->
+    - [x] Extend prompt registry schema to store a per-prompt model field alongside template, version, and updated_at <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:24-04:00 priority: high -->
+    - [x] Update `lib/ai.php` and `lib/roadmap.php` to pass the prompt's model to Ollama when calling `ollamaPrompt()` <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:25-04:00 priority: high -->
+    - [x] Update prompt editor UI to show and edit an optional "model" field per prompt template <!-- created_at: 2026-06-16T09:00:00-04:00 completed_at: 2026-06-16T10:40:26-04:00 priority: normal -->
+  - [ ] Migrate Prompts from JSON to Markdown Files (Files: `lib/ai_prompts.php`, `config/ai_prompts.json`) <!-- created_at: 2026-06-16T11:00:00-04:00 priority: high -->
+    - [ ] Create `/assets/prompts/{key}.md` markdown files for each prompt template currently in `config/ai_prompts.json` <!-- created_at: 2026-06-16T11:00:00-04:00 priority: high -->
+    - [ ] Update `AIPromptsRegistry::loadFromFile()` to fall back to reading markdown template files from `/assets/prompts/` <!-- created_at: 2026-06-16T11:00:00-04:00 priority: high -->
+    - [ ] Update prompt editor UI (view) to save edits as `.md` files in `/assets/prompts/` with a JSON manifest fallback <!-- created_at: 2026-06-16T11:00:00-04:00 priority: high -->
   - [ ] Roadmap Generation Service (Files: `lib/roadmap.php`, `lib/ai.php`) <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
     - [ ] Generate ROADMAP.md from Kanban <!-- created_at: 2026-06-12T11:29:50-04:00 priority: high -->
     - [ ] Generate release milestones <!-- created_at: 2026-06-12T11:29:50-04:00 priority: normal -->
