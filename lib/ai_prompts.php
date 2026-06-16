@@ -204,12 +204,11 @@ class AIPromptsRegistry {
             return;
         }
         
-        // Process each prompt in the config file
+        // Build metadata map from config (key -> metadata), NOT templates
+        $metadataMap = [];
         foreach ($data as $promptData) {
-            if (isset($promptData['key']) && isset($promptData['template'])) {
-                $this->prompts[$promptData['key']] = [
-                    'key' => $promptData['key'],
-                    'template' => $promptData['template'],
+            if (isset($promptData['key'])) {
+                $metadataMap[$promptData['key']] = [
                     'version' => $promptData['version'] ?? 1,
                     'updated_at' => $promptData['updated_at'] ?? date('c'),
                     'model' => $promptData['model'] ?? null
@@ -217,60 +216,68 @@ class AIPromptsRegistry {
             }
         }
 
-        // Fallback to reading markdown template files from /assets/prompts/
-        // This allows the markdown source to override any config entries
-        $markdownDir = dirname(__DIR__) . '/assets/prompts/';
-        if (is_dir($markdownDir)) {
-            $promptKeys = [
-                'task_decomposition',
-                'task_subtasks',
-                'task_priority',
-                'roadmap_generation',
-                'release_milestones',
-                'project_timeline'
-            ];
+        // Known prompt keys — always source templates from markdown files
+        $promptKeys = [
+            'task_decomposition',
+            'task_subtasks',
+            'task_priority',
+            'roadmap_generation',
+            'release_milestones',
+            'project_timeline'
+        ];
 
-            foreach ($promptKeys as $key) {
-                $markdownFile = $markdownDir . $key . '.md';
-                if (file_exists($markdownFile)) {
-                    $template = file_get_contents($markdownFile);
-                    if ($template !== false) {
-                        // If not already defined in config, add from markdown
-                        // If already defined, markdown version overrides config
-                        $this->prompts[$key] = [
-                            'key' => $key,
-                            'template' => $template,
-                            'version' => $this->prompts[$key]['version'] ?? 1, // Preserve version if exists
-                            'updated_at' => $this->prompts[$key]['updated_at'] ?? date('c'),
-                            'model' => $this->prompts[$key]['model'] ?? null
-                        ];
-                    }
+        $markdownDir = dirname(__DIR__) . '/assets/prompts/';
+
+        foreach ($promptKeys as $key) {
+            // Initialize metadata entry for this key if not already present in config
+            $metadataMap[$key] ??= [];
+
+            // Source template from markdown file, falling back to default
+            $template = null;
+            $markdownFile = $markdownDir . $key . '.md';
+            if (file_exists($markdownFile)) {
+                $template = file_get_contents($markdownFile);
+            }
+
+            if ($template === null || $template === false) {
+                if (isset($this->defaults[$key])) {
+                    $template = $this->defaults[$key];
+                } else {
+                    continue;
                 }
             }
+
+            // Create unified entry merging config metadata with template from markdown or default
+            $this->prompts[$key] = [
+                'key' => $key,
+                'template' => $template,
+                'version' => $metadataMap[$key]['version'] ?? 1,
+                'updated_at' => $metadataMap[$key]['updated_at'] ?? date('c'),
+                'model' => $metadataMap[$key]['model'] ?? null
+            ];
         }
     }
 
     /**
-     * Save prompts to config file 
+     * Save only metadata (version, updated_at, model) for each prompt to the config file.
+     * Templates are NOT saved here — they live exclusively in /assets/prompts/{key}.md.
      */
     private function saveToFile(): bool {
-        // Convert prompts array to the expected format
         $saveData = [];
-        foreach ($this->prompts as $key => $prompt) {
+        foreach ($this->prompts as $prompt) {
             $saveData[] = [
-                'key' => $key,
-                'template' => $prompt['template'],
+                'key' => $prompt['key'],
                 'version' => $prompt['version'],
                 'updated_at' => $prompt['updated_at'],
                 'model' => $prompt['model'] ?? null
             ];
         }
-        
+
         $dir = dirname($this->configFile);
         if (!is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
-        
+
         return file_put_contents($this->configFile, json_encode($saveData, JSON_PRETTY_PRINT)) !== false;
     }
 

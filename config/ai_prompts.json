@@ -1,0 +1,38 @@
+[
+    {
+        "key": "task_decomposition",
+        "version": 13,
+        "updated_at": "2026-06-16T16:11:02+00:00",
+        "model": "qwen3.6:35b-128k"
+    },
+    {
+        "key": "task_subtasks",
+        "version": 6,
+        "updated_at": "2026-06-16T15:46:55+00:00",
+        "model": "qwen3.6:35b-128k"
+    },
+    {
+        "key": "task_priority",
+        "version": 2,
+        "updated_at": "2026-06-16T14:11:32+00:00",
+        "model": "qwen3.6:35b-128k"
+    },
+    {
+        "key": "roadmap_generation",
+        "version": 1,
+        "updated_at": "2026-06-16T14:29:01+00:00",
+        "model": "qwen3.6:35b-128k"
+    },
+    {
+        "key": "release_milestones",
+        "version": 1,
+        "updated_at": "2026-06-16T14:29:05+00:00",
+        "model": "qwen3.6:35b-128k"
+    },
+    {
+        "key": "project_timeline",
+        "version": 2,
+        "updated_at": "2026-06-16T14:32:32+00:00",
+        "model": "qwen3.6:35b-128k"
+    }
+]
