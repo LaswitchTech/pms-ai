@@ -55,28 +55,6 @@ if (!is_array($inputData) || !isset($inputData['command'])) {
         ], 400);
     }
 
-    // Validate project slug if provided
-    $projectSlug = trim((string) ($inputData['project_slug'] ?? ''));
-    if (!empty($projectSlug)) {
-        // Load projects config from JSON
-        $projectsConfig = json_decode(file_get_contents(__DIR__ . '/../config/projects.json'), true);
-        if (empty($projectsConfig) || !isset($projectsConfig['projects'][$projectSlug])) {
-            opencodeApiRespond([
-                'status' => 'error',
-                'message'   => 'Project not found: ' . $projectSlug,
-            ], 404);
-        }
-
-        // Verify that the project directory actually exists
-        $projectPath = $projectsConfig['projects'][$projectSlug]['path'] ?? '';
-        if (empty($projectPath) || !is_dir($projectPath)) {
-            opencodeApiRespond([
-                'status' => 'error',
-                'message'   => 'Project directory not found: ' . $projectSlug,
-            ], 404);
-        }
-    }
-
     // Get OpenCode settings for running the command
     require_once __DIR__ . '/../lib/settings.php';
     $settings = loadSettings(__DIR__ . '/../config/settings.json');
@@ -92,39 +70,44 @@ if (!is_array($inputData) || !isset($inputData['command'])) {
     $port = (int) ($settings['opencode_port'] ?? 8080);
     $timeout = (int) ($settings['opencode_timeout'] ?? 60);
 
-    // For command execution, we'll use a longer timeout
-    $commandTimeout = max(60, $timeout * 2);
+    // For command execution, we'll use a longer timeout for session creation + response
+    $sessionTimeout = max(30, $timeout);
+    $commandTimeout = max(120, $timeout * 3);
 
-    // Send the command to OpenCode
-    // Note: This uses synchronous mode and blocks until completion (as per Phase 2 design)
-    $result = OpenCodeClient::sendCommand(
+    // Step 1: Create an OpenCode session
+    $sessionResult = OpenCodeClient::createSession($host, $port, $sessionTimeout);
+    if (!empty($sessionResult['error'])) {
+        opencodeApiRespond([
+            'status' => 'error',
+            'message'=> 'Failed to create OpenCode session: ' . $sessionResult['error'],
+        ], 502);
+    }
+
+    // Step 2: Execute the command within the session using server-default agent and model
+    $apiResponse = OpenCodeClient::executeCommandInSession(
         $host,
         $port,
         $commandTimeout,
+        $sessionResult['id'],
         $command,
-        $projectSlug ? [$projectSlug] : []
     );
 
     // Format response for client consumption
     $output = '';
-    if (is_string($result['body'])) {
-        $output = $result['body'];
-    } elseif (is_array($result['body']) && isset($result['body']['output'])) {
-        $output = $result['body']['output'];
-    } elseif (is_array($result['body'])) {
+    if (is_string($apiResponse['body'])) {
+        $output = $apiResponse['body'];
+    } elseif (is_array($apiResponse['body']) && isset($apiResponse['body']['output'])) {
+        $output = $apiResponse['body']['output'];
+    } elseif (is_array($apiResponse['body'])) {
         // In case where the response is just an array, output it as JSON
-        $output = json_encode($result['body']);
+        $output = json_encode($apiResponse['body']);
     }
 
-    $commitHash = null;
-    if (is_array($result['body']) && isset($result['body']['commitHash'])) {
-        $commitHash = $result['body']['commitHash'];
-    }
-
+    // For slash commands OpenCode does not return commitHash; leave as null
     opencodeApiRespond([
-        'status' => $result['status'],
-        'output'   => $output,
-        'errors' => $result['error'] ?? null,
-        'commitHash' => $commitHash,
+        'status' => $apiResponse['status'],
+        'output' => $output,
+        'errors' => $apiResponse['error'] ?? null,
+        'commitHash' => null,
     ]);
 }

@@ -579,7 +579,7 @@ $renderedAgents = $fileExists ? renderAgentsMarkdown($content) : '';
                     // Duplicate guard - prevent concurrent execution
                     const key = projectSlug ? `${command}:${projectSlug}` : command;
                     if (executingCommands.has(key)) {
-                        alert('Command is already executing. Please wait for completion.');
+                        showToast('Command is already executing. Please wait for completion.', 'warning');
                         return;
                     }
 
@@ -597,7 +597,7 @@ $renderedAgents = $fileExists ? renderAgentsMarkdown($content) : '';
                         // Reset button state
                         executingCommands.delete(key);
                         this.disabled = false;
-                        this.innerHTML = command.charAt(1).toUpperCase() + command.slice(2); // Reset button text
+                        this.innerHTML = command.slice(1).replace(/^./, c => c.toUpperCase()); // Reset button text to command name
                     }
                 });
             });
@@ -674,3 +674,6 @@ $renderedAgents = $fileExists ? renderAgentsMarkdown($content) : '';
         </article>
     <?php endif; ?>
 </div>
+
+<!-- Page-level toast container -->
+<div id="opencode-toast-container" class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1100;"></div>

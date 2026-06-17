@@ -291,20 +291,52 @@ function showConfirmationModal(command, proceedCallback) {
             modal = document.getElementById('opencode-confirmation-modal');
         }
 
-        // Handle proceed button click
+        // Handle proceed button click using Bootstrap's native API
         const proceedBtn = modal.querySelector('#confirm-proceed-btn');
         proceedBtn.onclick = function() {
-            modal.querySelector('.modal').classList.remove('show');
-            document.body.classList.remove('modal-open');
-            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            const bsModal = bootstrap.Modal.getInstance(modal) ?? new bootstrap.Modal(modal);
+            bsModal.hide();
             resolve(true);
             proceedCallback();
         };
 
-        // Show the modal
+        // Show the modal using Bootstrap 5 API
         const bootstrapModal = new bootstrap.Modal(modal, { backdrop: 'static' });
         bootstrapModal.show();
     });
+}
+
+/**
+ * Display a toast notification in the page-level toast container.
+ *
+ * @param {string} message - The toast message text
+ * @param {string} variant - Bootstrap alert variant (info, warning, success, danger)
+ * @param {number|null} delayMs - Auto-dismiss delay in ms; null = 8 seconds default
+ */
+function showToast(message, variant, delayMs = null) {
+    const toastContainer = document.getElementById('opencode-toast-container');
+    if (!toastContainer) return;
+
+    const id = 'toast-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    const dismissDelayMs = delayMs !== null ? delayMs : 8000;
+
+    const toastEl = document.createElement('div');
+    toastEl.id = id;
+    toastEl.className = 'toast-once alert alert-' + variant + ' alert-dismissible fade show shadow-sm';
+    toastEl.role = 'alert';
+    toastEl.style.minWidth = '280px';
+    toastEl.style.maxWidth = '480px';
+    toastEl.innerHTML = message;
+
+    toastContainer.appendChild(toastEl);
+
+    // Let Bootstrap's CSS transition show it, then dismiss after delay
+    setTimeout(() => {
+        const bsToast = new bootstrap.Toast(toastEl, { delay: dismissDelayMs });
+        bsToast.show();
+        // After the toast auto-hides/dismisses, remove its DOM node
+        toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove(), { once: true });
+    }, 50);
 }
 
 // Export for use in other modules
