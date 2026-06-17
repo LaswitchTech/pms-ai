@@ -67,7 +67,7 @@
 - [x] Phase 2.1: Decide execution model (fire-and-poll vs SSE vs synchronous) and extend `api/opencode.php` to support it <!-- created_at: 2026-06-17T12:00:00 priority: high -->
 - [x] Phase 2.2: Extend `OpenCodeClient` with task-id management and progress polling <!-- created_at: 2026-06-17T12:00:00 priority: high -->
 - [x] Phase 2.3: Validate command payload (whitelist, project slug lookup) in API endpoint <!-- created_at: 2026-06-17T12:00:00 priority: high -->
-- [ ] Phase 2.4: Create `assets/js/opencode.js` with core helpers: executeCommand, pollProgress, displayResult, duplicate guard <!-- created_at: 2026-06-17T12:00:00 priority: high -->
+- [x] Phase 2.4: Create `assets/js/opencode.js` with core helpers: executeCommand, pollProgress, displayResult, duplicate guard <!-- created_at: 2026-06-17T12:00:00 priority: high -->
 - [ ] Phase 2.5: Add command toolbar to `view/agents.php` — full buttons, argument input, results panel <!-- created_at: 2026-06-17T12:00:00 priority: high -->
 - [ ] Phase 2.6: Wire command buttons on `view/kanban.php`, `view/dashboard.php`, `view/roadmap.php`, `view/next.php`, `view/design.php` with toast result display <!-- created_at: 2026-06-17T12:00:00 priority: high -->
 - [ ] Phase 2.7: Auto-refresh roadmap/next views after successful `/plan` or `/next` execution, show manual instructions when OpenCode unavailable <!-- created_at: 2026-06-17T12:00:00 priority: normal -->
