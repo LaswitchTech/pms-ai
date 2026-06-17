@@ -15,12 +15,13 @@ function loadSettings(string $path): array
         'ollama_timeout' => 30,
         'ollama_context_window' => 4096,
         'ollama_model' => '',
-        'legacy_ai_workflows_enabled' => false,
         'opencode_enabled' => false,
         'opencode_host' => 'localhost',
         'opencode_port' => 8080,
         'opencode_timeout' => 60,
         'opencode_executable' => null,
+        'opencode_username' => null,
+        'opencode_password' => null,
     ];
 
     if (!file_exists($path) || !is_readable($path)) {
@@ -72,7 +73,10 @@ function saveSettings(string $path, array $settings): bool
         return false;
     }
 
-    // Ensure all required fields are present
+    // Ensure all required fields are present; saveSettings intentionally omits
+    // opencode_enabled here so that future saves do not re-inject the key.
+    // loadSettings() still provides it as a backward-compat default for existing
+    // configs that have the key present.
     $defaultSettings = [
         'timezone' => null,
         'ollama_host' => 'localhost',
@@ -80,23 +84,24 @@ function saveSettings(string $path, array $settings): bool
         'ollama_timeout' => 30,
         'ollama_context_window' => 4096,
         'ollama_model' => '',
-        'legacy_ai_workflows_enabled' => false,
-        'opencode_enabled' => false,
+        // NOTE: legacy_ai_workflows_enabled was removed from saveSettings().
+        // It has no consumers and was deprecated in favor of OpenCode.
         'opencode_host' => 'localhost',
         'opencode_port' => 8080,
         'opencode_timeout' => 60,
         'opencode_executable' => null,
+        'opencode_username' => null,
+        'opencode_password' => null,
     ];
 
-    // Validate opencode_enabled (boolean)
-    if (isset($settings['opencode_enabled']) && !is_bool($settings['opencode_enabled'])) {
-        return false;
-    }
-
     // Validate opencode_host (valid hostname or IP)
-    if (isset($settings['opencode_host']) && $settings['opencode_host'] !== null && $settings['opencode_host'] !== '') {
+    if (($settings['opencode_host'] ?? null) !== null && ($settings['opencode_host'] ?? '') !== '') {
         $host = (string) $settings['opencode_host'];
-        if (!filter_var($host, FILTER_VALIDATE_URL) && !filter_var($host, FILTER_VALIDATE_IP)) {
+        // Accept valid IP addresses OR hostnames (alphanumeric, dots, dashes).
+        // FILTER_VALIDATE_URL requires a scheme (http://...) so plain hostnames like "localhost" fail.
+        $isIp = filter_var($host, FILTER_VALIDATE_IP);
+        $isHostname = preg_match('/^[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?)*$/', $host) === 1;
+        if (!$isIp && !$isHostname) {
             return false;
         }
     }

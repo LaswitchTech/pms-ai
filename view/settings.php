@@ -17,17 +17,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'ollama_model' => $_POST['ollama_model'] ?? '',
 
         // OpenCode configuration
-        'opencode_enabled' => isset($_POST['opencode_enabled']) ? true : false,
         'opencode_host' => trim((string) ($_POST['opencode_host'] ?? '')) ?: 'localhost',
         'opencode_port' => (int) ($_POST['opencode_port'] ?? 8080),
         'opencode_timeout' => (int) ($_POST['opencode_timeout'] ?? 60),
         'opencode_executable' => !empty($_POST['opencode_executable']) ? trim($_POST['opencode_executable']) : null,
+        'opencode_username' => !empty($_POST['opencode_username']) ? trim($_POST['opencode_username']) : null,
+        'opencode_password' => !empty($_POST['opencode_password']) ? trim($_POST['opencode_password']) : null,
+
     ];
 
     // Validate port
     if ($newSettings['ollama_port'] < 1 || $newSettings['ollama_port'] > 65535) {
         $error = "Port must be an integer between 1 and 65535";
-    } elseif ((isset($newSettings['opencode_enabled']) && $newSettings['opencode_enabled'] === true) && ($newSettings['opencode_port'] < 1 || $newSettings['opencode_port'] > 65535)) {
+    } elseif (($newSettings['opencode_port'] ?? 0) < 1 || ($newSettings['opencode_port'] ?? 0) > 65535) {
         $error = "OpenCode port must be an integer between 1 and 65535";
     }
 
@@ -145,11 +147,6 @@ $allPrompts = getAIPromptsRegistry()->getAllPromptsWithMeta();
                         <h5 class="mb-0">OpenCode Configuration</h5>
                     </div>
                     <div class="card-body">
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="opencode_enabled" name="opencode_enabled" <?= !empty($settings['opencode_enabled']) ? 'checked' : '' ?>>
-                            <label class="form-check-label" for="opencode_enabled">Enable OpenCode</label>
-                        </div>
-
                         <div class="mb-3">
                             <label for="opencode_host" class="form-label">Host</label>
                             <input type="text" class="form-control" id="opencode_host" name="opencode_host" value="<?= e($settings['opencode_host']) ?>" placeholder="localhost">
@@ -169,6 +166,18 @@ $allPrompts = getAIPromptsRegistry()->getAllPromptsWithMeta();
                             <label for="opencode_executable" class="form-label">Executable Path (optional)</label>
                             <input type="text" class="form-control" id="opencode_executable" name="opencode_executable" value="<?= e($settings['opencode_executable'] ?? '') ?>" placeholder="/path/to/opendcode">
                             <small class="form-text text-muted">Local fallback executable path when server execution is unavailable.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="opencode_username" class="form-label">Username (optional)</label>
+                            <input type="text" class="form-control" id="opencode_username" name="opencode_username" value="<?= e($settings['opencode_username'] ?? '') ?>" placeholder="">
+                            <small class="form-text text-muted">Basic auth username for protected OpenCode instances.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="opencode_password" class="form-label">Password (optional)</label>
+                            <input type="password" class="form-control" id="opencode_password" name="opencode_password" value="<?= e($settings['opencode_password'] ?? '') ?>" placeholder="" autocomplete="current-password">
+                            <small class="form-text text-muted">Basic auth password for protected OpenCode instances.</small>
                         </div>
                     </div>
                 </div>
