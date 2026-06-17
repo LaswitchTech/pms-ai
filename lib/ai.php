@@ -6,9 +6,11 @@
  * @param string $taskDescription The task description to decompose
  * @param string $settingsPath Path to the settings.json file (default: __DIR__ . '/../settings.json')
  * @return array Response data with suggestion
+ * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
  */
 function generateTaskDecomposition(string $taskDescription, string $settingsPath = __DIR__ . '/../settings.json'): array
 {
+    trigger_error('generateTaskDecomposition is deprecated and will be removed in a future version. Use OpenCode `/plan` delegation instead.', E_USER_DEPRECATED);
     require_once __DIR__ . '/ollama.php';
     require_once __DIR__ . '/ai_prompts.php';
     
@@ -67,9 +69,11 @@ function generateTaskDecomposition(string $taskDescription, string $settingsPath
  * @param string $taskDescription The task description
  * @param string $settingsPath Path to the settings.json file (default: __DIR__ . '/../settings.json')
  * @return array Response data with subtask
+ * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
  */
 function generateSubtasks(string $taskDescription, string $settingsPath = __DIR__ . '/../settings.json'): array
 {
+    trigger_error('generateSubtasks is deprecated and will be removed in a future version. Use OpenCode `/plan` delegation instead.', E_USER_DEPRECATED);
     require_once __DIR__ . '/ollama.php';
     require_once __DIR__ . '/ai_prompts.php';
     
@@ -128,9 +132,11 @@ function generateSubtasks(string $taskDescription, string $settingsPath = __DIR_
  * @param string $taskDescription The task description
  * @param string $settingsPath Path to the settings.json file (default: __DIR__ . '/../settings.json')
  * @return array Response data with priority suggestion
+ * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
  */
 function suggestTaskPriority(string $taskDescription, string $settingsPath = __DIR__ . '/../settings.json'): array
 {
+    trigger_error('suggestTaskPriority is deprecated and will be removed in a future version. Use OpenCode `/plan` delegation instead.', E_USER_DEPRECATED);
     require_once __DIR__ . '/ollama.php';
     require_once __DIR__ . '/ai_prompts.php';
     
@@ -180,9 +186,11 @@ function suggestTaskPriority(string $taskDescription, string $settingsPath = __D
  * @param string $taskDescription The task description
  * @param string $settingsPath Path to the settings.json file (default: __DIR__ . '/../settings.json')
  * @return array Complete task review data
+ * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
  */
 function generateTaskReview(string $taskDescription, string $settingsPath = __DIR__ . '/../settings.json'): array
 {
+    trigger_error('generateTaskReview is deprecated and will be removed in a future version. Use OpenCode `/plan` delegation instead.', E_USER_DEPRECATED);
     // Generate decomposed subtask
     $subtasksResult = generateSubtasks($taskDescription, $settingsPath);
     

@@ -14,7 +14,8 @@ function loadSettings(string $path): array
         'ollama_port' => 11434,
         'ollama_timeout' => 30,
         'ollama_context_window' => 4096,
-        'ollama_model' => ''
+        'ollama_model' => '',
+        'legacy_ai_workflows_enabled' => false
     ];
 
     if (!file_exists($path) || !is_readable($path)) {
@@ -73,7 +74,8 @@ function saveSettings(string $path, array $settings): bool
         'ollama_port' => 11434,
         'ollama_timeout' => 30,
         'ollama_context_window' => 4096,
-        'ollama_model' => ''
+        'ollama_model' => '',
+        'legacy_ai_workflows_enabled' => false
     ];
     
     $settings = array_merge($defaultSettings, $settings);

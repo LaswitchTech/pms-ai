@@ -6,6 +6,8 @@
  * This class implements the roadmap generation functionality as specified in the design documentation,
  * following the Shared Library Pattern with no view or API dependencies, and proper markdown structure
  * preservation including ## Now / ## Next / ## Done sections.
+ *
+ * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
  */
 class RoadmapGenerator {
     private $settingsPath;
@@ -19,8 +21,10 @@ class RoadmapGenerator {
      *
      * @param string $kanbanContent The content of KANBAN.md  
      * @return array Response data with roadmap content
+     * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
      */
     public function generateRoadmapFromKanban(string $kanbanContent): array {
+        trigger_error('generateRoadmapFromKanban is deprecated and will be removed in a future version. Use OpenCode `/plan` delegation instead.', E_USER_DEPRECATED);
         require_once __DIR__ . '/ollama.php';
         require_once __DIR__ . '/ai_prompts.php';
         
@@ -71,8 +75,10 @@ class RoadmapGenerator {
      *
      * @param string $kanbanContent The content of KANBAN.md
      * @return array Response data with milestone information
+     * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
      */
     public function generateReleaseMilestones(string $kanbanContent): array {
+        trigger_error('generateReleaseMilestones is deprecated and will be removed in a future version. Use OpenCode `/plan` delegation instead.', E_USER_DEPRECATED);
         require_once __DIR__ . '/ollama.php';
         require_once __DIR__ . '/ai_prompts.php';
         
@@ -123,8 +129,10 @@ class RoadmapGenerator {
      *
      * @param string $kanbanContent The content of KANBAN.md
      * @return array Response data with timeline information
+     * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
      */
     public function generateTimeline(string $kanbanContent): array {
+        trigger_error('generateTimeline is deprecated and will be removed in a future version. Use OpenCode `/plan` delegation instead.', E_USER_DEPRECATED);
         require_once __DIR__ . '/ollama.php';
         require_once __DIR__ . '/ai_prompts.php';
         
@@ -175,8 +183,10 @@ class RoadmapGenerator {
      *
      * @param string $kanbanContent The content of KANBAN.md
      * @return array Complete roadmap information including all components
+     * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
      */
     public function generateCompleteRoadmap(string $kanbanContent): array {
+        trigger_error('generateCompleteRoadmap is deprecated and will be removed in a future version. Use OpenCode `/plan` delegation instead.', E_USER_DEPRECATED);
         // Generate roadmap from kanban
         $roadmapResult = $this->generateRoadmapFromKanban($kanbanContent);
         
@@ -223,6 +233,7 @@ class RoadmapGenerator {
  * @param string $kanbanContent The content of KANBAN.md
  * @param string $settingsPath Path to the settings.json file (default: __DIR__ . '/../settings.json')
  * @return array Response data with roadmap content
+ * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
  */
 function generateRoadmapFromKanban(string $kanbanContent, string $settingsPath = __DIR__ . '/../settings.json'): array
 {
@@ -239,6 +250,7 @@ function generateRoadmapFromKanban(string $kanbanContent, string $settingsPath =
  * @param string $kanbanContent The content of KANBAN.md
  * @param string $settingsPath Path to the settings.json file (default: __DIR__ . '/../settings.json')
  * @return array Response data with milestone information
+ * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
  */
 function generateReleaseMilestones(string $kanbanContent, string $settingsPath = __DIR__ . '/../settings.json'): array
 {
@@ -255,6 +267,7 @@ function generateReleaseMilestones(string $kanbanContent, string $settingsPath =
  * @param string $kanbanContent The content of KANBAN.md
  * @param string $settingsPath Path to the settings.json file (default: __DIR__ . '/../settings.json')
  * @return array Response data with timeline information
+ * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
  */
 function generateTimeline(string $kanbanContent, string $settingsPath = __DIR__ . '/../settings.json'): array
 {
@@ -271,6 +284,7 @@ function generateTimeline(string $kanbanContent, string $settingsPath = __DIR__ 
  * @param string $kanbanContent The content of KANBAN.md
  * @param string $settingsPath Path to the settings.json file (default: __DIR__ . '/../settings.json')
  * @return array Complete roadmap information including all components
+ * @deprecated Use OpenCode `/plan` delegation instead. Will be removed in a future version.
  */
 function generateCompleteRoadmap(string $kanbanContent, string $settingsPath = __DIR__ . '/../settings.json'): array
 {

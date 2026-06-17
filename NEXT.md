@@ -6,7 +6,7 @@ Review and deprecate custom PHP AI workflows in preparation for OpenCode `/plan`
 
 ## Status
 
-In Progress
+Completed
 
 ## Task Description
 
@@ -63,8 +63,8 @@ Deprecation decisions will directly affect what prompt entries from `AIPromptsRe
 
 ## Tasks
 
-- [ ] Audit existing call sites across the codebase for `lib/roadmap.php`, `lib/ai.php`, and prompt registry consumers <!-- created_at: 2026-06-16T18:30:00+00:00 priority: high -->
-- [ ] Map every public function in `lib/roadmap.php` and `lib/ai.php` with its call graph across `api/`, `view/`, and `index.php` <!-- created_at: 2026-06-16T18:30:00+00:00 priority: high -->
-- [ ] Document the deprecation decision (remove/deprecate/adapt) for each identified file and function <!-- created_at: 2026-06-16T18:30:00+00:00 priority: high -->
-- [ ] Apply @deprecated annotations and runtime triggers to legacy AI code, or remove dead-code files entirely <!-- created_at: 2026-06-16T18:30:00+00:00 priority: high -->
-- [ ] Add deprecation toggle to settings.json for safe rollback of the custom AI workflow shutdown <!-- created_at: 2026-06-16T18:30:00+00:00 priority: normal -->
+- [x] Audit existing call sites across the codebase for `lib/roadmap.php`, `lib/ai.php`, and prompt registry consumers <!-- created_at: 2026-06-16T18:30:00+00:00 priority: high -->
+- [x] Map every public function in `lib/roadmap.php` and `lib/ai.php` with its call graph across `api/`, `view/`, and `index.php` <!-- created_at: 2026-06-16T18:30:00+00:00 priority: high -->
+- [x] Document the deprecation decision (remove/deprecate/adapt) for each identified file and function <!-- created_at: 2026-06-16T18:30:00+00:00 priority: high -->
+- [x] Apply @deprecated annotations and runtime triggers to legacy AI code, or remove dead-code files entirely <!-- created_at: 2026-06-16T18:30:00+00:00 priority: high -->
+- [x] Add deprecation toggle to settings.json for safe rollback of the custom AI workflow shutdown <!-- created_at: 2026-06-16T18:30:00+00:00 priority: normal -->
