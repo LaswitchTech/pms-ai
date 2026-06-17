@@ -15,7 +15,12 @@ function loadSettings(string $path): array
         'ollama_timeout' => 30,
         'ollama_context_window' => 4096,
         'ollama_model' => '',
-        'legacy_ai_workflows_enabled' => false
+        'legacy_ai_workflows_enabled' => false,
+        'opencode_enabled' => false,
+        'opencode_host' => 'localhost',
+        'opencode_port' => 8080,
+        'opencode_timeout' => 60,
+        'opencode_executable' => null,
     ];
 
     if (!file_exists($path) || !is_readable($path)) {
@@ -75,9 +80,39 @@ function saveSettings(string $path, array $settings): bool
         'ollama_timeout' => 30,
         'ollama_context_window' => 4096,
         'ollama_model' => '',
-        'legacy_ai_workflows_enabled' => false
+        'legacy_ai_workflows_enabled' => false,
+        'opencode_enabled' => false,
+        'opencode_host' => 'localhost',
+        'opencode_port' => 8080,
+        'opencode_timeout' => 60,
+        'opencode_executable' => null,
     ];
-    
+
+    // Validate opencode_enabled (boolean)
+    if (isset($settings['opencode_enabled']) && !is_bool($settings['opencode_enabled'])) {
+        return false;
+    }
+
+    // Validate opencode_host (valid hostname or IP)
+    if (isset($settings['opencode_host']) && $settings['opencode_host'] !== null && $settings['opencode_host'] !== '') {
+        $host = (string) $settings['opencode_host'];
+        if (!filter_var($host, FILTER_VALIDATE_URL) && !filter_var($host, FILTER_VALIDATE_IP)) {
+            return false;
+        }
+    }
+
+    // Validate opencode_port (integer 1–65535)
+    if (isset($settings['opencode_port']) && (!is_numeric($settings['opencode_port']) || (int) $settings['opencode_port'] < 1 || (int) $settings['opencode_port'] > 65535)) {
+        return false;
+    }
+
+    // Validate opencode_timeout (positive integer, min 1 second)
+    if (isset($settings['opencode_timeout']) && (!is_numeric($settings['opencode_timeout']) || (int) $settings['opencode_timeout'] < 1)) {
+        return false;
+    }
+
+    // opencode_executable is optional string | null — no extra validation needed beyond presence check
+
     $settings = array_merge($defaultSettings, $settings);
 
     $json = json_encode($settings, JSON_PRETTY_PRINT);

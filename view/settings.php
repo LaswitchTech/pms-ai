@@ -14,12 +14,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'ollama_port' => (int) ($_POST['ollama_port'] ?? 11434),
         'ollama_timeout' => (int) ($_POST['ollama_timeout'] ?? 30),
         'ollama_context_window' => (int) ($_POST['ollama_context_window'] ?? 4096),
-        'ollama_model' => $_POST['ollama_model'] ?? ''
+        'ollama_model' => $_POST['ollama_model'] ?? '',
+
+        // OpenCode configuration
+        'opencode_enabled' => isset($_POST['opencode_enabled']) ? true : false,
+        'opencode_host' => trim((string) ($_POST['opencode_host'] ?? '')) ?: 'localhost',
+        'opencode_port' => (int) ($_POST['opencode_port'] ?? 8080),
+        'opencode_timeout' => (int) ($_POST['opencode_timeout'] ?? 60),
+        'opencode_executable' => !empty($_POST['opencode_executable']) ? trim($_POST['opencode_executable']) : null,
     ];
 
     // Validate port
     if ($newSettings['ollama_port'] < 1 || $newSettings['ollama_port'] > 65535) {
         $error = "Port must be an integer between 1 and 65535";
+    } elseif ((isset($newSettings['opencode_enabled']) && $newSettings['opencode_enabled'] === true) && ($newSettings['opencode_port'] < 1 || $newSettings['opencode_port'] > 65535)) {
+        $error = "OpenCode port must be an integer between 1 and 65535";
     }
 
     // Validate timeout
@@ -127,6 +136,39 @@ $allPrompts = getAIPromptsRegistry()->getAllPromptsWithMeta();
                         <div class="mb-3">
                             <label for="ollama_model" class="form-label">Default Model</label>
                             <input type="text" class="form-control" id="ollama_model" name="ollama_model" value="<?= e($settings['ollama_model']) ?>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">OpenCode Configuration</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="opencode_enabled" name="opencode_enabled" <?= !empty($settings['opencode_enabled']) ? 'checked' : '' ?>>
+                            <label class="form-check-label" for="opencode_enabled">Enable OpenCode</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="opencode_host" class="form-label">Host</label>
+                            <input type="text" class="form-control" id="opencode_host" name="opencode_host" value="<?= e($settings['opencode_host']) ?>" placeholder="localhost">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="opencode_port" class="form-label">Port</label>
+                            <input type="number" class="form-control" id="opencode_port" name="opencode_port" value="<?= e($settings['opencode_port']) ?>" min="1" max="65535">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="opencode_timeout" class="form-label">Timeout (seconds)</label>
+                            <input type="number" class="form-control" id="opencode_timeout" name="opencode_timeout" value="<?= e($settings['opencode_timeout']) ?>" min="1">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="opencode_executable" class="form-label">Executable Path (optional)</label>
+                            <input type="text" class="form-control" id="opencode_executable" name="opencode_executable" value="<?= e($settings['opencode_executable'] ?? '') ?>" placeholder="/path/to/opendcode">
+                            <small class="form-text text-muted">Local fallback executable path when server execution is unavailable.</small>
                         </div>
                     </div>
                 </div>
