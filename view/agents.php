@@ -568,6 +568,14 @@ $renderedAgents = $fileExists ? renderAgentsMarkdown($content) : '';
                     const command = this.dataset.command;
                     const projectSlug = projectSlugInput.value.trim();
 
+                    // Check for confirmation needed (only for /document)
+                    if (command === '/document') {
+                        const confirmed = await showConfirmationModal(command, () => {});
+                        if (!confirmed) {
+                            return;
+                        }
+                    }
+
                     // Duplicate guard - prevent concurrent execution
                     const key = projectSlug ? `${command}:${projectSlug}` : command;
                     if (executingCommands.has(key)) {

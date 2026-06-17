@@ -2564,6 +2564,14 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
                 const command = this.dataset.command;
                 const projectSlug = projectSlugInput.value.trim();
 
+                // Check for confirmation needed (only for /document)
+                if (command === '/document') {
+                    const confirmed = await showConfirmationModal(command, () => {});
+                    if (!confirmed) {
+                        return;
+                    }
+                }
+
                 // Simple duplicate guard in this case just disables the button
                 this.disabled = true;
                 this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Executing...';

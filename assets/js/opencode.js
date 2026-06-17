@@ -247,6 +247,66 @@ function markCommandAsNotExecuting(command, projectSlug = null) {
     isExecuting.delete(key);
 }
 
+/**
+ * Show a Bootstrap confirmation modal for destructive actions.
+ *
+ * @param {string} command - The command to confirm
+ * @param {Function} proceedCallback - Function to call if user confirms
+ * @returns {Promise<boolean>} True if confirmed, false otherwise
+ */
+function showConfirmationModal(command, proceedCallback) {
+    // Only show for /document since it can overwrite
+    if (command !== '/document') {
+        return Promise.resolve(true);
+    }
+
+    return new Promise((resolve) => {
+        // Create modal HTML or reuse existing one
+        let modal = document.getElementById('opencode-confirmation-modal');
+        
+        if (!modal) {
+            // Create the modal structure if it doesn't exist
+            const modalHTML = `
+                <div class="modal fade" id="opencode-confirmation-modal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Confirm Destructive Action</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Running this command may overwrite existing files. Are you sure you want to proceed?</p>
+                                <p class="text-muted small">This action cannot be undone.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" id="confirm-proceed-btn">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            modal = document.getElementById('opencode-confirmation-modal');
+        }
+
+        // Handle proceed button click
+        const proceedBtn = modal.querySelector('#confirm-proceed-btn');
+        proceedBtn.onclick = function() {
+            modal.querySelector('.modal').classList.remove('show');
+            document.body.classList.remove('modal-open');
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            resolve(true);
+            proceedCallback();
+        };
+
+        // Show the modal
+        const bootstrapModal = new bootstrap.Modal(modal, { backdrop: 'static' });
+        bootstrapModal.show();
+    });
+}
+
 // Export for use in other modules
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
@@ -257,6 +317,7 @@ if (typeof module !== 'undefined' && module.exports) {
         escapeHtml,
         isCommandExecuting,
         markCommandAsExecuting,
-        markCommandAsNotExecuting
+        markCommandAsNotExecuting,
+        showConfirmationModal
     };
 }
