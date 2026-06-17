@@ -618,77 +618,51 @@ $renderedAgents = $fileExists ? renderAgentsMarkdown($content) : '';
             <?php if ($opencodeCreateError !== null): ?>
                 <div class="alert alert-warning mb-0">
                     <strong>OpenCode config could not be created.</strong> <?= e($opencodeCreateError); ?>
-</div>
-
-    <!-- OpenCode Command Toolbar -->
-    <article class="card agents-card mb-4">
-        <div class="card-body p-4">
-            <h2 class="h5 mb-3">OpenCode Commands</h2>
-            
-            <div class="d-flex flex-wrap gap-2 mb-3">
-                <button type="button" class="btn btn-outline-primary btn-sm command-btn" data-command="/plan">Plan</button>
-                <button type="button" class="btn btn-outline-success btn-sm command-btn" data-command="/next">Next</button>
-                <button type="button" class="btn btn-outline-info btn-sm command-btn" data-command="/debug">Debug</button>
-                <button type="button" class="btn btn-outline-warning btn-sm command-btn" data-command="/review">Review</button>
-                <button type="button" class="btn btn-outline-secondary btn-sm command-btn" data-command="/document">Document</button>
-            </div>
-            
-            <div class="mb-3">
-                <label for="command-project-slug" class="form-label small">Project Slug (optional)</label>
-                <input type="text" 
-                       id="command-project-slug" 
-                       class="form-control form-control-sm" 
-                       placeholder="Enter project slug if needed"
-                       value="<?= $projectSlug ? e($projectSlug) : '' ?>">
-            </div>
-            
-            <div id="command-result" class="mt-3">
-                <!-- Command results will be displayed here -->
-            </div>
+                </div>
+            <?php else: ?>
+                <div class="row g-3">
+                    <div class="col-lg-4">
+                        <div class="border rounded-3 p-3 h-100 bg-light">
+                            <div class="text-muted small mb-1">Instructions</div>
+                            <div class="fw-semibold"><?= e((string) count($opencodeSummary['instructions'])); ?> files</div>
+                            <div class="small text-muted"><?= e(implode(', ', $opencodeSummary['instructions']) ?: '—'); ?></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="border rounded-3 p-3 h-100 bg-light">
+                            <div class="text-muted small mb-1">Agents</div>
+                            <div class="fw-semibold"><?= e((string) count($opencodeSummary['agents'])); ?> configured</div>
+                            <div class="small text-muted"><?= e(implode(', ', $opencodeSummary['agents']) ?: '—'); ?></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="border rounded-3 p-3 h-100 bg-light">
+                            <div class="text-muted small mb-1">Commands</div>
+                            <div class="fw-semibold"><?= e((string) count($opencodeSummary['commands'])); ?> configured</div>
+                            <div class="small text-muted"><?= e(implode(', ', $opencodeSummary['commands']) ?: '—'); ?></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-muted small mb-0 mt-3">
+                    Path: <code><?= e($opencodeConfigFile); ?></code>
+                </p>
+            <?php endif; ?>
         </div>
     </article>
 
+    <?php if ($agentsCreateError !== null): ?>
+        <div class="alert alert-warning">
+            <strong>AGENTS.md could not be created.</strong> <?= e($agentsCreateError); ?>
+        </div>
+    <?php elseif (trim($content) === ''): ?>
+        <div class="alert alert-info">
+            <strong>AGENTS.md is empty.</strong> Add agent instructions to render them here.
+        </div>
+    <?php else: ?>
+        <article class="card agents-card">
+            <div class="card-body p-4 p-lg-5 agents-content">
+                <?= $renderedAgents; ?>
+            </div>
+        </article>
+    <?php endif; ?>
 </div>
-
-<script src="/assets/js/opencode.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const commandButtons = document.querySelectorAll('.command-btn');
-        const projectSlugInput = document.getElementById('command-project-slug');
-        const resultDiv = document.getElementById('command-result');
-        
-        // Apply the same duplicate execution guard we use in the JS helper files
-        const executingCommands = new Set();
-        
-        commandButtons.forEach(button => {
-            button.addEventListener('click', async function() {
-                const command = this.dataset.command;
-                const projectSlug = projectSlugInput.value.trim();
-                
-                // Duplicate guard - prevent concurrent execution
-                const key = projectSlug ? `${command}:${projectSlug}` : command;
-                if (executingCommands.has(key)) {
-                    alert('Command is already executing. Please wait for completion.');
-                    return;
-                }
-                
-                // Mark as executing
-                executingCommands.add(key);
-                this.disabled = true;
-                this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Executing...';
-                
-                try {
-                    // Use the execute and display helper from opencode.js
-                    await executeAndDisplayCommand(command, projectSlug || null, resultDiv);
-                } catch (error) {
-                    console.error('Command execution failed:', error);
-                } finally {
-                    // Reset button state
-                    executingCommands.delete(key);
-                    this.disabled = false;
-                    this.innerHTML = command.charAt(1).toUpperCase() + command.slice(2); // Reset button text
-                }
-            });
-        });
-    });
-</script>
