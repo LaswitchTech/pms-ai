@@ -71,5 +71,5 @@
 - [x] Phase 2.5: Add command toolbar to `view/agents.php` — full buttons, argument input, results panel <!-- created_at: 2026-06-17T12:00:00 priority: high -->
 - [x] Phase 2.6: Wire command buttons on `view/kanban.php`, `view/dashboard.php`, `view/roadmap.php`, `view/next.php`, `view/design.php` with toast result display <!-- created_at: 2026-06-17T12:00:00 priority: high -->
 - [x] Phase 2.7: Auto-refresh roadmap/next views after successful `/plan` or `/next` execution, show manual instructions when OpenCode unavailable <!-- created_at: 2026-06-17T12:00:00 priority: normal -->
-- [ ] Phase 2.8: Bootstrap confirm dialog for destructive commands (`/document`) <!-- created_at: 2026-06-17T12:00:00 priority: normal -->
+- [x] Phase 2.8: Bootstrap confirm dialog for destructive commands (`/document`) <!-- created_at: 2026-06-17T12:00:00 priority: normal completed: 2026-06-17 -->
 - [ ] Phase 2.9: Integration verification — run end-to-end test of all five commands across Agents and one other view, confirm progress output + error handling work correctly <!-- created_at: 2026-06-17T12:00:00 priority: high -->
