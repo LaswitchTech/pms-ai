@@ -1,7 +1,7 @@
 # Next — Execution Queue
 ## Sprint Plan
 **Root Goal:** Add `/plan`, `/next`, `/debug`, `/review`, and `/document` command buttons across Agents, Kanban, Roadmap, Dashboard, and Next views, wire them to the OpenCode API with progress output, error display, and duplicate-execution guards.
-**Status:** Active — Start Implementation (Phase 2)
+**Status:** Active — Remaining Implementation (Phase 2)
 ---
 ## Design Notes
 ### Architectural Constraints
@@ -68,8 +68,8 @@
 - [x] Phase 2.2: Extend `OpenCodeClient` with task-id management and progress polling <!-- created_at: 2026-06-17T12:00:00 priority: high -->
 - [x] Phase 2.3: Validate command payload (whitelist, project slug lookup) in API endpoint <!-- created_at: 2026-06-17T12:00:00 priority: high -->
 - [x] Phase 2.4: Create `assets/js/opencode.js` with core helpers: executeCommand, pollProgress, displayResult, duplicate guard <!-- created_at: 2026-06-17T12:00:00 priority: high -->
-- [ ] Phase 2.5: Add command toolbar to `view/agents.php` — full buttons, argument input, results panel <!-- created_at: 2026-06-17T12:00:00 priority: high -->
-- [ ] Phase 2.6: Wire command buttons on `view/kanban.php`, `view/dashboard.php`, `view/roadmap.php`, `view/next.php`, `view/design.php` with toast result display <!-- created_at: 2026-06-17T12:00:00 priority: high -->
+- [x] Phase 2.5: Add command toolbar to `view/agents.php` — full buttons, argument input, results panel <!-- created_at: 2026-06-17T12:00:00 priority: high -->
+- [x] Phase 2.6: Wire command buttons on `view/kanban.php`, `view/dashboard.php`, `view/roadmap.php`, `view/next.php`, `view/design.php` with toast result display <!-- created_at: 2026-06-17T12:00:00 priority: high -->
 - [ ] Phase 2.7: Auto-refresh roadmap/next views after successful `/plan` or `/next` execution, show manual instructions when OpenCode unavailable <!-- created_at: 2026-06-17T12:00:00 priority: normal -->
 - [ ] Phase 2.8: Bootstrap confirm dialog for destructive commands (`/document`) <!-- created_at: 2026-06-17T12:00:00 priority: normal -->
 - [ ] Phase 2.9: Integration verification — run end-to-end test of all five commands across Agents and one other view, confirm progress output + error handling work correctly <!-- created_at: 2026-06-17T12:00:00 priority: high -->
