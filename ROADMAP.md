@@ -6,11 +6,11 @@
 
 Centralize AI orchestration through OpenCode, replacing custom PHP-based AI flows with the `/plan` command pipeline. This is the current active work item in `KANBAN.md`'s **In Progress** section.
 
-- [ ] Deprecate custom PHP AI workflows (`lib/roadmap.php`, `lib/ai.php`, `config/ai_prompts.json`)
-  - [ ] Review recently implemented roadmap generation code for deprecation boundaries
-  - [ ] Decide remove/deprecate/adapt strategy for custom roadmap-generation code
-  - [ ] Remove or deprecate prompts after `/plan` integration is validated
-  - [ ] Confirm planning delegations route to OpenCode `/plan`
+- [x] Deprecate custom PHP AI workflows (`lib/roadmap.php`, `lib/ai.php`, `config/ai_prompts.json`)
+  - [x] Review recently implemented roadmap generation code for deprecation boundaries
+  - [x] Decide remove/deprecate/adapt strategy for custom roadmap-generation code
+  - [x] Remove or deprecate prompts after `/plan` integration is validated
+  - [x] Confirm planning delegations route to OpenCode `/plan`
 - [ ] Implement OpenCode settings (`lib/settings.php`, `view/settings.php`)
   - [ ] Enable/toggle, server host/port/timeout, executable path, project working directory configs
   - [ ] Add validation on save
