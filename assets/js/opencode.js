@@ -53,6 +53,9 @@ async function executeAndDisplayCommand(command, projectSlug = null, outputConta
     // Show loading state
     outputContainer.innerHTML = '<div class="alert alert-info">Executing command...</div>';
 
+    const isRoadmapView = window.location.pathname.includes('/roadmap');
+    const isNextView = window.location.pathname.includes('/next');
+
     try {
         const result = await executeCommand(command, projectSlug);
 
@@ -80,6 +83,42 @@ async function executeAndDisplayCommand(command, projectSlug = null, outputConta
         }
 
         outputContainer.innerHTML = content;
+
+        // Auto-refresh roadmap/next views after successful plan/next command
+        if ((isRoadmapView || isNextView) && (command === '/plan' || command === '/next')) {
+            // For roadmap and next views, show success toast with refresh button
+            const toastContainer = document.getElementById('opencode-toast-container');
+            if (!toastContainer) {
+                // Create toast container if it doesn't exist
+                const container = document.createElement('div');
+                container.id = 'opencode-toast-container';
+                container.className = 'position-fixed top-0 start-50 translate-middle-x mt-3 p-3';
+                container.style.zIndex = 1050;
+                document.body.appendChild(container);
+            }
+
+            // Create a temporary toast for confirmation
+            const successToast = document.createElement('div');
+            successToast.className = 'alert alert-success alert-dismissible fade show shadow-sm';
+            successToast.role = 'alert';
+            successToast.innerHTML = `
+                Command executed successfully.
+                <button type="button" class="btn btn-outline-success btn-sm ms-2" onclick="window.location.reload()">Refresh View</button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+
+            // Insert this in the toast container
+            const container = document.getElementById('opencode-toast-container');
+            if (container) {
+                container.appendChild(successToast);
+                // Auto-remove after 10 seconds to give time for action
+                setTimeout(() => {
+                    if (successToast.parentNode) {
+                        successToast.remove();
+                    }
+                }, 10000);
+            }
+        }
 
         return result;
     } catch (error) {

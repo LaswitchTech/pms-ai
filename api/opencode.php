@@ -39,7 +39,7 @@ $inputData = json_decode($rawInput, true);
 if (!is_array($inputData) || !isset($inputData['command'])) {
     // Use the health probe helper from OpenCodeClient which reads settings.json
     $probe = OpenCodeClient::healthProbe();
-    
+
     opencodeApiRespond($probe);
 } else {
     // This is a command execution request - validate and execute command
@@ -47,18 +47,18 @@ if (!is_array($inputData) || !isset($inputData['command'])) {
     // Validate command
     $validCommands = ['/plan', '/next', '/debug', '/review', '/document'];
     $command = trim((string) ($inputData['command'] ?? ''));
-    
+
     if (!in_array($command, $validCommands, true)) {
         opencodeApiRespond([
             'status' => 'error',
             'message'   => 'Command not supported. Must be one of: ' . implode(', ', $validCommands),
         ], 400);
     }
-    
+
     // Validate project slug if provided
     $projectSlug = trim((string) ($inputData['project_slug'] ?? ''));
     if (!empty($projectSlug)) {
-        // Load projects config from JSON  
+        // Load projects config from JSON
         $projectsConfig = json_decode(file_get_contents(__DIR__ . '/../config/projects.json'), true);
         if (empty($projectsConfig) || !isset($projectsConfig['projects'][$projectSlug])) {
             opencodeApiRespond([
@@ -66,7 +66,7 @@ if (!is_array($inputData) || !isset($inputData['command'])) {
                 'message'   => 'Project not found: ' . $projectSlug,
             ], 404);
         }
-        
+
         // Verify that the project directory actually exists
         $projectPath = $projectsConfig['projects'][$projectSlug]['path'] ?? '';
         if (empty($projectPath) || !is_dir($projectPath)) {
@@ -76,11 +76,11 @@ if (!is_array($inputData) || !isset($inputData['command'])) {
             ], 404);
         }
     }
-    
+
     // Get OpenCode settings for running the command
     require_once __DIR__ . '/../lib/settings.php';
     $settings = loadSettings(__DIR__ . '/../config/settings.json');
-    
+
     if (empty($settings['opencode_enabled']) || !is_bool($settings['opencode_enabled'])) {
         opencodeApiRespond([
             'status' => 'error',
@@ -91,10 +91,10 @@ if (!is_array($inputData) || !isset($inputData['command'])) {
     $host = (string) ($settings['opencode_host'] ?? 'localhost');
     $port = (int) ($settings['opencode_port'] ?? 8080);
     $timeout = (int) ($settings['opencode_timeout'] ?? 60);
-    
+
     // For command execution, we'll use a longer timeout
     $commandTimeout = max(60, $timeout * 2);
-    
+
     // Send the command to OpenCode
     // Note: This uses synchronous mode and blocks until completion (as per Phase 2 design)
     $result = OpenCodeClient::sendCommand(
@@ -104,7 +104,7 @@ if (!is_array($inputData) || !isset($inputData['command'])) {
         $command,
         $projectSlug ? [$projectSlug] : []
     );
-    
+
     // Format response for client consumption
     $output = '';
     if (is_string($result['body'])) {
@@ -115,12 +115,12 @@ if (!is_array($inputData) || !isset($inputData['command'])) {
         // In case where the response is just an array, output it as JSON
         $output = json_encode($result['body']);
     }
-    
+
     $commitHash = null;
     if (is_array($result['body']) && isset($result['body']['commitHash'])) {
         $commitHash = $result['body']['commitHash'];
     }
-    
+
     opencodeApiRespond([
         'status' => $result['status'],
         'output'   => $output,
