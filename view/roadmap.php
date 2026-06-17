@@ -171,6 +171,34 @@ $renderedRoadmap = $fileExists ? renderRoadmapMarkdown($content) : '';
         </div>
     </div>
 
+    <!-- OpenCode Command Toolbar -->
+    <article class="card roadmap-card mb-4">
+        <div class="card-body p-4">
+            <h2 class="h5 mb-3">OpenCode Commands</h2>
+
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <button type="button" class="btn btn-outline-primary btn-sm command-btn" data-command="/plan">Plan</button>
+                <button type="button" class="btn btn-outline-success btn-sm command-btn" data-command="/next">Next</button>
+                <button type="button" class="btn btn-outline-info btn-sm command-btn" data-command="/debug">Debug</button>
+                <button type="button" class="btn btn-outline-warning btn-sm command-btn" data-command="/review">Review</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm command-btn" data-command="/document">Document</button>
+            </div>
+
+            <div class="mb-3">
+                <label for="command-project-slug" class="form-label small">Project Slug (optional)</label>
+                <input type="text"
+                       id="command-project-slug"
+                       class="form-control form-control-sm"
+                       placeholder="Enter project slug if needed"
+                       value="<?= $projectSlug ? e($projectSlug) : '' ?>">
+            </div>
+
+            <div id="command-result" class="mt-3">
+                <!-- Command results will be displayed here -->
+            </div>
+        </div>
+    </article>
+
     <?php if ($roadmapCreateError !== null): ?>
         <div class="alert alert-warning">
             <strong>ROADMAP.md could not be created.</strong> <?= e($roadmapCreateError); ?>
@@ -187,3 +215,64 @@ $renderedRoadmap = $fileExists ? renderRoadmapMarkdown($content) : '';
         </article>
     <?php endif; ?>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Apply command button logic using existing JS helper from assets/js/opencode.js
+        const commandButtons = document.querySelectorAll('.command-btn');
+        const projectSlugInput = document.getElementById('command-project-slug');
+        const resultDiv = document.getElementById('command-result');
+
+        // Simple toast notification system for roadmap view (reusing existing toast infrastructure)
+        function showCommandToast(message, type = 'info') {
+            // Create or reuse toast container
+            let toastContainer = document.getElementById('opencode-toast-container');
+            if (!toastContainer) {
+                toastContainer = document.createElement('div');
+                toastContainer.id = 'opencode-toast-container';
+                toastContainer.className = 'position-fixed top-0 start-50 translate-middle-x mt-3 p-3';
+                toastContainer.style.zIndex = 1050;
+                document.body.appendChild(toastContainer);
+            }
+
+            const toast = document.createElement('div');
+            toast.className = `alert alert-${type} alert-dismissible fade show shadow-sm`;
+            toast.role = 'alert';
+            toast.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+            }, 5000);
+        }
+
+        commandButtons.forEach(button => {
+            button.addEventListener('click', async function() {
+                const command = this.dataset.command;
+                const projectSlug = projectSlugInput.value.trim();
+
+                // Simple duplicate guard in this case just disables the button
+                this.disabled = true;
+                this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Executing...';
+
+                try {
+                    // Run the command and display result using existing helper
+                    await executeAndDisplayCommand(command, projectSlug || null, resultDiv);
+                } catch (error) {
+                    console.error('Command execution failed:', error);
+                } finally {
+                    // Reset button state
+                    this.disabled = false;
+                    this.innerHTML = command.charAt(1).toUpperCase() + command.slice(2);
+                }
+            });
+        });
+    });
+</script>

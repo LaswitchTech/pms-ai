@@ -719,6 +719,34 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
         </div>
     </div>
 
+    <!-- OpenCode Command Toolbar -->
+    <article class="card mb-4">
+        <div class="card-body p-4">
+            <h2 class="h5 mb-3">OpenCode Commands</h2>
+
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <button type="button" class="btn btn-outline-primary btn-sm command-btn" data-command="/plan">Plan</button>
+                <button type="button" class="btn btn-outline-success btn-sm command-btn" data-command="/next">Next</button>
+                <button type="button" class="btn btn-outline-info btn-sm command-btn" data-command="/debug">Debug</button>
+                <button type="button" class="btn btn-outline-warning btn-sm command-btn" data-command="/review">Review</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm command-btn" data-command="/document">Document</button>
+            </div>
+
+            <div class="mb-3">
+                <label for="command-project-slug" class="form-label small">Project Slug (optional)</label>
+                <input type="text"
+                       id="command-project-slug"
+                       class="form-control form-control-sm"
+                       placeholder="Enter project slug if needed"
+                       value="<?= $projectSlug ? e($projectSlug) : '' ?>">
+            </div>
+
+            <div id="command-result">
+                <!-- Command results will be displayed here -->
+            </div>
+        </div>
+    </article>
+
     <form method="post" action="<?= e($kanbanRoute); ?>" class="card border-0 shadow-sm mb-4" data-kanban-action-form data-kanban-reset-on-success data-kanban-render-column-on-success>
         <input type="hidden" name="action" value="add_column">
         <div class="card-body d-flex flex-wrap gap-2 align-items-end">
@@ -2523,4 +2551,34 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
         initializeTagFilter();
         applyTagFilter();
     })();
+
+    // Add command execution logic using existing JS helper from assets/js/opencode.js
+    document.addEventListener('DOMContentLoaded', function() {
+        // Apply command button logic using existing JS helper from assets/js/opencode.js
+        const commandButtons = document.querySelectorAll('.command-btn');
+        const projectSlugInput = document.getElementById('command-project-slug');
+        const resultDiv = document.getElementById('command-result');
+
+        commandButtons.forEach(button => {
+            button.addEventListener('click', async function() {
+                const command = this.dataset.command;
+                const projectSlug = projectSlugInput.value.trim();
+
+                // Simple duplicate guard in this case just disables the button
+                this.disabled = true;
+                this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Executing...';
+
+                try {
+                    // Run the command and display result using existing helper
+                    await executeAndDisplayCommand(command, projectSlug || null, resultDiv);
+                } catch (error) {
+                    console.error('Command execution failed:', error);
+                } finally {
+                    // Reset button state
+                    this.disabled = false;
+                    this.innerHTML = command.charAt(1).toUpperCase() + command.slice(2);
+                }
+            });
+        });
+    });
 </script>
