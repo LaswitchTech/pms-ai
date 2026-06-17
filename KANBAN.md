@@ -133,14 +133,6 @@
 
 ## In Progress
 - [ ] OpenCode Orchestration (Files: `lib/opencode.php`, `lib/settings.php`, `view/settings.php`, `view/dashboard.php`, `view/agents.php`, `view/kanban.php`, `view/roadmap.php`, `api/opencode.php`, `.opencode/commands/`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] Implement OpenCode settings (Files: `lib/settings.php`, `view/settings.php`, `lib/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add OpenCode enabled setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add OpenCode server host setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add OpenCode server port setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add OpenCode timeout setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Add OpenCode executable path setting for local/manual fallback <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Add OpenCode project working directory setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Validate OpenCode settings before saving <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
   - [ ] Implement OpenCode server integration (Files: `lib/opencode.php`, `api/opencode.php`, `view/dashboard.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Create reusable OpenCode client wrapper <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Confirm OpenCode server API endpoint and command execution payload format <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
@@ -172,6 +164,14 @@
   - [ ] Synchronize command templates into managed projects <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
 
 ## Done <!-- hide: copy -->
+- [x] Implement OpenCode settings (Files: `lib/settings.php`, `view/settings.php`, `lib/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:04:04-04:00 priority: high -->
+  - [x] Add OpenCode enabled setting <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:03:57-04:00 priority: high -->
+  - [x] Add OpenCode server host setting <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:03:58-04:00 priority: high -->
+  - [x] Add OpenCode server port setting <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:03:59-04:00 priority: high -->
+  - [x] Add OpenCode timeout setting <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:04:00-04:00 priority: normal -->
+  - [x] Add OpenCode executable path setting for local/manual fallback <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:04:01-04:00 priority: normal -->
+  - [x] Add OpenCode project working directory setting <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:04:02-04:00 priority: high -->
+  - [x] Validate OpenCode settings before saving <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:04:02-04:00 priority: normal -->
 - [x] Review and deprecate custom PHP AI workflows (Files: `lib/roadmap.php`, `lib/ai.php`, `config/ai_prompts.json`, `assets/prompts/`) <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T08:02:07-04:00 priority: high -->
   - [x] Review recently implemented `lib/roadmap.php` and `lib/ai.php` roadmap-generation code <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T08:02:06-04:00 priority: high -->
   - [x] Decide whether to remove, deprecate, or adapt custom roadmap-generation code <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T08:02:05-04:00 priority: high -->
