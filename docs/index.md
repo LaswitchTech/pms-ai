@@ -16,6 +16,11 @@ Navigation hub for all application documentation.
 
 - [API Reference](api-reference.md) — Request/response schemas for all active AJAX endpoints
 
+## Server & External APIs
+
+- [OpenCode Server Docs](opencode/server.md) — OpenCode 1.x server, SSE stream, session flow, auth, and SDK details
+- [Ollama REST API](ollama/api.md) — Ollama completions, chat, embeddings, and control endpoint specs
+
 ## Historical / Changelog
 
 - [AI Prompts Registry Design](ai_prompts_registry_design.md) — Original design document for prompt registry structure
