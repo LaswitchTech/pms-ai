@@ -2,9 +2,9 @@
 
 /**
  * AI Prompts Registry - Centralized storage and management of AI prompts.
- * 
+ *
  * This class provides a registry for storing and retrieving AI prompts used by
- * the application's AI services. All hardcoded prompts in lib/ai.php and 
+ * the application's AI services. All hardcoded prompts in lib/ai.php and
  * lib/roadmap.php will be extracted to this registry.
  */
 
@@ -20,10 +20,10 @@ class AIPromptsRegistry {
      */
     public function __construct(string $configFile = __DIR__ . '/../config/ai_prompts.json') {
         $this->configFile = $configFile;
-        
+
         // Load defaults from code
         $this->loadDefaults();
-        
+
         // Load config file prompts if it exists
         $this->loadFromFile();
     }
@@ -39,12 +39,12 @@ class AIPromptsRegistry {
         if (isset($this->prompts[$key])) {
             return $this->prompts[$key]['template'];
         }
-        
+
         // Return fallback default if available
         if (isset($this->defaults[$key])) {
             return $this->defaults[$key];
         }
-        
+
         // No prompt found
         return null;
     }
@@ -72,13 +72,13 @@ class AIPromptsRegistry {
             'model' => $model !== null ? $model : $existingModel
         ];
 
-        // Save to both JSON config file AND markdown file with fallback behavior  
+        // Save to both JSON config file AND markdown file with fallback behavior
         return $this->saveToBoth($key, $template, $model);
     }
-    
+
     /**
      * Save prompt to both JSON file and markdown file (fallback to JSON on markdown failure)
-     * 
+     *
      * @param string $key The prompt key
      * @param string $template The prompt template
      * @param string|null $model Optional Ollama model name for this prompt
@@ -88,19 +88,19 @@ class AIPromptsRegistry {
         // First attempt to save to markdown file (this is the primary authoritative source)
         $markdownDir = dirname(__DIR__) . '/assets/prompts/';
         $markdownFile = $markdownDir . $key . '.md';
-        
+
         $markdownSuccess = false;
         if (is_dir($markdownDir) || mkdir($markdownDir, 0755, true)) {
             // Write to markdown file - this is the primary authoritative source
             $markdownSuccess = file_put_contents($markdownFile, $template) !== false;
         }
-        
+
         // If writing to markdown failed, fall back to JSON
         if (!$markdownSuccess) {
             return $this->saveToFile();
         }
-        
-        // If markdown succeeded, also write the metadata to JSON for consistency 
+
+        // If markdown succeeded, also write the metadata to JSON for consistency
         // (but keep model in the prompt entry since setPrompt already has set it)
         return $this->saveToFile();
     }
@@ -170,16 +170,16 @@ class AIPromptsRegistry {
         $this->defaults = [
             // Task-related prompts (no specific model specified)
             'task_decomposition' => "Please decompose the following task into 3-5 logical subtasks:\n\n{task_description}\n\nFormat your response as a markdown list with subtasks numbered.",
-            
+
             'task_subtasks' => "Generate 3-5 detailed subtasks for the following main task:\n\n{task_description}\n\nFormat each subtask with a brief description only, one per line.",
-            
+
             'task_priority' => "Based on the following task description, please suggest a priority level from the options: high, medium, low\n\n{task_description}\n\nRespond with only the priority level (high/medium/low) and nothing else.",
-            
-            // Roadmap-related prompts (no specific model specified) 
+
+            // Roadmap-related prompts (no specific model specified)
             'roadmap_generation' => "Generate a ROADMAP.md file based on the following KANBAN.md content. Structure it in proper markdown with sections, and include release milestones and timeline information:\n\n### KANBAN.md Content:\n{kanban_content}\n\nGenerate a comprehensive roadmap that includes:\n1. Release milestones\n2. Timeline estimation\n3. Priority ordering of tasks\n4. Strategic planning considerations\n\nFormat properly with markdown headers and lists.",
-            
+
             'release_milestones' => "Extract and organize the following KANBAN.md content into release milestones:\n\n{kanban_content}\n\nGenerate a list of release milestones with approximate dates, based on task dependencies and complexity. Format as a markdown list.",
-            
+
             'project_timeline' => "Based on the following KANBAN.md content, generate a project timeline with key dates:\n\n{kanban_content}\n\nCreate a timeline that shows planned completion dates for major features or groups of tasks. Format it as a markdown timeline."
         ];
     }
@@ -192,18 +192,18 @@ class AIPromptsRegistry {
             // If config doesn't exist, just return - defaults will be used
             return;
         }
-        
+
         $content = file_get_contents($this->configFile);
         if ($content === false) {
             return;
         }
-        
+
         $data = json_decode($content, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             // Log error or handle gracefully - not critical
             return;
         }
-        
+
         // Build metadata map from config (key -> metadata), NOT templates
         $metadataMap = [];
         foreach ($data as $promptData) {
@@ -317,7 +317,7 @@ function getPrompt(string $key): ?string {
  * Set a prompt template by key (helper function)
  *
  * @param string $key The prompt key
- * @param string $template The prompt template  
+ * @param string $template The prompt template
  * @param string|null $model Optional Ollama model name for this prompt
  * @return bool Success status
  */

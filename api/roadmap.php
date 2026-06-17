@@ -47,10 +47,10 @@ if (empty(trim($kanbanContent))) {
 try {
     // Include the roadmap generation functions
     require_once __DIR__ . '/../lib/roadmap.php';
-    
+
     // Generate complete roadmap from kanban content
     $result = generateCompleteRoadmap($kanbanContent);
-    
+
     if (!$result['success']) {
         http_response_code(500);
         header('Content-Type: application/json');
@@ -60,7 +60,7 @@ try {
         ]);
         exit;
     }
-    
+
     // Return the generated roadmap data as JSON
     header('Content-Type: application/json');
     echo json_encode([
@@ -69,7 +69,7 @@ try {
         'milestones' => $result['milestones'],
         'timeline' => $result['timeline']
     ]);
-    
+
 } catch (Exception $e) {
     http_response_code(500);
     header('Content-Type: application/json');

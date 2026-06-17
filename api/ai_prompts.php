@@ -36,7 +36,7 @@ if (setPrompt($key, $template, $model)) {
             break;
         }
     }
-    
+
     echo json_encode([
         'success' => true,
         'message' => 'Prompt saved successfully',

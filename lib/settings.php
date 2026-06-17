@@ -52,23 +52,23 @@ function loadSettings(string $path): array
 function saveSettings(string $path, array $settings): bool
 {
     // Validate port (integer 1-65535)
-    if (isset($settings['ollama_port']) && 
-        (!is_numeric($settings['ollama_port']) || 
-         $settings['ollama_port'] < 1 || 
+    if (isset($settings['ollama_port']) &&
+        (!is_numeric($settings['ollama_port']) ||
+         $settings['ollama_port'] < 1 ||
          $settings['ollama_port'] > 65535)) {
         return false;
     }
 
     // Validate timeout (min 5)
-    if (isset($settings['ollama_timeout']) && 
-        (!is_numeric($settings['ollama_timeout']) || 
+    if (isset($settings['ollama_timeout']) &&
+        (!is_numeric($settings['ollama_timeout']) ||
          $settings['ollama_timeout'] < 5)) {
         return false;
     }
 
     // Validate context_window (min 256)
-    if (isset($settings['ollama_context_window']) && 
-        (!is_numeric($settings['ollama_context_window']) || 
+    if (isset($settings['ollama_context_window']) &&
+        (!is_numeric($settings['ollama_context_window']) ||
          $settings['ollama_context_window'] < 256)) {
         return false;
     }
