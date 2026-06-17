@@ -181,4 +181,61 @@ final class OpenCodeClient
 
         return self::isAvailable($host, $port, $timeout);
     }
+
+    /**
+     * Start an asynchronous command execution and return a task ID.
+     *
+     * This method is for future async implementation. For now, it implements
+     * synchronous behavior to maintain backward compatibility with Phase 2.1.
+     *
+     * @param string $host Hostname or IP address
+     * @param int $port TCP port number
+     * @param int $timeout Timeout in seconds
+     * @param string $command Command name (e.g. "plan", "next", "debug")
+     * @param list<string> $arguments Optional command arguments
+     * @return array{id: string, status: string}
+     */
+    public static function startCommand(
+        string $host,
+        int $port,
+        int $timeout,
+        string $command,
+        array $arguments = []
+    ): array {
+        // For Phase 2, we keep this as synchronous but still return a "task" structure
+        // to support future async integration
+        $result = self::sendCommand($host, $port, $timeout, $command, $arguments);
+
+        // Return a task-like structure, even for synchronous execution
+        // This prepares the interface for async implementations while maintaining backward compatibility
+        return [
+            'id' => md5($command . serialize($arguments) . time()), // Simple unique ID generation
+            'status' => $result['status']
+        ];
+    }
+
+    /**
+     * Poll for command status and results using a task ID.
+     *
+     * This method is intended for async execution patterns and returns
+     * progress information if the server supports it. For Phase 2,
+     * this will return completed status immediately.
+     *
+     * @param string $host Hostname or IP address
+     * @param int $port TCP port number
+     * @param string $taskId The task ID returned from startCommand
+     * @return array{status: string, output: mixed|null, errors: string|null, isComplete: bool}
+     */
+    public static function pollCommand(string $host, int $port, string $taskId): array
+    {
+        // In Phase 2 with synchronous implementation, we just return completed status
+        // This is for future async support - we could implement actual polling logic here if needed
+
+        return [
+            'status' => 'completed',
+            'output' => null,
+            'errors' => null,
+            'isComplete' => true
+        ];
+    }
 }
