@@ -128,14 +128,11 @@
 - [ ] Implement a blog article workflow for LaswitchTech.com <!-- created_at: 2026-06-16T19:06:58-04:00 priority: normal -->
 - [ ] Implement CRUD functions for managing projects <!-- created_at: 2026-06-16T19:08:37-04:00 priority: normal -->
 - [ ] Implement a link a project. Which will create a symlink to the directory specified. Start with a basic text input. Later implement a file explorer so the user can more easily select the folder. <!-- created_at: 2026-06-16T19:10:02-04:00 priority: normal -->
+- [ ] Move project meta data into a metadata.json file in the root of project directories. This could include version, name, created and modified. slug would be determined by the folder name. The git repository could be retrieved locally from the folder using git. Path could be calculated from the project path or symlink. <!-- created_at: 2026-06-16T20:25:46-04:00 priority: normal -->
+- [ ] Remove the concept of active_project within `/config/projects.json`. <!-- created_at: 2026-06-16T20:26:30-04:00 priority: normal -->
 
 ## In Progress
 - [ ] OpenCode Orchestration (Files: `lib/opencode.php`, `lib/settings.php`, `view/settings.php`, `view/dashboard.php`, `view/agents.php`, `view/kanban.php`, `view/roadmap.php`, `api/opencode.php`, `.opencode/commands/`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] Review and deprecate custom PHP AI workflows (Files: `lib/roadmap.php`, `lib/ai.php`, `config/ai_prompts.json`, `assets/prompts/`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Review recently implemented `lib/roadmap.php` and `lib/ai.php` roadmap-generation code <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Decide whether to remove, deprecate, or adapt custom roadmap-generation code <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Remove or deprecate roadmap-generation prompts after OpenCode `/plan` integration is validated <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Ensure planning remains delegated to OpenCode `/plan` instead of local PHP AI prompts <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
   - [ ] Implement OpenCode settings (Files: `lib/settings.php`, `view/settings.php`, `lib/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Add OpenCode enabled setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Add OpenCode server host setting <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
@@ -175,6 +172,11 @@
   - [ ] Synchronize command templates into managed projects <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
 
 ## Done <!-- hide: copy -->
+- [x] Review and deprecate custom PHP AI workflows (Files: `lib/roadmap.php`, `lib/ai.php`, `config/ai_prompts.json`, `assets/prompts/`) <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T08:02:07-04:00 priority: high -->
+  - [x] Review recently implemented `lib/roadmap.php` and `lib/ai.php` roadmap-generation code <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T08:02:06-04:00 priority: high -->
+  - [x] Decide whether to remove, deprecate, or adapt custom roadmap-generation code <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T08:02:05-04:00 priority: high -->
+  - [x] Remove or deprecate roadmap-generation prompts after OpenCode `/plan` integration is validated <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T08:02:01-04:00 priority: normal -->
+  - [x] Ensure planning remains delegated to OpenCode `/plan` instead of local PHP AI prompts <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T08:02:04-04:00 priority: high -->
 - [x] Migrate Prompts from JSON to Markdown Files (Files: `lib/ai_prompts.php`, `config/ai_prompts.json`) <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:18-04:00 priority: high -->
   - [x] Create `/assets/prompts/{key}.md` markdown files for each prompt template currently in `config/ai_prompts.json` <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:14-04:00 priority: high -->
   - [x] Update `AIPromptsRegistry::loadFromFile()` to fall back to reading markdown template files from `/assets/prompts/` <!-- created_at: 2026-06-16T11:00:00-04:00 completed_at: 2026-06-16T12:19:15-04:00 priority: high -->
