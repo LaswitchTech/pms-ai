@@ -133,13 +133,6 @@
 
 ## In Progress
 - [ ] OpenCode Orchestration (Files: `lib/opencode.php`, `lib/settings.php`, `view/settings.php`, `view/dashboard.php`, `view/agents.php`, `view/kanban.php`, `view/roadmap.php`, `api/opencode.php`, `.opencode/commands/`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-  - [ ] Implement OpenCode server integration (Files: `lib/opencode.php`, `api/opencode.php`, `view/dashboard.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Create reusable OpenCode client wrapper <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Confirm OpenCode server API endpoint and command execution payload format <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Detect OpenCode server availability <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Show OpenCode availability on dashboard <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Show Ollama availability on dashboard using existing Ollama settings <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
-    - [ ] Add fallback/manual execution instructions when OpenCode server is unavailable <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
   - [ ] Implement OpenCode command execution UI (Files: `view/agents.php`, `view/kanban.php`, `view/roadmap.php`, `assets/js/opencode.js`, `api/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Add command buttons for `/plan`, `/next`, `/debug`, `/review`, and `/document` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Add argument input field for commands that require user context such as `/debug` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
@@ -164,6 +157,13 @@
   - [ ] Synchronize command templates into managed projects <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
 
 ## Done <!-- hide: copy -->
+- [x] Implement OpenCode server integration (Files: `lib/opencode.php`, `api/opencode.php`, `view/dashboard.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:49:33-04:00 priority: high -->
+  - [x] Create reusable OpenCode client wrapper <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:49:19-04:00 priority: high -->
+  - [x] Confirm OpenCode server API endpoint and command execution payload format <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:49:20-04:00 priority: high -->
+  - [x] Detect OpenCode server availability <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:49:21-04:00 priority: high -->
+  - [x] Show OpenCode availability on dashboard <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:49:22-04:00 priority: normal -->
+  - [x] Show Ollama availability on dashboard using existing Ollama settings <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:49:22-04:00 priority: normal -->
+  - [x] Add fallback/manual execution instructions when OpenCode server is unavailable <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:49:23-04:00 priority: normal -->
 - [x] Implement OpenCode settings (Files: `lib/settings.php`, `view/settings.php`, `lib/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:04:04-04:00 priority: high -->
   - [x] Add OpenCode enabled setting <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:03:57-04:00 priority: high -->
   - [x] Add OpenCode server host setting <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-17T12:03:58-04:00 priority: high -->
