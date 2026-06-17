@@ -1,0 +1,116 @@
+/**
+ * OpenCode command execution utilities
+ */
+
+/**
+ * Execute an OpenCode command via AJAX
+ * 
+ * @param {string} command - The command to execute (e.g., "/plan", "/next")  
+ * @param {string|null} projectSlug - Optional project slug
+ * @param {Function} onProgress - Callback for progress updates
+ * @returns {Promise<Object>} Command execution result
+ */
+async function executeCommand(command, projectSlug = null, onProgress = null) {
+    const payload = {
+        command: command
+    };
+    
+    if (projectSlug) {
+        payload.project_slug = projectSlug;
+    }
+    
+    try {
+        const response = await fetch('/api/opencode.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+        
+        const result = await response.json();
+        
+        // If we got an error, throw it
+        if (result.status === 'error') {
+            throw new Error(result.message || result.errors || 'Command execution failed');
+        }
+        
+        return result;
+    } catch (error) {
+        console.error('OpenCode command failed:', error);
+        throw error;
+    }
+}
+
+/**
+ * Execute a command and display results
+ * 
+ * @param {string} command - The command to execute 
+ * @param {string|null} projectSlug - Optional project slug
+ * @param {HTMLElement} outputContainer - Where to display result
+ */
+async function executeAndDisplayCommand(command, projectSlug = null, outputContainer) {
+    // Show loading state
+    outputContainer.innerHTML = '<div class="alert alert-info">Executing command...</div>';
+    
+    try {
+        const result = await executeCommand(command, projectSlug);
+        
+        // Format the output for display
+        let content = '';
+        
+        if (result.errors) {
+            content += `<div class="alert alert-danger">
+                <strong>Errors:</strong><br>
+                <pre>${escapeHtml(result.errors)}</pre>
+            </div>`;
+        }
+        
+        if (result.output) {
+            content += `<div class="card">
+                <div class="card-header">Output</div>
+                <div class="card-body">
+                    <pre>${escapeHtml(result.output)}</pre>
+                </div>
+            </div>`;
+        }
+        
+        if (result.commitHash) {
+            content += `<div class="mt-2 small text-muted">Commit: ${escapeHtml(result.commitHash)}</div>`;
+        }
+        
+        outputContainer.innerHTML = content;
+        
+        return result;
+    } catch (error) {
+        outputContainer.innerHTML = `<div class="alert alert-danger">
+            <strong>Command failed:</strong> ${escapeHtml(error.message)}
+        </div>`;
+        throw error;
+    }
+}
+
+/**
+ * Simple HTML escaping function
+ * 
+ * @param {string} unsafe - Unsafe string to escape
+ * @returns {string} Escaped string
+ */
+function escapeHtml(unsafe) {
+    if (typeof unsafe !== 'string') return '';
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+// Export for use in other modules
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        executeCommand,
+        executeAndDisplayCommand,
+        escapeHtml
+    };
+}
