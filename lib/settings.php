@@ -15,7 +15,6 @@ function loadSettings(string $path): array
         'ollama_timeout' => 30,
         'ollama_context_window' => 4096,
         'ollama_model' => '',
-        'opencode_enabled' => false,
         'opencode_host' => 'localhost',
         'opencode_port' => 8080,
         'opencode_timeout' => 60,
@@ -73,10 +72,7 @@ function saveSettings(string $path, array $settings): bool
         return false;
     }
 
-    // Ensure all required fields are present; saveSettings intentionally omits
-    // opencode_enabled here so that future saves do not re-inject the key.
-    // loadSettings() still provides it as a backward-compat default for existing
-    // configs that have the key present.
+    // Ensure all required fields are present; opencode_enabled removed — assumed on, never toggled off.
     $defaultSettings = [
         'timezone' => null,
         'ollama_host' => 'localhost',

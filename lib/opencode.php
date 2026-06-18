@@ -245,13 +245,6 @@ final class OpenCodeClient
 
         $settings = loadSettings($settingsPath);
 
-        if (empty($settings['opencode_enabled']) || !is_bool($settings['opencode_enabled'])) {
-            return [
-                'available' => false,
-                'message'   => 'OpenCode is not enabled in settings.',
-            ];
-        }
-
         $host = (string) ($settings['opencode_host'] ?? 'localhost');
         $port = (int) ($settings['opencode_port'] ?? 8080);
         $timeout = (int) ($settings['opencode_timeout'] ?? 60);

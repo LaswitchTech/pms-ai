@@ -59,13 +59,6 @@ if (!is_array($inputData) || !isset($inputData['command'])) {
     require_once __DIR__ . '/../lib/settings.php';
     $settings = loadSettings(__DIR__ . '/../config/settings.json');
 
-    if (empty($settings['opencode_enabled']) || !is_bool($settings['opencode_enabled'])) {
-        opencodeApiRespond([
-            'status' => 'error',
-            'message'   => 'OpenCode is not enabled in settings.',
-        ], 400);
-    }
-
     $host = (string) ($settings['opencode_host'] ?? 'localhost');
     $port = (int) ($settings['opencode_port'] ?? 8080);
     $timeout = (int) ($settings['opencode_timeout'] ?? 60);

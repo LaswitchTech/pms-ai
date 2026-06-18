@@ -117,5 +117,6 @@ $showPageTitle = $pageTitle !== 'Dashboard';
             <?php endif; ?>
         </main>
     </div>
+    <script src="/assets/js/opencode.js"></script>
 </body>
 </html>
