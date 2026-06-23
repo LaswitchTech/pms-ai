@@ -134,7 +134,7 @@
 ## In Progress
 - [ ] OpenCode Orchestration (Files: `lib/opencode.php`, `lib/settings.php`, `view/settings.php`, `view/dashboard.php`, `view/agents.php`, `view/kanban.php`, `view/roadmap.php`, `api/opencode.php`, `.opencode/commands/`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
   - [ ] Implement OpenCode command execution UI (Files: `view/agents.php`, `view/kanban.php`, `view/roadmap.php`, `assets/js/opencode.js`, `api/opencode.php`) <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
-    - [ ] Add command buttons for `/plan`, `/next`, `/debug`, `/review`, and `/document` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
+    - [x] Add command buttons for `/plan`, `/next`, `/debug`, `/review`, and `/document` <!-- created_at: 2026-06-16T16:18:38-04:00 completed_at: 2026-06-18T10:01:19-04:00 priority: high -->
     - [ ] Add argument input field for commands that require user context such as `/debug` <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->
     - [ ] Execute `/plan` through OpenCode for the active project <!-- created_at: 2026-06-16T16:18:38-04:00 priority: high -->
     - [ ] Execute `/next`, `/debug`, `/review`, and `/document` through OpenCode for the active project <!-- created_at: 2026-06-16T16:18:38-04:00 priority: normal -->

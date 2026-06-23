@@ -82,14 +82,17 @@ final class OpenCodeClient
             ];
         }
 
-        curl_setopt_array($curl, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST           => true,
-            CURLOPT_TIMEOUT        => $timeout,
-            CURLOPT_CONNECTTIMEOUT => min(3, $timeout),
-            CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
-            CURLOPT_POSTFIELDS     => json_encode([]),
-        ]);
+    curl_setopt_array($curl, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_TIMEOUT        => $timeout,
+        CURLOPT_CONNECTTIMEOUT => min(3, $timeout),
+        CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+        // Per OpenCode spec (docs/opencode/server.md line 151):
+        // POST /session expects body { parentID?, title? }.
+        // Sending an empty object {} is rejected with HTTP 400.
+        CURLOPT_POSTFIELDS => json_encode(['title' => 'API session']),
+    ]);
 
         $response = curl_exec($curl);
         $error    = curl_error($curl);
@@ -156,13 +159,16 @@ final class OpenCodeClient
     ): array {
         $url = sprintf('http://%s:%d/session/%s/command', rtrim($host, '/'), $port, urlencode($sessionId));
 
-        // Build the arguments field as a plain string (OpenCode requirement)
+        // OpenCode server spec (docs/opencode/server.md line 179):
+        // POST /session/:id/command expects { messageID?, agent?, model?, command, arguments }
+        // where 'command' is the slash command and 'arguments' are optional string args.
         $commandArg = $command[0] === '/' ? $command : '/' . trim($command, '/');
 
         $payload = [
             'agent'     => $agent,
             'model'     => $model,
-            'arguments' => $commandArg,
+            'command'   => $commandArg,
+            'arguments' => [],
         ];
 
         $curl = curl_init($url);
