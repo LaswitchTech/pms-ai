@@ -110,9 +110,41 @@ function renderTimeAgo(?string $timestamp): string
 }
 
 
+function taskStatusLabel(array $task): string
+{
+    return match ($task['status'] ?? 'open') {
+        'done' => 'Done',
+        'in_progress' => 'In Progress',
+        default => 'Open',
+    };
+}
+
+function taskStatusBadgeClass(array $task): string
+{
+    return match ($task['status'] ?? 'open') {
+        'done' => 'text-bg-success',
+        'in_progress' => 'text-bg-warning text-dark',
+        default => 'text-bg-light border text-dark',
+    };
+}
+
+function taskStatusIconClass(array $task): string
+{
+    return match ($task['status'] ?? 'open') {
+        'done' => 'bi-check-circle-fill',
+        'in_progress' => 'bi-arrow-repeat',
+        default => 'bi-circle',
+    };
+}
+
+function taskIsDone(array $task): bool
+{
+    return ($task['status'] ?? 'open') === 'done';
+}
+
 function dueDateClass(array $task): string
 {
-    if (!empty($task['done']) || empty($task['due_at'])) {
+    if (taskIsDone($task) || empty($task['due_at'])) {
         return 'text-muted';
     }
 
@@ -136,7 +168,7 @@ function dueDateClass(array $task): string
 
 function dueDateIndicator(array $task): ?array
 {
-    if (!empty($task['done']) || empty($task['due_at'])) {
+    if (taskIsDone($task) || empty($task['due_at'])) {
         return null;
     }
 
@@ -190,10 +222,10 @@ function renderTaskNode(array $task, string $columnName, string $path, string $c
     $tagsHtml = renderTaskTags($task);
     $dueIndicator = dueDateIndicator($task);
     $hasIncompleteSubtasks = taskHasIncompleteSubtasks($task);
-    $toggleDisabled = empty($task['done']) && $hasIncompleteSubtasks;
+    $toggleDisabled = !taskIsDone($task) && $hasIncompleteSubtasks;
     $isTopLevel = $level === 0;
     ?>
-    <article class="card task-card task-node<?= !empty($task['done']) ? ' done' : ''; ?>" data-task="<?= e((string) $taskData); ?>">
+    <article class="card task-card task-node<?= taskIsDone($task) ? ' done' : ''; ?>" data-task="<?= e((string) $taskData); ?>">
         <div class="card-body">
             <div class="d-flex align-items-start align-items-center gap-2 mb-3">
                 <span class="drag-handle text-muted" title="Drag task">
@@ -203,11 +235,11 @@ function renderTaskNode(array $task, string $columnName, string $path, string $c
                     <input type="hidden" name="action" value="toggle_task">
                     <input type="hidden" name="column" value="<?= e($columnName); ?>">
                     <input type="hidden" name="path" value="<?= e($path); ?>">
-                    <button type="submit" class="badge border-0 <?= !empty($task['done']) ? 'text-bg-success' : 'text-bg-light border text-dark'; ?> mt-1" title="<?= $toggleDisabled ? 'Complete all subtasks before marking this task done.' : 'Toggle task status'; ?>" <?= $toggleDisabled ? 'disabled' : ''; ?>>
-                        <?= !empty($task['done']) ? 'Done' : 'Open'; ?>
+                    <button type="submit" class="badge border-0 <?= taskStatusBadgeClass($task); ?> mt-1" title="<?= $toggleDisabled ? 'Complete all subtasks before marking this task done.' : 'Toggle task status'; ?>" <?= $toggleDisabled ? 'disabled' : ''; ?>>
+                        <?= taskStatusLabel($task); ?>
                     </button>
                 </form>
-                <div class="task-title ms-auto <?= !empty($task['done']) ? 'text-decoration-line-through text-muted' : ''; ?>">
+                <div class="task-title ms-auto <?= taskIsDone($task) ? 'text-decoration-line-through text-muted' : ''; ?>">
                     <div class="task-title-badges d-flex flex-wrap gap-1 justify-content-end align-items-center">
                         <form method="post" action="<?= e($kanbanRoute); ?>" class="d-inline priority-form" data-kanban-action-form data-kanban-update-card-on-success>
                             <input type="hidden" name="action" value="update_priority">
@@ -274,7 +306,7 @@ function renderTaskNode(array $task, string $columnName, string $path, string $c
                 </div>
             </div>
             <div class="d-flex align-items-start gap-2 mb-3">
-                <div class="task-title flex-grow-1 <?= !empty($task['done']) ? 'text-decoration-line-through text-muted' : ''; ?>">
+                <div class="task-title flex-grow-1 <?= taskIsDone($task) ? 'text-decoration-line-through text-muted' : ''; ?>">
                     <div class="d-flex flex-column gap-2">
                         <h3 class="card-title h6 mb-0"><?= markdownInline((string) $task['title']); ?></h3>
                         <?php if ($description !== ''): ?>
@@ -361,11 +393,11 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
     $tagsHtml = renderTaskTags($task);
     $dueIndicator = dueDateIndicator($task);
     ?>
-    <article class="card task-card archived-task-node<?= !empty($task['done']) ? ' done' : ''; ?>">
+    <article class="card task-card archived-task-node<?= taskIsDone($task) ? ' done' : ''; ?>">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
-                <span class="badge <?= !empty($task['done']) ? 'text-bg-success' : 'text-bg-light border text-dark'; ?>">
-                    <?= !empty($task['done']) ? 'Done' : 'Open'; ?>
+                <span class="badge <?= taskStatusBadgeClass($task); ?>">
+                    <?= taskStatusLabel($task); ?>
                 </span>
                 <div class="task-title-badges d-flex flex-wrap gap-1 justify-content-end">
                     <span class="badge <?= e(priorityBadgeClass($task['priority'] ?? null)); ?> archived-priority-badge" title="Priority: <?= e(priorityLabel($task['priority'] ?? null)); ?>">
@@ -380,7 +412,7 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
                 </div>
             </div>
             <div class="d-flex flex-column gap-2 mb-2">
-                <div class="task-title <?= !empty($task['done']) ? 'text-decoration-line-through text-muted' : ''; ?>">
+                <div class="task-title <?= taskIsDone($task) ? 'text-decoration-line-through text-muted' : ''; ?>">
                     <h3 class="card-title h6 mb-0"><?= markdownInline((string) $task['title']); ?></h3>
                     <?php if ($description !== ''): ?>
                         <div class="task-description small text-muted mt-2">
@@ -1130,7 +1162,7 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
         }
 
         function dueDateClassForRender(task) {
-            if (task?.done || !task?.due_at) {
+            if (taskIsDoneForRender(task) || !task?.due_at) {
                 return 'text-muted';
             }
 
@@ -1155,7 +1187,7 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
         }
 
         function dueDateIndicatorForRender(task) {
-            if (task?.done || !task?.due_at) {
+            if (taskIsDoneForRender(task) || !task?.due_at) {
                 return null;
             }
 
@@ -1190,12 +1222,13 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
         function taskHasIncompleteSubtasksForRender(task) {
             const children = Array.isArray(task?.children) ? task.children : [];
 
-            return children.some((child) => !child.done || taskHasIncompleteSubtasksForRender(child));
+            return children.some((child) => !taskIsDoneForRender(child) || taskHasIncompleteSubtasksForRender(child));
         }
 
         function taskDataAttribute(task) {
             return JSON.stringify({
-                done: task?.done === true,
+                status: normalizeTaskStatusForRender(task),
+                done: taskIsDoneForRender(task),
                 title: String(task?.title || ''),
                 description: String(task?.description || ''),
                 tags: Array.isArray(task?.tags) ? task.tags : [],
@@ -1240,12 +1273,12 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
             const children = Array.isArray(normalizedTask.children) ? normalizedTask.children : [];
             const dueIndicator = dueDateIndicatorForRender(normalizedTask);
             const hasIncompleteSubtasks = taskHasIncompleteSubtasksForRender(normalizedTask);
-            const toggleDisabled = !normalizedTask.done && hasIncompleteSubtasks;
+            const toggleDisabled = !taskIsDoneForRender(normalizedTask) && hasIncompleteSubtasks;
             const isTopLevel = level === 0;
-            const doneClass = normalizedTask.done ? ' done' : '';
-            const titleDoneClass = normalizedTask.done ? ' text-decoration-line-through text-muted' : '';
-            const statusClass = normalizedTask.done ? 'text-bg-success' : 'text-bg-light border text-dark';
-            const statusLabel = normalizedTask.done ? 'Done' : 'Open';
+            const doneClass = taskIsDoneForRender(normalizedTask) ? ' done' : '';
+            const titleDoneClass = taskIsDoneForRender(normalizedTask) ? ' text-decoration-line-through text-muted' : '';
+            const statusClass = taskStatusBadgeClassForRender(normalizedTask);
+            const statusLabel = taskStatusLabelForRender(normalizedTask);
             const toggleTitle = toggleDisabled ? 'Complete all subtasks before marking this task done.' : 'Toggle task status';
             const priority = normalizeTaskPriorityForRender(normalizedTask.priority);
             const description = String(normalizedTask.description || '').trim();
@@ -1424,14 +1457,56 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
             return 'text-bg-primary';
         }
 
+        function normalizeTaskStatusForRender(task) {
+            const status = task && typeof task === 'object' ? String((task.status || '').trim()).toLowerCase() : '';
+
+            if (['open', 'in_progress', 'done'].includes(status)) {
+                return status;
+            }
+
+            return (task?.done === true) ? 'done' : 'open';
+        }
+
+        function taskIsDoneForRender(task) {
+            return normalizeTaskStatusForRender(task) === 'done';
+        }
+
+        function taskStatusLabelForRender(task) {
+            const status = normalizeTaskStatusForRender(task);
+
+            if (status === 'done') {
+                return 'Done';
+            }
+
+            if (status === 'in_progress') {
+                return 'In Progress';
+            }
+
+            return 'Open';
+        }
+
+        function taskStatusBadgeClassForRender(task) {
+            const status = normalizeTaskStatusForRender(task);
+
+            if (status === 'done') {
+                return 'text-bg-success';
+            }
+
+            if (status === 'in_progress') {
+                return 'text-bg-warning text-dark';
+            }
+
+            return 'text-bg-light border text-dark';
+        }
+
         function renderArchivedTaskNodeFromPayload(task, archiveIndex = null, level = 0) {
             const normalizedTask = task && typeof task === 'object' ? task : {};
             const children = Array.isArray(normalizedTask.children) ? normalizedTask.children : [];
             const dueIndicator = dueDateIndicatorForRender(normalizedTask);
-            const doneClass = normalizedTask.done ? ' done' : '';
-            const titleDoneClass = normalizedTask.done ? ' text-decoration-line-through text-muted' : '';
-            const statusClass = normalizedTask.done ? 'text-bg-success' : 'text-bg-light border text-dark';
-            const statusLabel = normalizedTask.done ? 'Done' : 'Open';
+            const doneClass = taskIsDoneForRender(normalizedTask) ? ' done' : '';
+            const titleDoneClass = taskIsDoneForRender(normalizedTask) ? ' text-decoration-line-through text-muted' : '';
+            const statusClass = taskStatusBadgeClassForRender(normalizedTask);
+            const statusLabel = taskStatusLabelForRender(normalizedTask);
             const priority = normalizeTaskPriorityForRender(normalizedTask.priority);
             const description = String(normalizedTask.description || '').trim();
             const descriptionHtml = description === '' ? '' : `
@@ -1649,7 +1724,7 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
                     return;
                 }
 
-                const shouldDisable = !task.done && taskHasIncompleteSubtasks(task);
+                const shouldDisable = !taskIsDoneForRender(task) && taskHasIncompleteSubtasks(task);
                 toggleButton.disabled = shouldDisable;
                 toggleButton.title = shouldDisable
                     ? 'Complete all subtasks before marking this task done.'
@@ -2178,7 +2253,7 @@ function renderArchivedTaskNode(array $task, string $kanbanRoute, ?int $archiveI
             const children = Array.isArray(task.children) ? task.children : [];
 
             return children.some((child) => {
-                if (!child.done) {
+                if (!taskIsDoneForRender(child)) {
                     return true;
                 }
 

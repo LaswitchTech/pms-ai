@@ -80,20 +80,23 @@ function renderDesignMarkdown(string $content): string
             continue;
         }
 
-        if (preg_match('/^-\s+\[( |x|X)\]\s+(.+)$/', $trimmed, $matches) === 1) {
+        if (preg_match('/^-\s+\[( |x|X|~)\]\s+(.+)$/', $trimmed, $matches) === 1) {
             if ($inList === false) {
                 $html .= '<ul class="list-group list-group-flush mb-4">';
                 $inList = true;
             }
 
-            $done = strtolower($matches[1]) === 'x';
-            $badge = $done ? '<span class="badge text-bg-success">Done</span>' : '<span class="badge text-bg-secondary">Open</span>';
+            $marker = strtolower($matches[1]);
+            $status = $marker === 'x' ? 'done' : ($marker === '~' ? 'in_progress' : 'open');
+            $done = $status === 'done';
+            $badgeLabel = $status === 'done' ? 'Done' : ($status === 'in_progress' ? 'In Progress' : 'Open');
+            $badgeClass = $status === 'done' ? 'text-bg-success' : ($status === 'in_progress' ? 'text-bg-warning text-dark' : 'text-bg-secondary');
             $titleClass = $done ? 'text-decoration-line-through text-muted' : '';
 
             $html .= '<li class="list-group-item d-flex gap-3 align-items-start px-0">'
-                . '<div class="pt-1"><i class="bi ' . ($done ? 'bi-check-circle-fill text-success' : 'bi-circle text-secondary') . '"></i></div>'
+                . '<div class="pt-1"><i class="bi ' . ($status === 'done' ? 'bi-check-circle-fill text-success' : ($status === 'in_progress' ? 'bi-pause-circle-fill text-warning' : 'bi-circle text-secondary')) . '"></i></div>'
                 . '<div class="flex-grow-1 ' . $titleClass . '">' . designMarkdownInline(trim($matches[2])) . '</div>'
-                . '<div>' . $badge . '</div>'
+                . '<div>><span class="badge ' . $badgeClass . '">' . $badgeLabel . '</span>' . '</div>'
                 . '</li>';
             continue;
         }

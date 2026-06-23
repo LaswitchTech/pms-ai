@@ -98,13 +98,15 @@ function toggleColumnControl(array &$columnSettings, string $columnName, string 
 
 function parseTaskLine(string $line): ?array
 {
-    if (preg_match('/^(\s*)-\s+\[( |x|X)\]\s+(.+)$/', $line, $matches) === 1) {
-        $done = strtolower($matches[2]) === 'x';
+    if (preg_match('/^(\s*)-\s+\[( |~|x|X)\]\s+(.+)$/', $line, $matches) === 1) {
+        $checkbox = strtolower($matches[2]);
+        $status = $checkbox === 'x' ? 'done' : ($checkbox === '~' ? 'in_progress' : 'open');
+        $done = in_array($checkbox, ['x', 'X'], true);
         $parsed = parseTaskMetadata(trim($matches[3]));
-
         return [
             'level' => intdiv(strlen(str_replace("\t", '  ', $matches[1])), 2),
             'done' => $done,
+            'status' => $status,
             'title' => $parsed['title'],
             'description' => '',
             'tags' => [],
@@ -124,7 +126,7 @@ function parseTaskLine(string $line): ?array
 
 function parseTaskDescriptionLine(string $line): ?array
 {
-    if (preg_match('/^(\s*)-\s+(?!\[(?: |x|X)\]\s+)(.+)$/', $line, $matches) === 1) {
+    if (preg_match('/^(\s*)-\s+(?!\[(?: |~|x|X)\]\s+)(.+)$/', $line, $matches) === 1) {
         return [
             'level' => intdiv(strlen(str_replace("\t", '  ', $matches[1])), 2),
             'description' => trim((string) $matches[2]),
@@ -652,7 +654,7 @@ function writeTasks(array $tasks, int $level = 0): string
         }
 
         $indent = str_repeat('  ', $level);
-        $checkbox = !empty($task['done']) ? 'x' : ' ';
+        $checkbox = $task['status'] === 'done' ? 'x' : ($task['status'] === 'in_progress' ? '~' : ' ');
         $content .= $indent . '- [' . $checkbox . '] ' . $title . formatTaskMetadata($task) . "\n";
 
         $description = trim((string) ($task['description'] ?? ''));
@@ -920,21 +922,32 @@ function toggleTaskByPath(array &$tasks, array $path): bool
         }
 
         if ($depth === count($path) - 1) {
-            $willBeDone = empty($current[$index]['done']);
+            $wasDone = !empty($current[$index]['done']);
+            $oldStatus = $current[$index]['status'] ?? 'open';
+
+            // Cycle: open → in_progress → done → open...
+            $newStatus = match ($oldStatus) {
+                'in_progress' => 'done',
+                'done' => 'open',
+                default => 'in_progress',
+            };
+
+            $willBeDone = $newStatus === 'done';
 
             if ($willBeDone && taskHasIncompleteSubtasks($current[$index])) {
                 return false;
             }
 
+            $current[$index]['status'] = $newStatus;
             $current[$index]['done'] = $willBeDone;
 
             if (empty($current[$index]['created_at'])) {
                 $current[$index]['created_at'] = currentKanbanTimestamp();
             }
 
-            if (!empty($current[$index]['done'])) {
+            if ($willBeDone && !$wasDone) {
                 $current[$index]['completed_at'] = currentKanbanTimestamp();
-            } else {
+            } elseif (!$willBeDone) {
                 $current[$index]['completed_at'] = null;
             }
 
@@ -1542,6 +1555,8 @@ function normalizeTask(array $task): array
     $priority = normalizeTaskPriority($task['priority'] ?? null);
     $tags = normalizeTaskTags($task['tags'] ?? []);
 
+    $status = !empty($task['status']) ? $task['status'] : ($done ? 'done' : 'open');
+
     if ($createdAt === '') {
         $createdAt = currentKanbanTimestamp();
     }
@@ -1555,6 +1570,7 @@ function normalizeTask(array $task): array
     }
 
     return [
+        'status' => $status,
         'done' => $done,
         'title' => trim((string) ($task['title'] ?? '')),
         'description' => trim((string) ($task['description'] ?? '')),
@@ -1576,6 +1592,7 @@ function normalizeTask(array $task): array
 function taskForDataAttribute(array $task): array
 {
     return [
+        'status' => !empty($task['status']) ? $task['status'] : (($task['done'] ?? false) ? 'done' : 'open'),
         'done' => !empty($task['done']),
         'title' => (string) ($task['title'] ?? ''),
         'description' => (string) ($task['description'] ?? ''),
